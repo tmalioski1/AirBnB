@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: {
       allowNull: false,
       type: DataTypes.INTEGER
-    }
+    },
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,

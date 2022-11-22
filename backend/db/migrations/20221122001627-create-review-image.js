@@ -26,16 +26,18 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "ReviewImages"
-    await queryInterface.dropTable(options, options);
+    await queryInterface.dropTable(options);
   }
 };
