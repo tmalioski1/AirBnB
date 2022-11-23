@@ -9,27 +9,42 @@ const router = express.Router();
 
 router.get( '/',
     async (req, res) => {
-      const spots = await Spot.findAll( {
-        attributes: {
-            include: [
-                [
-                    sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-                    "avgSpotRatings"
-                ]
-            ],
-        },
-        include: {
-            model: Review,
-            attributes: []
-        },
-        include: {
-            model: SpotImage,
-            attributes: []
-        }
+      const spots = await Spot.findAll({
+        include: [
+            {
+                model: Review
+            },
+            {
+                model: SpotImage
+            }
+        ]
       })
-      return res.json(spots);
+
+
+      let spotArray = [];
+      spots.forEach(spot => {
+         spotArray.push(spot.toJSON())
+      })
+
+      spotArray.forEach(spot => {
+        spot.SpotImages.forEach(image => {
+            if (image.preview) {
+            spot.previewImage = image.url
+            }  else {
+                spot.previewImage = 'needs an image'
+            }
+            delete spot.SpotImages
+        })
+
+
+      })
+
+
+      return res.json(spotArray);
+    //   return res.json({"Spots" : spots});
     }
   );
+
 
 
 
