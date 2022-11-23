@@ -54,7 +54,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ['502 Spring Rd.', '401 New St.', '502 Spring Rd.'] }
+      address: { [Op.in]: ['301 Watercourt St.', '401 New St.', '502 Spring Rd.'] }
     }, {});
   }
 };
