@@ -47,25 +47,10 @@ router.get( '/',
             delete spot.SpotImages
         })
 
-        // attributes: {
-        //     include: [
-        //         [
-        //             sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-        //             "avgSpotRatings"
-        //         ]
-        //     ],
-        // },
-        // include: {
-        //     model: Review,
-        //     attributes: []
-        // },
-
-
       })
 
 
-      return res.json(spotArray);
-    //   return res.json({"Spots" : spots});
+      return res.json({"Spots" : spotArray});
     }
   );
 
