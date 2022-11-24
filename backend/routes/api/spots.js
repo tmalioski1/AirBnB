@@ -27,6 +27,17 @@ router.get( '/',
       })
 
       spotArray.forEach(spot => {
+        let spotCount = 0
+        let starsSum = 0
+        spot.Reviews.forEach(review => {
+           starsSum += review.stars
+           spotCount++
+        })
+            spot.avgStarRating = starsSum/spotCount
+            delete spot.Reviews
+      })
+
+      spotArray.forEach(spot => {
         spot.SpotImages.forEach(image => {
             if (image.preview) {
             spot.previewImage = image.url
@@ -35,6 +46,19 @@ router.get( '/',
             }
             delete spot.SpotImages
         })
+
+        // attributes: {
+        //     include: [
+        //         [
+        //             sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+        //             "avgSpotRatings"
+        //         ]
+        //     ],
+        // },
+        // include: {
+        //     model: Review,
+        //     attributes: []
+        // },
 
 
       })
