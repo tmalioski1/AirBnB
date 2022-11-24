@@ -33,7 +33,7 @@ router.get( '/',
            starsSum += review.stars
            spotCount++
         })
-            spot.avgStarRating = starsSum/spotCount
+            spot.avgRating = starsSum/spotCount
             delete spot.Reviews
       })
 
