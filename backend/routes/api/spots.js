@@ -4,6 +4,7 @@ const { Spot, Review, SpotImage } = require('../../db/models');
 
 
 const sequelize  = require("sequelize");
+const { requireAuth } = require('../../utils/auth');
 
 const router = express.Router();
 
@@ -54,7 +55,12 @@ router.get( '/',
     }
   );
 
+  router.post(
+    '/',
+    async (req, res) => {
 
+    }
+  );
 
 
 module.exports = router;
