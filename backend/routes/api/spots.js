@@ -10,6 +10,81 @@ const sequelize = require("sequelize");
 
 const router = express.Router();
 
+//Create an Image for a Spot//
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+  const { url, preview } = req.body;
+  const spot = await Spot.findByPk(req.params.spotId)
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  }
+  const { user } = req;
+  if (user.id !== spot.ownerId) {
+     throw new Error("spot must belong to the current user")
+  }
+
+  let spotId = spot.id
+  const newImage = await SpotImage.create({
+    spotId,
+    url,
+    preview,
+
+  })
+  return res.json({ "id": newImage.id, "url": newImage.url, "preview": newImage.preview })
+});
+
+//Create a Review for a Spot//
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+
+   const spot = await Spot.findByPk(req.params.spotId)
+   if (!spot) {
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  }
+  const { review, stars } = req.body;
+  if (!review || stars < 1 || stars > 5) {
+    return res.status(400).json({
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": [
+        "Review text is required",
+        "Stars must be an integer from 1 to 5",
+      ]
+    })
+  }
+  let userId = req.user.id
+  const spotReviews = await Spot.findByPk(req.params.spotId, {
+    include: [
+      { model: Review}
+    ]
+  })
+  spotReviews.Reviews.forEach(review => {
+      if (userId === review.userId) {
+         return res.status(403).json({
+          "message": "User already has a review for this spot",
+          "statusCode": 403
+         })
+      }
+  })
+
+  let spotId = spot.id
+
+  const newReview = await Review.create({
+    userId,
+    spotId,
+    review,
+    stars,
+
+  })
+   res.json(newReview)
+});
+
 //Get spots of Current User
 router.get('/current', requireAuth, async (req, res) => {
   const spots = await Spot.findAll({
@@ -109,7 +184,9 @@ router.get('/:spotId', async (req, res) => {
 
 //edit a Spot//
 router.put('/:spotId', requireAuth, async (req, res) => {
+
    const spot = await Spot.findByPk(req.params.spotId)
+
    if (!spot) {
     res.status(404);
     return res.json({
@@ -117,6 +194,11 @@ router.put('/:spotId', requireAuth, async (req, res) => {
       "statusCode": 404
     })
   }
+  const { user } = req;
+  if (user.id !== spot.ownerId) {
+     throw new Error("spot must belong to the current user")
+  }
+
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
     return res.status(400).json({
@@ -200,26 +282,7 @@ router.get('/', async (req, res) => {
   }
 );
 
-//Create an Image for a Spot//
-router.post('/:spotId/images', requireAuth, async (req, res) => {
-  const { url, preview } = req.body;
-  const spot = await Spot.findByPk(req.params.spotId)
-  if (!spot) {
-    res.status(404);
-    return res.json({
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    })
-  }
-  let spotId = spot.id
-  const newImage = await SpotImage.create({
-    spotId,
-    url,
-    preview,
 
-  })
-  return res.json({ "id": newImage.id, "url": newImage.url, "preview": newImage.preview })
-});
 
 
 //Create a Spot//
