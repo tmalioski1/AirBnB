@@ -10,7 +10,7 @@ const sequelize = require("sequelize");
 
 const router = express.Router();
 
-
+//Get spots of Current User
 router.get('/current', requireAuth, async (req, res) => {
   const spots = await Spot.findAll({
     where: {
@@ -57,6 +57,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 });
 
+//Get details of a Spot by Id//
 router.get('/:spotId', async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, {
     include: [
@@ -106,6 +107,53 @@ router.get('/:spotId', async (req, res) => {
 
 })
 
+//edit a Spot//
+router.put('/:spotId', requireAuth, async (req, res) => {
+   const spot = await Spot.findByPk(req.params.spotId)
+   if (!spot) {
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  }
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
+    return res.status(400).json({
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": [
+        "Street address is required",
+        "City is required",
+        "State is required",
+        "Country is required",
+        "Latitude is not valid",
+        "Longitude is not valid",
+        "Name must be less than 50 characters",
+        "Description is required",
+        "Price per day is required"
+      ]
+    })
+  }
+
+   spot.address = address;
+   spot.city = city;
+   spot.state = state;
+   spot.country = country;
+   spot.lat = lat;
+   spot.lng = lng;
+   spot.name = name;
+   spot.description = description;
+   spot.price = price
+
+   await spot.save()
+
+   res.json(spot)
+
+
+})
+
+//Get All Spots
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
       include: [
@@ -152,6 +200,7 @@ router.get('/', async (req, res) => {
   }
 );
 
+//Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
   const spot = await Spot.findByPk(req.params.spotId)
@@ -172,6 +221,8 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
   return res.json({ "id": newImage.id, "url": newImage.url, "preview": newImage.preview })
 });
 
+
+//Create a Spot//
 router.post('/', requireAuth, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
@@ -191,7 +242,6 @@ router.post('/', requireAuth, async (req, res) => {
       ]
     })
   }
-
 
 
   const newSpot = await Spot.create({
