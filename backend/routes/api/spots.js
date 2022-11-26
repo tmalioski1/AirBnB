@@ -10,6 +10,12 @@ const sequelize  = require("sequelize");
 
 const router = express.Router();
 
+
+router.get('/current', requireAuth, async (req, res) => {
+
+});
+
+
 router.get( '/',
     async (req, res) => {
       const spots = await Spot.findAll({
@@ -67,7 +73,9 @@ router.get( '/',
         "statusCode": 404
       })
     }
+    let spotId = spot.id
     const newImage = await SpotImage.create({
+      spotId,
       url,
       preview,
 
