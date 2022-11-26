@@ -58,7 +58,6 @@ router.get( '/',
   );
 
   router.post('/:spotId/images', requireAuth, async (req, res) => {
-    console.log(req.user)
     const { url, preview } = req.body;
     const spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
@@ -73,7 +72,7 @@ router.get( '/',
       preview,
 
     })
-     return res.json(newImage)
+     return res.json({"id": newImage.id, "url": newImage.url, "preview": newImage.preview})
   });
 
   router.post('/', requireAuth, async (req, res) => {
