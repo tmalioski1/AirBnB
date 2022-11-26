@@ -1,4 +1,6 @@
 const express = require('express');
+const router = express.Router();
+
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
 const { User, Spot, Review, SpotImage } = require('../../db/models');
@@ -8,7 +10,6 @@ const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 
-const router = express.Router();
 
 //Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
@@ -61,7 +62,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
   let userId = req.user.id
   const spotReviews = await Spot.findByPk(req.params.spotId, {
     include: [
-      { model: Review}
+      { model: Review }
     ]
   })
   spotReviews.Reviews.forEach(review => {
