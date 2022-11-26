@@ -57,40 +57,26 @@ router.get( '/',
     }
   );
 
-  // const validateSignup = [
-  //   check('email')
-  //     .exists({ checkFalsy: true })
-  //     .isEmail()
-  //     .withMessage('Please provide a valid email.'),
-  //   check('username')
-  //     .exists({ checkFalsy: true })
-  //     .isLength({ min: 4 })
-  //     .withMessage('Please provide a username with at least 4 characters.'),
-  //   check('username')
-  //     .not()
-  //     .isEmail()
-  //     .withMessage('Username cannot be an email.'),
-  //   check('password')
-  //     .exists({ checkFalsy: true })
-  //     .isLength({ min: 6 })
-  //     .withMessage('Password must be 6 characters or more.'),
-  //   check ('firstName')
-  //   .exists({ checkFalsy: true })
-  //   .withMessage('First Name is required'),
-  //   check ('lastName')
-  //   .exists({ checkFalsy: true })
-  //   .withMessage('Last Name is required'),
-  //   handleValidationErrors
-  // ];
+  router.post('/:spotId/images', requireAuth, async (req, res) => {
+    const { url, preview } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId)
+    if (!spot) {
+      res.status(404);
+      return res.json({
+        "message": "Spot couldn't be found",
+        "statusCode": 404
+      })
+    }
+    const newImage = await SpotImage.create({
+      url,
+      preview,
 
+    })
+     return res.json({"id": newImage.id, "url": newImage.url, "preview": newImage.preview})
+  });
 
-  router.post(
-    '/',
-
-    requireAuth,
-    async (req, res) => {
+  router.post('/', requireAuth, async (req, res) => {
      const { address, city, state, country, lat, lng, name, description, price } = req.body;
-
      if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
       return res.status(400).json({
         "message" : "Validation Error",
@@ -128,6 +114,7 @@ router.get( '/',
      return res.json(newSpot)
     }
   );
+
 
 
 module.exports = router;
