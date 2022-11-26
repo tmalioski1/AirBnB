@@ -12,6 +12,48 @@ const router = express.Router();
 
 
 router.get('/current', requireAuth, async (req, res) => {
+     const spots = await Spot.findAll({
+      where: {
+        ownerId : req.user.id
+      },
+      include: [
+        {
+            model: Review
+        },
+        {
+            model: SpotImage
+        }
+    ]
+     })
+     let spotArray = [];
+     spots.forEach(spot => {
+        spotArray.push(spot.toJSON())
+     })
+
+     spotArray.forEach(spot => {
+       let spotCount = 0
+       let starsSum = 0
+       spot.Reviews.forEach(review => {
+          starsSum += review.stars
+          spotCount++
+       })
+           spot.avgRating = starsSum/spotCount
+           delete spot.Reviews
+     })
+
+     spotArray.forEach(spot => {
+       spot.SpotImages.forEach(image => {
+           if (image.preview) {
+           spot.previewImage = image.url
+           }  else {
+               spot.previewImage = 'needs an image'
+           }
+           delete spot.SpotImages
+       })
+
+     })
+
+     res.json({"Spots" : spotArray})
 
 });
 
