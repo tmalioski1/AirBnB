@@ -64,7 +64,7 @@ router.get('/:spotId', async (req, res) => {
         model: Review
       },
       {
-        model: SpotImage
+        model: SpotImage,
       },
       {
         model: User
@@ -92,6 +92,11 @@ router.get('/:spotId', async (req, res) => {
     delete manipulatedSpot.SpotImages
     manipulatedSpot.SpotImages = manipulatedSpot.placeHolderSpotImages
     delete manipulatedSpot.placeHolderSpotImages
+    manipulatedSpot.SpotImages.forEach(image => {
+      delete image.spotId
+      delete image.createdAt
+      delete image.updatedAt
+    })
     manipulatedSpot.Owner = manipulatedSpot.User
     delete manipulatedSpot.Reviews
     delete manipulatedSpot.User
