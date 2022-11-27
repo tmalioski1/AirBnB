@@ -49,6 +49,52 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
   return res.json( { "id": newImage.id, "url": newImage.url} )
 });
 
+//edit a Review//
+router.put('/:reviewId', requireAuth, async (req, res) => {
+
+  const editedReview = await Review.findByPk(req.params.reviewId)
+
+  if (!editedReview) {
+    res.status(404);
+    return res.json({
+      "message": "Review couldn't be found",
+      "statusCode": 404
+    })
+  }
+
+  const { user } = req;
+  if (user.id !== editedReview.userId) {
+     throw new Error("spot must belong to the current user")
+  }
+
+  const { review, stars } = req.body
+if (!review || !stars || stars < 1 || stars > 5 ) {
+  return res.status(400).json({
+    "message": "Validation Error",
+    "statusCode": 400,
+    "errors": [
+      "Review text is required",
+      "Stars must be an integer from 1 to 5",
+    ]
+  })
+}
+
+
+editedReview.review = review;
+editedReview.stars = stars;
+
+
+await editedReview.save()
+
+res.json(editedReview)
+
+
+
+
+
+})
+
+
 //Get Reviews of Current User
 router.get('/current', requireAuth, async (req, res) => {
   const reviews = await Review.findAll({
