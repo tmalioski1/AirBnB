@@ -10,7 +10,36 @@ const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 
+//Create a booking based on a Spot Id//
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+  const { startDate, endDate } = req.body;
+  const spot = await Spot.findByPk(req.params.spotId, {
+    include :
+      [
+       {
+        model: Booking
+       }
+      ]
 
+  })
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  }
+
+  const { user } = req;
+  if (user.id === spot.ownerId) {
+     throw new Error("spot must not belong to the current user")
+  }
+
+
+
+   return res.json(spot)
+
+});
 //Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
