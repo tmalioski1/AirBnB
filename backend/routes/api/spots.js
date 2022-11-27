@@ -3,14 +3,82 @@ const router = express.Router();
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
-const { User, Spot, Review, SpotImage, ReviewImage } = require('../../db/models');
+const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 
+//Create a booking based on a Spot Id//
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
+  const { startDate, endDate } = req.body;
+  const stringStartDate = startDate
+  const stringEndDate = endDate
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+
+  const spot = await Spot.findByPk(req.params.spotId, {
+    include :
+      [
+       {
+        model: Booking
+       }
+      ]
+
+  })
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  }
+
+  const { user } = req;
+  if (user.id === spot.ownerId) {
+     throw new Error("spot must not belong to the current user")
+  }
+
+  if (end <= start) {
+    res.status(400);
+    return res.json({
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": [
+        "endDate cannot be on or before startDate"
+      ]
+    })
+  }
+
+  spot.Bookings.forEach(booking => {
+   const bookingStart = new Date(booking.startDate)
+   const bookingEnd = new Date(booking.endDate)
+   if ((start >= bookingStart && start <= bookingEnd) || (end >= bookingStart && end <= bookingEnd))
+   {
+    res.status(403);
+    return res.json({
+      "message": "Sorry, this spot is already booked for the specified dates",
+      "statusCode": 403,
+      "errors": [
+        "Start date conflicts with an existing booking",
+        "End date conflicts with an existing booking"
+      ]
+    })
+   }
+  })
+   let spotId = spot.id
+   let userId = user.id
+   const newBooking = await Booking.create({
+    spotId,
+    userId,
+    startDate: stringStartDate,
+    endDate: stringEndDate
+   })
+   return res.json(newBooking)
+
+});
 //Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
