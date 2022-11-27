@@ -80,6 +80,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
    return res.json(newBooking)
 
 });
+
 //Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
