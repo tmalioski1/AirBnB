@@ -41,7 +41,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
       "statusCode": 403
     })
   }
-  console.log('length----------------', imageCounter.ReviewImages.length)
 
   const newImage = await ReviewImage.create({
     reviewId,
@@ -50,6 +49,75 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
   return res.json( { "id": newImage.id, "url": newImage.url} )
 });
 
+//Get Reviews of Current User
+router.get('/current', requireAuth, async (req, res) => {
+  const reviews = await Review.findAll({
+    where: {
+      userId: req.user.id
+
+    },
+    attributes: ['id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      },
+      {
+        model: Spot,
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
+      },
+      {
+        model: ReviewImage,
+        attributes: ['id', 'url']
+      },
+
+    ]
+  })
+   const manipulatedSpots = await Spot.findAll({
+
+     include: [
+      {
+      model: SpotImage,
+      // attributes: [['url', 'previewImage']]
+      }
+     ],
+   })
+  let reviewArray = [];
+  reviews.forEach(review => {
+    reviewArray.push(review.toJSON())
+  })
+
+
+
+  let manipulatedSpotArray = []
+  manipulatedSpots.forEach(spot => {
+    manipulatedSpotArray.push(spot.toJSON())
+  })
+
+  manipulatedSpotArray.forEach(spot => {
+    spot.SpotImages.forEach(image => {
+      if (image.preview) {
+        spot.previewImage = image.url
+      } else {
+        spot.previewImage = 'needs an image'
+      }
+      delete spot.SpotImages
+    })
+
+  })
+
+  reviewArray.forEach(review => {
+    manipulatedSpotArray.forEach(spot => {
+      if (review.spotId === spot.id) {
+            review.Spot.previewImage = spot.previewImage
+      }
+    })
+  })
+  console.log(reviewArray)
+
+  return res.json({ "Reviews": reviewArray })
+
+});
 
 
 
