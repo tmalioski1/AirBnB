@@ -78,7 +78,7 @@ router.get('/current', requireAuth, async (req, res) => {
      include: [
       {
       model: SpotImage,
-      attributes: [['url', 'previewImage']]
+      // attributes: [['url', 'previewImage']]
       }
      ],
    })
@@ -113,7 +113,7 @@ router.get('/current', requireAuth, async (req, res) => {
       }
     })
   })
-
+  console.log(reviewArray)
 
   return res.json({ "Reviews": reviewArray })
 
