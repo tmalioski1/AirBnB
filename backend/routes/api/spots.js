@@ -14,8 +14,6 @@ const sequelize = require("sequelize");
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
   const { startDate, endDate } = req.body;
-  const stringStartDate = startDate
-  const stringEndDate = endDate
   const start = new Date(startDate)
   const end = new Date(endDate)
 
@@ -73,8 +71,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
    const newBooking = await Booking.create({
     spotId,
     userId,
-    startDate: stringStartDate,
-    endDate: stringEndDate
+    startDate,
+    endDate
    })
    return res.json(newBooking)
 
