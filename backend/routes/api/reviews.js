@@ -53,7 +53,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 router.get('/current', requireAuth, async (req, res) => {
   const reviews = await Review.findAll({
     where: {
-      userId: 3, //(really req.user.id)
+      userId: req.user.id
 
     },
     attributes: ['id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt'],
