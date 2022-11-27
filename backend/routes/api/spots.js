@@ -12,7 +12,10 @@ const sequelize = require("sequelize");
 
 //Create a booking based on a Spot Id//
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+
   const { startDate, endDate } = req.body;
+  const stringStartDate = startDate
+  const stringEndDate = endDate
   const start = new Date(startDate)
   const end = new Date(endDate)
 
@@ -48,10 +51,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       ]
     })
   }
+
   spot.Bookings.forEach(booking => {
    const bookingStart = new Date(booking.startDate)
    const bookingEnd = new Date(booking.endDate)
-   if (start === bookingStart || start === bookingEnd || end === bookingEnd || end === bookingStart) {
+   if ((start >= bookingStart && start <= bookingEnd) || (end >= bookingStart && end <= bookingEnd))
+   {
     res.status(403);
     return res.json({
       "message": "Sorry, this spot is already booked for the specified dates",
@@ -68,8 +73,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
    const newBooking = await Booking.create({
     spotId,
     userId,
-    startDate,
-    endDate
+    startDate: stringStartDate,
+    endDate: stringEndDate
    })
    return res.json(newBooking)
 

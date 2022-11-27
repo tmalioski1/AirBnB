@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER
     },
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    startDate: DataTypes.DATEONLY,
+    endDate: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'Booking',
