@@ -88,10 +88,6 @@ await editedReview.save()
 
 res.json(editedReview)
 
-
-
-
-
 })
 
 
@@ -159,7 +155,6 @@ router.get('/current', requireAuth, async (req, res) => {
       }
     })
   })
-  console.log(reviewArray)
 
   return res.json({ "Reviews": reviewArray })
 
