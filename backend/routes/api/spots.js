@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 
-const { User, Spot, Review, SpotImage } = require('../../db/models');
+const { User, Spot, Review, SpotImage, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { validateLogin } = require('./session')
@@ -37,6 +37,36 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
   return res.json({ "id": newImage.id, "url": newImage.url, "preview": newImage.preview })
 });
 
+//Get Reviews by SpotId//
+router.get('/:spotId/reviews', async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId)
+  if (!spot) {
+   res.status(404);
+   return res.json({
+     "message": "Spot couldn't be found",
+     "statusCode": 404
+   })
+ }
+
+    const reviews = await Review.findAll({
+      where : {
+        spotId : req.params.spotId
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: ReviewImage,
+          attributes: ['id', 'url']
+        }
+      ]
+    })
+
+    res.json({'Reviews': reviews})
+
+})
 //Create a Review for a Spot//
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 
