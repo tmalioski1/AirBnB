@@ -10,6 +10,68 @@ const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 
+
+//GET all Bookings for a Spot based on a Spot Id//
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId)
+  if (!spot) {
+   res.status(404);
+   return res.json({
+     "message": "Spot couldn't be found",
+     "statusCode": 404
+   })
+ }
+  console.log('this is the userId------', req.user.id)
+  console.log('this is the ownerId------', spot.ownerId)
+  if (req.user.id !== spot.ownerId) {
+    const bookings = await Booking.findAll({
+      where : {
+        spotId : req.params.spotId
+      },
+      attributes: ["spotId", "startDate", "endDate"]
+    })
+     return res.json({'Bookings': bookings})
+  }
+
+
+  if (req.user.id === spot.ownerId) {
+    const bookings = await Booking.findAll({
+      where : {
+        spotId : req.params.spotId
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+      ]
+    })
+
+    let bookingsArray = [];
+    bookings.forEach(booking => {
+      bookingsArray.push(booking.toJSON())
+    })
+
+    const deconstructedBookingsArray = []
+    bookingsArray.forEach(booking => {
+      deconstructedBookingsArray.push({ 'User': booking.User, 'id': booking.id, 'spotId': booking.spotId, 'userId': booking.userId, 'startDate': booking.startDate, 'endDate': booking.endDate, 'createdAt': booking.createdAt, 'updatedAt': booking.updatedAt })
+    })
+
+
+    return res.json({'Bookings': deconstructedBookingsArray})
+  }
+
+})
+
+
+
+
+
+
+
+
+
+
 //Create a booking based on a Spot Id//
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
@@ -80,6 +142,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
    return res.json(newBooking)
 
 });
+
 //Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
@@ -136,6 +199,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     res.json({'Reviews': reviews})
 
 })
+
 //Create a Review for a Spot//
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
 
