@@ -13,6 +13,7 @@ const sequelize = require("sequelize");
 
 //Get All Current User's Bookings//
 router.get('/current', requireAuth, async (req, res) => {
+
   const bookings = await Booking.findAll({
     where: {
       userId: req.user.id

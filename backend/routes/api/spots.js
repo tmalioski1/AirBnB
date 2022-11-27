@@ -50,6 +50,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
+
   spot.Bookings.forEach(booking => {
    const bookingStart = new Date(booking.startDate)
    const bookingEnd = new Date(booking.endDate)
@@ -65,7 +66,9 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       ]
     })
    }
-  })
+  }
+  )
+
    let spotId = spot.id
    let userId = user.id
    const newBooking = await Booking.create({
