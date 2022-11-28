@@ -59,9 +59,7 @@ if ((start >= bookingStart && start <= bookingEnd) || (end >= bookingStart && en
 const todayDate = new Date()
 const bookingTimeMiliSeconds = todayDate.getTime()
 const bookingEndMiliSeconds = bookingEnd.getTime()
-console.log('this is the current time--------------', bookingTimeMiliSeconds)
 
-console.log('this is the enddate time--------------', bookingEndMiliSeconds)
 
 if (bookingTimeMiliSeconds > bookingEndMiliSeconds) {
   res.status(403);
@@ -71,7 +69,6 @@ if (bookingTimeMiliSeconds > bookingEndMiliSeconds) {
   })
 }
 
- //Successfull Response stuff///
 
   booking.userId = user.id;
   booking.startDate = startDate;
