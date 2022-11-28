@@ -10,6 +10,53 @@ const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 
+
+//Delete a Booking//
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+   const deletedBooking = await Booking.findByPk(req.params.bookingId)
+   if (!deletedBooking) {
+    res.status(404);
+    return res.json({
+      "message": "Booking couldn't be found",
+      "statusCode": 404
+    })
+  }
+  const spotConnect = await Booking.findByPk(req.params.bookingId, {
+    include : [
+      {
+          model: Spot
+      }
+   ]
+  })
+  const { user } = req;
+  if (user.id !== spotConnect.Spot.ownerId && user.id !== deletedBooking.userId) {
+    throw new Error("Booking must belong to the current user or the Spot must belong to the current user")
+  }
+
+  const deleteDate = new Date()
+  const preciseDeleteDate = deleteDate.getTime()
+
+  const deletedStartDate = new Date(deletedBooking.startDate)
+  const preciseStartDate = deletedStartDate.getTime()
+
+  if (preciseDeleteDate >= preciseStartDate) {
+    res.status(403);
+    return res.json({
+      "message": "Bookings that have been started can't be deleted",
+      "statusCode": 403,
+    })
+  }
+    await deletedBooking.destroy();
+    return res.json({
+      "message": "Successfully deleted",
+      "statusCode": 200
+     })
+})
+
+
+
+
+
 //edit a Booking//
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const { startDate, endDate } = req.body;
