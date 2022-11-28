@@ -21,8 +21,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
      "statusCode": 404
    })
  }
-  console.log('this is the userId------', req.user.id)
-  console.log('this is the ownerId------', spot.ownerId)
+
   if (req.user.id !== spot.ownerId) {
     const bookings = await Booking.findAll({
       where : {
@@ -222,14 +221,24 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
       { model: Review }
     ]
   })
-  spotReviews.Reviews.forEach(review => {
-      if (userId === review.userId) {
-         return res.status(403).json({
-          "message": "User already has a review for this spot",
-          "statusCode": 403
-         })
-      }
-  })
+
+  for (let i = 0; i < spotReviews.Reviews.length; i++) {
+    let review = spotReviews.Reviews[i]
+    if (userId === review.userId) {
+      return res.status(403).json({
+       "message": "User already has a review for this spot",
+       "statusCode": 403
+      })
+   }
+  }
+  // spotReviews.Reviews.forEach(review => {
+  //     if (userId === review.userId) {
+  //        return res.status(403).json({
+  //         "message": "User already has a review for this spot",
+  //         "statusCode": 403
+  //        })
+  //     }
+  // })
 
   let spotId = spot.id
 
