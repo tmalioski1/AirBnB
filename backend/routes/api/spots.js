@@ -105,24 +105,25 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
-
-  spot.Bookings.forEach(booking => {
-   const bookingStart = new Date(booking.startDate)
-   const bookingEnd = new Date(booking.endDate)
-   if ((start >= bookingStart && start <= bookingEnd) || (end >= bookingStart && end <= bookingEnd))
-   {
-    res.status(403);
-    return res.json({
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "statusCode": 403,
-      "errors": {
-        "startdate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
+  for (let i = 0; i < spot.Bookings.length; i++) {
+      let booking = spot.Bookings[i]
+      const bookingStart = new Date(booking.startDate)
+      const bookingEnd = new Date(booking.endDate)
+      if ((start >= bookingStart && start <= bookingEnd) || (end >= bookingStart && end <= bookingEnd))
+      {
+       res.status(403);
+       return res.json({
+         "message": "Sorry, this spot is already booked for the specified dates",
+         "statusCode": 403,
+         "errors": {
+           "startdate": "Start date conflicts with an existing booking",
+           "endDate": "End date conflicts with an existing booking"
+         }
+       })
       }
-    })
-   }
   }
-  )
+
+
 
    let spotId = spot.id
    let userId = user.id
