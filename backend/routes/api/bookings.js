@@ -11,7 +11,6 @@ const { validateLogin } = require('./session')
 const sequelize = require("sequelize");
 
 //edit a Booking//
-
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const { startDate, endDate } = req.body;
   const start = new Date(startDate)
