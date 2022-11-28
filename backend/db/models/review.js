@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   Review.init({
     spotId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
+      type: DataTypes.INTEGER
+
     },
     userId: {
       allowNull: false,
