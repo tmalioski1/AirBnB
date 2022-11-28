@@ -392,6 +392,34 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 })
 
+
+//Delete a Spot//
+router.delete('/:spotId', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId)
+  if (!spot) {
+    res.status(404);
+    return res.json({
+    "message": "Spot couldn't be found",
+    "statusCode": 404
+  })
+  }
+  const { user } = req;
+  console.log('this is the user.id', user.id)
+  console.log('this is the ownerId', spot.ownerId)
+
+  if (user.id !== spot.ownerId) {
+    throw new Error("Spot must belong to the current user")
+  }
+
+  await spot.destroy()
+  return res.json({
+    "message": "Successfully deleted",
+    "statusCode": 200
+   })
+
+})
+
+
 //Get All Spots
 router.get('/', async (req, res) => {
     const spots = await Spot.findAll({
