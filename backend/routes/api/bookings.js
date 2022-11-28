@@ -10,6 +10,79 @@ const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 
+//edit a Booking//
+
+router.put('/:bookingId', requireAuth, async (req, res) => {
+  const { startDate, endDate } = req.body;
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+
+  const booking = await Booking.findByPk(req.params.bookingId)
+  if (!booking) {
+   res.status(404);
+   return res.json({
+     "message": "Booking couldn't be found",
+     "statusCode": 404
+   })
+ }
+ const { user, spot } = req;
+ if (user.id !== booking.userId) {
+    throw new Error("booking must belong to the current user")
+ }
+
+ if (end <= start) {
+  res.status(400);
+  return res.json({
+    "message": "Validation error",
+    "statusCode": 400,
+    "errors": [
+      "endDate cannot be on or before startDate"
+    ]
+  })
+}
+
+const bookingStart = new Date(booking.startDate)
+const bookingEnd = new Date(booking.endDate)
+if ((start >= bookingStart && start <= bookingEnd) || (end >= bookingStart && end <= bookingEnd))
+{
+ res.status(403);
+ return res.json({
+   "message": "Sorry, this spot is already booked for the specified dates",
+   "statusCode": 403,
+   "errors": [
+     "Start date conflicts with an existing booking",
+     "End date conflicts with an existing booking"
+   ]
+ })
+}
+
+const todayDate = new Date()
+const bookingTimeMiliSeconds = todayDate.getTime()
+const bookingEndMiliSeconds = bookingEnd.getTime()
+console.log('this is the current time--------------', bookingTimeMiliSeconds)
+
+console.log('this is the enddate time--------------', bookingEndMiliSeconds)
+
+if (bookingTimeMiliSeconds > bookingEndMiliSeconds) {
+  res.status(403);
+  return res.json({
+    "message": "Past bookings can't be modified",
+    "statusCode": 403,
+  })
+}
+
+ //Successfull Response stuff///
+
+  booking.userId = user.id;
+  booking.startDate = startDate;
+  booking.endDate = endDate
+
+
+  await booking.save()
+
+  return res.json(booking)
+
+})
 
 //Get All Current User's Bookings//
 router.get('/current', requireAuth, async (req, res) => {

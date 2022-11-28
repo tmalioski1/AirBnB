@@ -65,13 +65,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 
 
 
-
-
-
-
-
-
-
 //Create a booking based on a Spot Id//
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
