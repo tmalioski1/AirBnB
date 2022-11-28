@@ -404,8 +404,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
   })
   }
   const { user } = req;
-  console.log('this is the user.id', user.id)
-  console.log('this is the ownerId', spot.ownerId)
+
 
   if (user.id !== spot.ownerId) {
     throw new Error("Spot must belong to the current user")
