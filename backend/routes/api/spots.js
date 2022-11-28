@@ -115,10 +115,10 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     return res.json({
       "message": "Sorry, this spot is already booked for the specified dates",
       "statusCode": 403,
-      "errors": [
-        "Start date conflicts with an existing booking",
-        "End date conflicts with an existing booking"
-      ]
+      "errors": {
+        "startdate": "Start date conflicts with an existing booking",
+        "endDate": "End date conflicts with an existing booking"
+      }
     })
    }
   }
@@ -421,6 +421,93 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
 //Get All Spots
 router.get('/', async (req, res) => {
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+  if (minLat) {
+   minLat = Number(minLat)
+   if (isNaN(minLat)) {
+    res.status(400);
+    return res.json({
+      "message": "Minimum latitude is invalid",
+      "statusCode": 400
+    })
+   }
+  }
+
+  if (maxLat) {
+    maxLat = Number(maxLat)
+    if (isNaN(maxLat)) {
+     res.status(400);
+     return res.json({
+       "message": "Maximum latitude is invalid",
+       "statusCode": 400
+     })
+    }
+   }
+
+   if (minLng) {
+    minLng = Number(minLng)
+    if (isNaN(minLng)) {
+     res.status(400);
+     return res.json({
+       "message": "Minimum longitude is invalid",
+       "statusCode": 400
+     })
+    }
+   }
+
+   if (maxLng) {
+    maxLng = Number(maxLng)
+    if (isNaN(maxLng)) {
+     res.status(400);
+     return res.json({
+       "message": "Maximum longitude is invalid",
+       "statusCode": 400
+     })
+    }
+   }
+
+   if (minPrice) {
+    minPrice = Number(minPrice)
+    if (isNaN(minPrice) || minPrice < 0) {
+     res.status(400);
+     return res.json({
+       "message": "Minimum price must be greater than or equal to 0",
+       "statusCode": 400
+     })
+    }
+   }
+
+   if (maxPrice) {
+    maxPrice = Number(maxPrice)
+    if (isNaN(maxPrice) || maxPrice < 0) {
+     res.status(400);
+     return res.json({
+       "message": "Maximum price must be greater than or equal to 0",
+       "statusCode": 400
+     })
+    }
+   }
+
+
+
+
+
+
+
+   page = Number(page)
+   size = Number(size);
+
+  if(!page) page = 1
+  if(!size) size = 20
+  if(page > 10) page = 10;
+  if(size > 20) size = 20;
+
+  let pagination = {}
+  if (parseInt(page) >= 1 && parseInt(size) >= 1) {
+       pagination.limit = size
+       pagination.offset = size * (page - 1)
+  }
     const spots = await Spot.findAll({
       include: [
         {
@@ -429,7 +516,8 @@ router.get('/', async (req, res) => {
         {
           model: SpotImage
         }
-      ]
+      ],
+      ...pagination
     })
 
 
@@ -462,7 +550,7 @@ router.get('/', async (req, res) => {
     })
 
 
-    return res.json({ "Spots": spotArray });
+    return res.json({ "Spots": spotArray, page, size });
   }
 );
 
