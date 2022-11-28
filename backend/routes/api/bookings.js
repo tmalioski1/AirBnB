@@ -106,8 +106,20 @@ const todayDate = new Date()
 const bookingTimeMiliSeconds = todayDate.getTime()
 const bookingEndMiliSeconds = bookingEnd.getTime()
 
+console.log('this is the current time ----', bookingTimeMiliSeconds)
 
 if (bookingTimeMiliSeconds > bookingEndMiliSeconds) {
+  res.status(403);
+  return res.json({
+    "message": "Past bookings can't be modified",
+    "statusCode": 403,
+  })
+}
+
+const endTimeMiliSeconds = end.getTime()
+console.log('this is the endtime time ----', endTimeMiliSeconds)
+
+if (bookingTimeMiliSeconds > endTimeMiliSeconds) {
   res.status(403);
   return res.json({
     "message": "Past bookings can't be modified",
