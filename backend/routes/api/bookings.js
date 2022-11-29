@@ -106,7 +106,6 @@ const todayDate = new Date()
 const bookingTimeMiliSeconds = todayDate.getTime()
 const bookingEndMiliSeconds = bookingEnd.getTime()
 
-console.log('this is the current time ----', bookingTimeMiliSeconds)
 
 if (bookingTimeMiliSeconds > bookingEndMiliSeconds) {
   res.status(403);
@@ -117,7 +116,6 @@ if (bookingTimeMiliSeconds > bookingEndMiliSeconds) {
 }
 
 const endTimeMiliSeconds = end.getTime()
-console.log('this is the endtime time ----', endTimeMiliSeconds)
 
 if (bookingTimeMiliSeconds > endTimeMiliSeconds) {
   res.status(403);

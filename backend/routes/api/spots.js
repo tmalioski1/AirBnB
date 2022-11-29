@@ -231,14 +231,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
       })
    }
   }
-  // spotReviews.Reviews.forEach(review => {
-  //     if (userId === review.userId) {
-  //        return res.status(403).json({
-  //         "message": "User already has a review for this spot",
-  //         "statusCode": 403
-  //        })
-  //     }
-  // })
 
   let spotId = spot.id
 
