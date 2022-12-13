@@ -18,7 +18,9 @@ useEffect(() => {
       <ul>
         {
           spots.map(spot => (
-            <NavLink to={`/spots/${spot.id}`}>
+            <NavLink
+            key={spot.id}
+            to={`/spots/${spot.id}`}>
                {spot.address}
               </NavLink>
           ))
