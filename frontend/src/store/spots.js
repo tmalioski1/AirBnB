@@ -1,7 +1,13 @@
 
 const LOAD = 'spots/LOAD'
+const LOADONE = 'spots/LOADONE'
 
 const loadAll = (spots) => ({
+    type: LOAD,
+    spots,
+})
+
+const loadOne = (spots) => ({
     type: LOAD,
     spots,
 })
