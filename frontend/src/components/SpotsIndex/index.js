@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllSpots } from '../../store/spots';
+import { NavLink } from 'react-router-dom';
+
 
 const SpotsIndex = () => {
   const dispatch = useDispatch();
@@ -16,11 +18,9 @@ useEffect(() => {
       <ul>
         {
           spots.map(spot => (
-            <li
-              id={spot.id}
-              >
+            <NavLink to={`/spots/${spot.id}`}>
                {spot.address}
-              </li>
+              </NavLink>
           ))
         }
       </ul>
