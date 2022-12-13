@@ -7,9 +7,9 @@ const loadAll = (spots) => ({
     spots,
 })
 
-const loadOne = (spots) => ({
+const loadOne = (spot) => ({
     type: LOAD,
-    spots,
+    spot,
 })
 
 
@@ -21,6 +21,17 @@ export const getAllSpots = () => async (dispatch) => {
     }
   };
 
+  export const getOneSpot = () => async (dispatch) => {
+    const response = await fetch(`/api/spots/:spotId`)
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(loadOne(spot));
+    }
+  }
+
+
+
+
 const initialState = { allSpots : {}, singleSpot : {} }
 
 const spotsReducer = (state = initialState, action) => {
@@ -28,7 +39,6 @@ const spotsReducer = (state = initialState, action) => {
     switch(action.type) {
        case LOAD:
         const newSpots = { allSpots : {}, singleSpot : {}}
-        console.log('this is action.spots-------', action.spots)
         action.spots.Spots.forEach(spot => {
             newSpots.allSpots[spot.id] = spot
         });
