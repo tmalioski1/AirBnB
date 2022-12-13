@@ -7,10 +7,7 @@ const loadAll = (spots) => ({
     spots,
 })
 
-const loadOne = (spot) => ({
-    type: LOAD,
-    spot,
-})
+
 
 
 export const getAllSpots = () => async (dispatch) => {
@@ -21,13 +18,6 @@ export const getAllSpots = () => async (dispatch) => {
     }
   };
 
-  export const getOneSpot = () => async (dispatch) => {
-    const response = await fetch(`/api/spots/:spotId`)
-    if (response.ok) {
-        const spot = await response.json();
-        dispatch(loadOne(spot));
-    }
-  }
 
 
 
