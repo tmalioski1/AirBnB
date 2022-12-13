@@ -18,7 +18,7 @@ function App() {
       {isLoaded && (
         <Switch>
              <Route
-        path={["/", "/spots/:spotId"]}
+        path={["/", "/spots", "/spots/:spotId"]}
       >
         <SpotsIndex />
       </Route>

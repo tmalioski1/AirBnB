@@ -24,7 +24,7 @@ export const getAllSpots = () => async (dispatch) => {
   };
 
   export const getOneSpot = (id) => async (dispatch) => {
-    const response = await fetch(`/api/pokemon/${id}`)
+    const response = await fetch(`/api/spots/${id}`)
     if (response.ok) {
         const oneSpot = await response.json();
         dispatch(loadOne(oneSpot));
@@ -39,7 +39,7 @@ const spotsReducer = (state = initialState, action) => {
 
     switch(action.type) {
        case LOAD:
-        const newState = { allSpots : {}}
+        const newState = {  allSpots : {}, singleSpot: {} }
         action.spots.Spots.forEach(spot => {
             newState.allSpots[spot.id] = spot
         });
@@ -47,12 +47,11 @@ const spotsReducer = (state = initialState, action) => {
         return newState;
 
         case LOAD_ONE:
-            const singleSpotState = { singleSpot: {}}
+            const singleSpotState = { allSpots: {}, singleSpot: {}}
+            singleSpotState.state.singleSpot=  action.spot
 
-        return {
-            singleSpotState
 
-        }
+        return singleSpotState
 
 
       default:

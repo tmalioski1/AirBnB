@@ -1,17 +1,22 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getAllSpots } from '../../store/spots';
-import { NavLink } from 'react-router-dom';
+import { getAllSpots, getOneSpot } from '../../store/spots';
+import { NavLink, useParams } from 'react-router-dom';
 
 
 const SpotsIndex = () => {
   const dispatch = useDispatch();
+  const { id } = useParams()
   const spotsObj = useSelector(state => state.spots.allSpots);
   const spots = Object.values(spotsObj)
 
 useEffect(() => {
     dispatch(getAllSpots())
 }, [dispatch])
+
+useEffect(() => {
+  dispatch(getOneSpot(id))
+}, [id, dispatch])
 
   return (
     <section>
