@@ -8,7 +8,7 @@ import './SingleSpotPage.css';
 const SingleSpotPage = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  const spotsObj = useSelector(state => state.spots);
+  const spotsObj = useSelector(state => state.spots.singleSpot);
 
 
 
