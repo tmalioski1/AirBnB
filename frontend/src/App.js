@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import SingleSpotPage from "./components/SingleSpotPage";
+import SpotForm from "./components/SpotForm"
 
 function App() {
   const dispatch = useDispatch();

@@ -1,64 +1,84 @@
+import { csrfFetch } from './csrf'
 
 const LOAD = 'spots/LOAD'
 const LOAD_ONE = 'spots/LOAD_ONE'
+const CREATE_ONE = 'spots/CREATE_ONE'
 
 const loadAll = (spots) => ({
-    type: LOAD,
-    spots,
+  type: LOAD,
+  spots,
 })
 
 
 
 const loadOne = (spot) => ({
-    type: LOAD_ONE,
-    spot,
+  type: LOAD_ONE,
+  spot,
+})
+
+const createOne = (spot) => ({
+  type: CREATE_ONE,
+  spot
 })
 
 
 export const getAllSpots = () => async (dispatch) => {
-    const response = await fetch(`/api/spots`);
-    if (response.ok) {
-      const spots = await response.json();
-      // console.log('spots in thunk---', spots)
-      dispatch(loadAll(spots));
-    }
-    return response
-  };
-
-  export const getOneSpot = (id) => async (dispatch) => {
-    const { spotId } = id
-    const response = await fetch(`/api/spots/${spotId}`)
-    if (response.ok) {
-        const oneSpot = await response.json();
-        dispatch(loadOne(oneSpot));
-    }
-    return response
+  const response = await csrfFetch(`/api/spots`);
+  if (response.ok) {
+    const spots = await response.json();
+    // console.log('spots in thunk---', spots)
+    dispatch(loadAll(spots));
   }
+  return response
+};
 
+export const getOneSpot = (id) => async (dispatch) => {
+  const { spotId } = id
+  const response = await csrfFetch(`/api/spots/${spotId}`)
+  if (response.ok) {
+    const oneSpot = await response.json();
+    dispatch(loadOne(oneSpot));
+  }
+  return response
+}
 
-const initialState = { allSpots : {}, singleSpot : {} }
+export const createOneSpot = (newSpot) => async (dispatch) => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newSpot),
+  })
+
+}
+
+const initialState = { allSpots: {}, singleSpot: {} }
 
 const spotsReducer = (state = initialState, action) => {
 
-  switch(action.type) {
-    case LOAD:
-      const newState = { allSpots : {}, singleSpot : {} }
-        action.spots.Spots.forEach(spot => {
-            newState.allSpots[spot.id] = spot
-        });
+  switch (action.type) {
+    case LOAD: {
+      const newState = { allSpots: {}, singleSpot: {} }
+      action.spots.Spots.forEach(spot => {
+        newState.allSpots[spot.id] = spot
+      });
 
-        return newState;
+      return newState;
+    }
 
-        case LOAD_ONE:
-        const singleSpotState = {  allSpots : {}, singleSpot : {} }
-        singleSpotState.singleSpot = action.spot
-        return singleSpotState
+    case LOAD_ONE: {
+      const newState = { allSpots: {}, singleSpot: {} }
+      newState.singleSpot = action.spot
+      return newState
+    }
 
-
-      default:
+    case CREATE_SPOT: {
+      const newState = { ...state, allSpots: { ...state.allSpots}}
+      newState.allSpots[spot.id] = spot;
+    }
+    default:
       return state
 
-    }
+  }
 }
 
 export default spotsReducer;

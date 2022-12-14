@@ -1,97 +1,168 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
+import { createOneSpot } from '../../store/spots';
 import './SpotForm.css';
 
-function SignupFormModal() {
+function SpotForm() {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const { closeModal } = useModal();
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("")
+  const [price, setPrice] = useState()
+  const [spotImage, setSpotImage] = useState('')
+  const [validationErrors, setValidationErrors] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
+
+  useEffect(() => {
+    const errors = [];
+
+    if (address.length === 0) {
+      errors.push('Street address is required');
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+    if (city.length === 0) {
+      errors.push('City is required');
+    }
+    if (state.length === 0) {
+      errors.push('State is required');
+    }
+    if (country.length === 0) {
+      errors.push('Country is required');
+    }
+    if (name.length === 0) {
+      errors.push('Name is required');
+    }
+    if (description.length === 0) {
+      errors.push('Description is required');
+    }
+    if (!price) {
+      errors.push('Price per day is required');
+    }
+
+    if (spotImage.length === 0) {
+      errors.push('Spot image is required')
+    }
+
+    setValidationErrors(errors);
+  }, [address, city, state, country, name, description, price, spotImage]);
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newSpot = {
+      address,
+      city,
+      state,
+      country,
+      'lat': 50,
+      'lng': 100,
+      name,
+      description,
+      price,
+    };
+
+    const newSpotImage = {
+      url: spotImage,
+      preview: true
+    }
+
+    let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
+    if (createdSpot) {
+      history.push(`/spots/${createdSpot.id}`);
+    }
   };
 
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      <form className="spot-form"
+        onSubmit={handleSubmit}>
+        <h1>Spot Form</h1>
+        <ul className="errors">
+          {validationErrors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
         </ul>
         <label>
-          Email
+          Address
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             required
           />
         </label>
         <label>
-          Username
+          City
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
             required
           />
         </label>
         <label>
-          First Name
+          State
           <input
             type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={state}
+            onChange={(e) => setState(e.target.value)}
             required
           />
         </label>
         <label>
-          Last Name
+          Country
           <input
             type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
             required
           />
         </label>
         <label>
-          Password
+          Name
           <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </label>
         <label>
-          Confirm Password
+          Description
           <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <label>
+          Price
+          <input
+            type="text"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          spotImage
+          <input
+            type="text"
+            value={spotImage}
+            onChange={(e) => setSpotImage(e.target.value)}
+            required
+          />
+        </label>
+        <button type="submit">Create New Spot</button>
       </form>
     </>
   );
 }
 
-export default SignupFormModal;
+export default SpotForm
