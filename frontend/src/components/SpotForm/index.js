@@ -43,6 +43,10 @@ function SpotForm() {
       errors.push('Price per day is required');
     }
 
+    if (!Number(price)) {
+      errors.push('Price must be a number')
+    }
+
     if (spotImage.length === 0) {
       errors.push('Spot image is required')
     }
