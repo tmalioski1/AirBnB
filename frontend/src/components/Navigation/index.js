@@ -36,6 +36,7 @@ function Navigation({ isLoaded }){
     <ul>
       <li>
         <NavLink exact to="/">Home</NavLink>
+        <NavLink to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
       </li>
       {isLoaded && sessionLinks}
     </ul>

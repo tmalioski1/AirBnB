@@ -24,6 +24,11 @@ function App() {
             <HomePage />
           </Route>
           <Route
+            path="/spots/new"
+          >
+            <SpotForm/>
+          </Route>
+          <Route
             path="/spots/:spotId"
           >
             <SingleSpotPage/>
