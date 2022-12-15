@@ -19,9 +19,9 @@ function EditSpot() {
   const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);
 
-  useEffect(() => {
-    dispatch(editOneSpot());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(editOneSpot(spotsObj.id));
+  // }, [dispatch]);
 
   useEffect(() => {
     const errors = [];
