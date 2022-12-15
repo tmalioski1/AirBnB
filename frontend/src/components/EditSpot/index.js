@@ -1,29 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { createOneSpot } from '../../store/spots';
-import './SpotForm.css';
+import { editOneSpot } from '../../store/spots';
+import './EditSpot.css';
 
-function SpotForm() {
+function EditSpot() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("")
-  const [price, setPrice] = useState()
-  const [spotImage, setSpotImage] = useState('')
+  const spotsObj = useSelector(state => state.spots.singleSpot);
+  const owner = useSelector(state => state.spots.singleSpot.ownerId);
+  const [address, setAddress] = useState(spotsObj.address);
+  const [city, setCity] = useState(spotsObj.city);
+  const [state, setState] = useState(spotsObj.state);
+  const [country, setCountry] = useState(spotsObj.country);
+  const [name, setName] = useState(spotsObj.name);
+  const [description, setDescription] = useState(spotsObj.description)
+  const [price, setPrice] = useState(spotsObj.price)
   const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);
+
+  useEffect(() => {
+    dispatch(editOneSpot());
+  }, [dispatch]);
 
   useEffect(() => {
     const errors = [];
 
     if (!sessionUser) {
-      errors.push('User must be logged in to create spot')
+      errors.push('User must be logged in to edit spot')
     }
+
+    if (sessionUser.id !== owner) {
+        errors.push('Must own spot to edit spot')
+    }
+
     if (address.length === 0) {
       errors.push('Street address is required');
     }
@@ -50,18 +60,15 @@ function SpotForm() {
       errors.push('Price must be a number')
     }
 
-    if (spotImage.length === 0) {
-      errors.push('Spot image is required')
-    }
 
     setValidationErrors(errors);
-  }, [sessionUser, address, city, state, country, name, description, price, spotImage]);
+  }, [sessionUser, owner, address, city, state, country, name, description, price]);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newSpot = {
+    const editedSpot = {
       address,
       city,
       state,
@@ -73,22 +80,17 @@ function SpotForm() {
       price,
     };
 
-    const newSpotImage = {
-      url: spotImage,
-      preview: true
-    }
-
-    let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
-    if (createdSpot) {
-      history.push(`/spots/${createdSpot.id}`);
+    let spotChanges = await dispatch(editOneSpot(editedSpot, spotsObj.id));
+    if (spotChanges) {
+      history.push(`/spots/${spotChanges.id}`);
     }
   };
 
   return (
     <>
-      <form className="spot-form"
+      <form className="edit-form"
         onSubmit={handleSubmit}>
-        <h1>Spot Form</h1>
+        <h1>Edit Form</h1>
         <ul className="errors">
           {validationErrors.map((error) => (
             <li key={error}>{error}</li>
@@ -157,19 +159,10 @@ function SpotForm() {
             required
           />
         </label>
-        <label>
-          spotImage
-          <input
-            type="text"
-            value={spotImage}
-            onChange={(e) => setSpotImage(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Create New Spot</button>
+        <button type="submit">Edit Spot</button>
       </form>
     </>
   );
 }
 
-export default SpotForm
+export default EditSpot

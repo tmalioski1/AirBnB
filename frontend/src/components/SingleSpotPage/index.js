@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import { getOneSpot } from '../../store/spots';
 import './SingleSpotPage.css';
 
@@ -19,7 +19,14 @@ const SingleSpotPage = () => {
 
 
   return (
+    <>
    <h1>{spotsObj.description}</h1>
+   <div>
+   <NavLink to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
+   </div>
+   </>
+
+
   );
 }
 
