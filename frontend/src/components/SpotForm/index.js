@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { createOneSpot } from '../../store/spots';
 import './SpotForm.css';
@@ -16,11 +16,14 @@ function SpotForm() {
   const [price, setPrice] = useState()
   const [spotImage, setSpotImage] = useState('')
   const [validationErrors, setValidationErrors] = useState([]);
-
+  const sessionUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     const errors = [];
 
+    if (!sessionUser) {
+      errors.push('User must be logged in to create spot')
+    }
     if (address.length === 0) {
       errors.push('Street address is required');
     }
