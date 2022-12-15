@@ -57,6 +57,7 @@ const SingleSpotPage = () => {
    <NavLink onClick={userValidation}to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
    </div>
    <button onClick={deleteSpot}>Delete Spot</button>
+   <div className='all-reviews-container'>Reviews</div>
    </>
 
 
