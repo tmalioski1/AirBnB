@@ -1,175 +1,168 @@
-// import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from 'react-router-dom';
-// import { createOneSpot } from '../../store/spots';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
+import { editOneSpot } from '../../store/spots';
 import './EditSpot.css';
 
 function EditSpot() {
-//   const history = useHistory();
-//   const dispatch = useDispatch();
-//   const [address, setAddress] = useState("");
-//   const [city, setCity] = useState("");
-//   const [state, setState] = useState("");
-//   const [country, setCountry] = useState("");
-//   const [name, setName] = useState("");
-//   const [description, setDescription] = useState("")
-//   const [price, setPrice] = useState()
-//   const [spotImage, setSpotImage] = useState('')
-//   const [validationErrors, setValidationErrors] = useState([]);
-//   const sessionUser = useSelector(state => state.session.user);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const spotsObj = useSelector(state => state.spots.singleSpot);
+  const owner = useSelector(state => state.spots.singleSpot.ownerId);
+  const [address, setAddress] = useState(spotsObj.address);
+  const [city, setCity] = useState(spotsObj.city);
+  const [state, setState] = useState(spotsObj.state);
+  const [country, setCountry] = useState(spotsObj.country);
+  const [name, setName] = useState(spotsObj.name);
+  const [description, setDescription] = useState(spotsObj.description)
+  const [price, setPrice] = useState(spotsObj.price)
+  const [validationErrors, setValidationErrors] = useState([]);
+  const sessionUser = useSelector(state => state.session.user);
 
-//   useEffect(() => {
-//     const errors = [];
+  useEffect(() => {
+    dispatch(editOneSpot());
+  }, [dispatch]);
 
-//     if (!sessionUser) {
-//       errors.push('User must be logged in to edit spot')
-//     }
-//     if (address.length === 0) {
-//       errors.push('Street address is required');
-//     }
-//     if (city.length === 0) {
-//       errors.push('City is required');
-//     }
-//     if (state.length === 0) {
-//       errors.push('State is required');
-//     }
-//     if (country.length === 0) {
-//       errors.push('Country is required');
-//     }
-//     if (name.length === 0) {
-//       errors.push('Name is required');
-//     }
-//     if (description.length === 0) {
-//       errors.push('Description is required');
-//     }
-//     if (!price) {
-//       errors.push('Price per day is required');
-//     }
+  useEffect(() => {
+    const errors = [];
 
-//     if (!Number(price)) {
-//       errors.push('Price must be a number')
-//     }
+    if (!sessionUser) {
+      errors.push('User must be logged in to edit spot')
+    }
 
-//     if (spotImage.length === 0) {
-//       errors.push('Spot image is required')
-//     }
+    if (sessionUser.id !== owner) {
+        errors.push('Must own spot to edit spot')
+    }
 
-//     setValidationErrors(errors);
-//   }, [address, city, state, country, name, description, price, spotImage]);
+    if (address.length === 0) {
+      errors.push('Street address is required');
+    }
+    if (city.length === 0) {
+      errors.push('City is required');
+    }
+    if (state.length === 0) {
+      errors.push('State is required');
+    }
+    if (country.length === 0) {
+      errors.push('Country is required');
+    }
+    if (name.length === 0) {
+      errors.push('Name is required');
+    }
+    if (description.length === 0) {
+      errors.push('Description is required');
+    }
+    if (!price) {
+      errors.push('Price per day is required');
+    }
+
+    if (!Number(price)) {
+      errors.push('Price must be a number')
+    }
 
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+    setValidationErrors(errors);
+  }, [sessionUser, owner, address, city, state, country, name, description, price]);
 
-//     const newSpot = {
-//       address,
-//       city,
-//       state,
-//       country,
-//       'lat': 50,
-//       'lng': 100,
-//       name,
-//       description,
-//       price,
-//     };
 
-//     const newSpotImage = {
-//       url: spotImage,
-//       preview: true
-//     }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//     let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
-//     if (createdSpot) {
-//       history.push(`/spots/${createdSpot.id}`);
-//     }
-//   };
+    const editedSpot = {
+      address,
+      city,
+      state,
+      country,
+      'lat': 50,
+      'lng': 100,
+      name,
+      description,
+      price,
+    };
 
-//   return (
-//     <>
-//       <form className="spot-form"
-//         onSubmit={handleSubmit}>
-//         <h1>Spot Form</h1>
-//         <ul className="errors">
-//           {validationErrors.map((error) => (
-//             <li key={error}>{error}</li>
-//           ))}
-//         </ul>
-//         <label>
-//           Address
-//           <input
-//             type="text"
-//             value={address}
-//             onChange={(e) => setAddress(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           City
-//           <input
-//             type="text"
-//             value={city}
-//             onChange={(e) => setCity(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           State
-//           <input
-//             type="text"
-//             value={state}
-//             onChange={(e) => setState(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           Country
-//           <input
-//             type="text"
-//             value={country}
-//             onChange={(e) => setCountry(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           Name
-//           <input
-//             type="text"
-//             value={name}
-//             onChange={(e) => setName(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           Description
-//           <input
-//             type="text"
-//             value={description}
-//             onChange={(e) => setDescription(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           Price
-//           <input
-//             type="text"
-//             value={price}
-//             onChange={(e) => setPrice(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <label>
-//           spotImage
-//           <input
-//             type="text"
-//             value={spotImage}
-//             onChange={(e) => setSpotImage(e.target.value)}
-//             required
-//           />
-//         </label>
-//         <button type="submit">Create New Spot</button>
-//       </form>
-//     </>
-//   );
+    let spotChanges = await dispatch(editOneSpot(editedSpot, spotsObj.id));
+    if (spotChanges) {
+      history.push(`/spots/${spotChanges.id}`);
+    }
+  };
+
+  return (
+    <>
+      <form className="edit-form"
+        onSubmit={handleSubmit}>
+        <h1>Edit Form</h1>
+        <ul className="errors">
+          {validationErrors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+        <label>
+          Address
+          <input
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          City
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          State
+          <input
+            type="text"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Country
+          <input
+            type="text"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Name
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Description
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Price
+          <input
+            type="text"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+        </label>
+        <button type="submit">Edit Spot</button>
+      </form>
+    </>
+  );
 }
 
 export default EditSpot

@@ -22,7 +22,7 @@ const SingleSpotPage = () => {
     <>
    <h1>{spotsObj.description}</h1>
    <div>
-   <NavLink to={'/spots/:spotId/edit'}>Edit Your Spot</NavLink>
+   <NavLink to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
    </div>
    </>
 

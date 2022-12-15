@@ -31,7 +31,7 @@ function App() {
             <SpotForm/>
           </Route>
           <Route
-            path="/spots/:spotId/new"
+            path="/spots/:spotId/edit"
           >
             <EditSpot/>
           </Route>

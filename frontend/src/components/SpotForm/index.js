@@ -55,7 +55,7 @@ function SpotForm() {
     }
 
     setValidationErrors(errors);
-  }, [address, city, state, country, name, description, price, spotImage]);
+  }, [sessionUser, address, city, state, country, name, description, price, spotImage]);
 
 
   const handleSubmit = async (e) => {
