@@ -12,8 +12,6 @@ const loadAllReviewsForSpot = (reviews) => ({
 
 export const getAllReviewsForSpot = (id) => async (dispatch) => {
     const { spotId } = id
-    console.log('this is the id', id)
-    console.log('this is the spotId', spotId)
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
     if (response.ok) {
       const reviews = await response.json();
@@ -30,8 +28,6 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
      case LOAD: {
         const newState = { spot: {}, user: {} }
-        console.log(Array.isArray(action.reviews.Reviews))
-        console.log('this is action.reviews.Reviews', action.reviews.Reviews)
         action.reviews.Reviews.forEach(review => {
             newState.spot[review.id] = review
         })
