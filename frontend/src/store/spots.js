@@ -11,7 +11,6 @@ const loadAll = (spots) => ({
 })
 
 
-
 const loadOne = (spot) => ({
   type: LOAD_ONE,
   spot,
@@ -116,8 +115,8 @@ const spotsReducer = (state = initialState, action) => {
       const newState = { ...state, allSpots: { ...state.allSpots}}
       newState.allSpots[action.spot.id] = action.spot;
       return newState
-
     }
+
     default:
       return state
 
