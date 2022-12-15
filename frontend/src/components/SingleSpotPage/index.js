@@ -18,6 +18,7 @@ const SingleSpotPage = () => {
 
   const deleteSpot = (e) => {
     e.preventDefault();
+
     dispatch(deleteOneSpot(spotId))
   }
 

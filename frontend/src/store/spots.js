@@ -92,9 +92,8 @@ export const editOneSpot = (editedSpot, id) => async(dispatch) => {
 }
 
 export const deleteOneSpot = (id) => async(dispatch) => {
-   const response = await csrfFetch(`api/spots/${id}`, {
+   const response = await csrfFetch(`/api/spots/${id}`, {
     method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
    })
    if (response.ok) {
     const spot = await response.json();
@@ -135,8 +134,8 @@ const spotsReducer = (state = initialState, action) => {
     }
 
       case DELETE_ONE: {
-      const newState = {}
-      delete newState[action.id]
+      const newState = {...state, allSpots: { ...state.allSpots}}
+      delete newState.allSpots[action.id]
       return newState
     }
 
