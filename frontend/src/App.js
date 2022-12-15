@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import SingleSpotPage from "./components/SingleSpotPage";
 import SpotForm from "./components/SpotForm"
+import EditSpot from "./components/EditSpot"
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,11 @@ function App() {
             path="/spots/new"
           >
             <SpotForm/>
+          </Route>
+          <Route
+            path="/spots/:spotId/new"
+          >
+            <EditSpot/>
           </Route>
           <Route
             path="/spots/:spotId"
