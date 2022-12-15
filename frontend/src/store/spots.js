@@ -4,6 +4,7 @@ const LOAD = 'spots/LOAD'
 const LOAD_ONE = 'spots/LOAD_ONE'
 const CREATE_ONE = 'spots/CREATE_ONE'
 const EDIT_ONE = 'spots/EDIT_ONE'
+const DELETE_ONE = 'spots/DELETE_ONE'
 
 const loadAll = (spots) => ({
   type: LOAD,
@@ -24,6 +25,11 @@ const createOne = (spot) => ({
 const editOne = (spot) => ({
   type: EDIT_ONE,
   spot
+})
+
+const deleteOne = (id) => ({
+  type: DELETE_ONE,
+  id
 })
 
 
@@ -85,6 +91,17 @@ export const editOneSpot = (editedSpot, id) => async(dispatch) => {
    }
 }
 
+export const deleteOneSpot = (id) => async(dispatch) => {
+   const response = await csrfFetch(`api/spots/${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+   })
+   if (response.ok) {
+    const spot = await response.json();
+    dispatch(deleteOne(spot));
+   }
+}
+
 const initialState = { allSpots: {}, singleSpot: {} }
 
 const spotsReducer = (state = initialState, action) => {
@@ -114,6 +131,12 @@ const spotsReducer = (state = initialState, action) => {
     case EDIT_ONE: {
       const newState = { ...state, allSpots: { ...state.allSpots}}
       newState.allSpots[action.spot.id] = action.spot;
+      return newState
+    }
+
+      case DELETE_ONE: {
+      const newState = {}
+      delete newState[action.id]
       return newState
     }
 

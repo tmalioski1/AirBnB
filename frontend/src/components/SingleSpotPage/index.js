@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import { getOneSpot } from '../../store/spots';
+import { getOneSpot, deleteOneSpot } from '../../store/spots';
 import './SingleSpotPage.css';
 
 
@@ -16,7 +16,10 @@ const SingleSpotPage = () => {
     dispatch(getOneSpot({spotId}))
   }, [spotId, dispatch])
 
-
+  const deleteSpot = (e) => {
+    e.preventDefault();
+    dispatch(deleteOneSpot(spotId))
+  }
 
   return (
     <>
@@ -24,6 +27,7 @@ const SingleSpotPage = () => {
    <div>
    <NavLink to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
    </div>
+   <button onClick={deleteSpot}>Delete Spot</button>
    </>
 
 
