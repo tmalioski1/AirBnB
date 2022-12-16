@@ -151,7 +151,7 @@ function SpotForm() {
         <label>
           Price
           <input
-            type="text"
+            type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
@@ -160,7 +160,7 @@ function SpotForm() {
         <label>
           spotImage
           <input
-            type="text"
+            type="url"
             value={spotImage}
             onChange={(e) => setSpotImage(e.target.value)}
             required
