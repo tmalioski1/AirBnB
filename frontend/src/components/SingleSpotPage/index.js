@@ -16,9 +16,8 @@ const SingleSpotPage = () => {
   const [validationErrors, setValidationErrors] = useState([]);
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
-  const userReviews = reviews.filter(review => review.userId === sessionUser.id)
-  console.log('this is the reviewsObj', reviewsObj)
-  console.log('this is userReviews', userReviews)
+  // console.log('this is the reviewsObj', reviewsObj)
+  // console.log('this is userReviews', userReviews)
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
@@ -49,22 +48,17 @@ const SingleSpotPage = () => {
       history.push('/')
     }
   }
-
   const deleteReview = async (reviewId) => {
     for (let i = 0; i < reviews.length; i++) {
        let review = reviews[i]
        if (sessionUser.id !== review.userId) {
+        // console.log('this is the review', review)
         errors.push('Review must belong to the current user')
-        return setValidationErrors(errors);
+        setValidationErrors(errors);
       }
+      await dispatch(deleteOneReview(reviewId))
+      history.push('/')
     }
-    // reviews.filter(review => {
-    //   if (sessionUser.id !== review.userId) {
-    //     errors.push('Review must belong to the current user')
-    //     setValidationErrors(errors);
-    //   }
-    // })
-    await dispatch(deleteOneReview(reviewId))
 
   }
 
