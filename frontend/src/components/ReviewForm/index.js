@@ -12,31 +12,7 @@ const ReviewForm = () => {
  const [stars, setStars] = useState("")
  const [validationErrors, setValidationErrors] = useState([]);
  const sessionUser = useSelector(state => state.session.user);
- const spotInfo = useSelector(state => state.spots.singleSpot)
 
-
-
-const userData = {}
-userData.id = sessionUser.id
-userData.firstName = sessionUser.firstName
-userData.lastName = sessionUser.lastName
-
- const spotsData = {}
- spotsData.id = spotInfo.id
- spotsData.ownerId = spotInfo.ownerId
- spotsData.address = spotInfo.address
- spotsData.city = spotInfo.city
- spotsData.state = spotInfo.state
- spotsData.country = spotInfo.country
- spotsData.lat = spotInfo.lat
- spotsData.lng = spotInfo.lng
- spotsData.name = spotInfo.name
- spotsData.price = spotInfo.price
- spotInfo.SpotImages.forEach(spotImage => {
-  if (spotImage.previewImage) {
-    spotsData.previewImage = spotImage.previewImage
-  }
-})
 
  useEffect(() => {
   const errors = [];
@@ -65,8 +41,7 @@ const handleSubmit = async (e) => {
   };
 
 
-
-  let createdReview = await dispatch(createOneReview(newReview, spotId, userData, spotsData));
+  let createdReview = await dispatch(createOneReview(newReview, spotId));
   if (createdReview) {
     history.push(`/spots/${spotId}`);
   }

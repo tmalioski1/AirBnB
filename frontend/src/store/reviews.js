@@ -44,7 +44,7 @@ export const getAllReviewsForSpot = (id) => async (dispatch) => {
     return response
   };
 
-  export const createOneReview = (newReview, spotId, userData, spotData) => async (dispatch) => {
+  export const createOneReview = (newReview, spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -52,7 +52,6 @@ export const getAllReviewsForSpot = (id) => async (dispatch) => {
     })
     if (response.ok) {
       const newReview = await response.json();
-      console.log('this is the newReview', newReview)
       dispatch(createReview(newReview))
       return newReview
     }

@@ -18,7 +18,6 @@ const SingleSpotPage = () => {
   const reviews = Object.values(reviewsObj)
 
 
-
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
   }, [spotId, dispatch])
@@ -26,6 +25,8 @@ const SingleSpotPage = () => {
   useEffect(() => {
     dispatch(getAllReviewsForSpot({ spotId }))
   }, [spotId, dispatch])
+
+
 
 
   const errors = [];
@@ -48,10 +49,10 @@ const SingleSpotPage = () => {
   }
 
   const deleteReview = async (reviewId) => {
-    reviews.map(review => {
+    reviews.forEach(review => {
       if (sessionUser.id !== review.userId) {
         errors.push('Review must belong to the current user')
-        return setValidationErrors(errors);
+        setValidationErrors(errors);
       }
     })
     await dispatch(deleteOneReview(reviewId))
@@ -107,6 +108,7 @@ const SingleSpotPage = () => {
       <ul className='all-reviews-container'>
       {
           reviews.map(review => (
+
             <div className = 'review-container' key={review.id}>
              <li className='review-text'>{review.review}</li>
              <li className='review-stars'>{review.stars}</li>
