@@ -9,7 +9,6 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const spotsObj = useSelector(state => state.spots.allSpots);
   const spots = Object.values(spotsObj)
-  // console.log('this is spotsObj---', spotsObj)
 
   useEffect(() => {
     dispatch(getAllSpots())

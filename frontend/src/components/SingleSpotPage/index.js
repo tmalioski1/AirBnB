@@ -17,7 +17,6 @@ const SingleSpotPage = () => {
   const reviewsObj = useSelector(state => state.reviews.spot);
   console.log('this is the reviewsObj', reviewsObj)
   const reviews = Object.values(reviewsObj)
-  console.log('this is the reviews', reviews)
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
