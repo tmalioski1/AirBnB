@@ -23,17 +23,17 @@ module.exports = {
    return queryInterface.bulkInsert(options, [
     {
       spotId: 1,
-      url: 'url1',
+      url: 'https://a0.muscache.com/im/pictures/b0c977d9-57ba-4f70-bbb4-8b3cd3ae8dc4.jpg?im_w=1200',
       preview: true
     },
     {
       spotId: 2,
-      url: 'url2',
-      preview: false
+      url: 'https://a0.muscache.com/im/pictures/72b1b127-0601-4eb3-b4ae-729f4ca5c387.jpg?im_w=1440',
+      preview: true
     },
      {
       spotId: 3,
-      url: 'url3',
+      url: 'https://a0.muscache.com/im/pictures/559bdede-53d5-4f42-9851-e952a75409b7.jpg?im_w=1200',
       preview: true
     }
    ], {});
