@@ -23,19 +23,19 @@ module.exports = {
    return queryInterface.bulkInsert(options, [
     {
       spotId: 1,
-      userId: 1,
+      userId: 2,
       startDate: '2022-02-16',
       endDate:   '2022-02-18',
     },
     {
       spotId: 2,
-      userId: 2,
+      userId: 3,
       startDate: '2022-04-03',
       endDate:  '2022-04-10',
     },
      {
       spotId: 3,
-      userId: 3,
+      userId: 1,
       startDate: '2022-07-10',
       endDate: '2022-07-17',
     }
