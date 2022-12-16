@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { getOneSpot, deleteOneSpot } from '../../store/spots';
-import { getAllReviewsForSpot } from '../../store/reviews';
+import { getAllReviewsForSpot, deleteOneReview } from '../../store/reviews';
 import './SingleSpotPage.css';
 
 
@@ -15,8 +15,8 @@ const SingleSpotPage = () => {
   const owner = useSelector(state => state.spots.singleSpot.ownerId);
   const [validationErrors, setValidationErrors] = useState([]);
   const reviewsObj = useSelector(state => state.reviews.spot);
-  console.log('this is the reviewsObj', reviewsObj)
   const reviews = Object.values(reviewsObj)
+
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
@@ -25,6 +25,8 @@ const SingleSpotPage = () => {
   useEffect(() => {
     dispatch(getAllReviewsForSpot({ spotId }))
   }, [spotId, dispatch])
+
+
 
 
   const errors = [];
@@ -45,6 +47,18 @@ const SingleSpotPage = () => {
       history.push('/')
     }
   }
+  const deleteReview = async (reviewId) => {
+    for (let i = 0; i < reviews.length; i++) {
+       let review = reviews[i]
+       if (sessionUser.id !== review.userId) {
+        errors.push('Review must belong to the current user')
+        setValidationErrors(errors);
+      }
+      await dispatch(deleteOneReview(reviewId))
+      history.push('/')
+    }
+
+  }
 
   const userValidation = (e) => {
     if (!sessionUser) {
@@ -52,6 +66,28 @@ const SingleSpotPage = () => {
       errors.push('User must be logged in to edit spot')
       setValidationErrors(errors);
     }
+  }
+
+  const userReviewValidation = (e) => {
+    if (!sessionUser) {
+      e.preventDefault();
+      errors.push('User must be logged in to review a spot')
+      setValidationErrors(errors);
+    }
+    if (sessionUser.id === owner) {
+      e.preventDefault();
+      errors.push('Review cannot be made by spot owner')
+      setValidationErrors(errors);
+    }
+
+    for (let i = 0; i < reviews.length; i++) {
+      if (sessionUser.id === reviews[i].User.id) {
+        e.preventDefault();
+        errors.push('User already has a review for this spot')
+        setValidationErrors(errors)
+      }
+    }
+
   }
 
   return (
@@ -65,12 +101,19 @@ const SingleSpotPage = () => {
       <div>
         <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
       </div>
+      <div>
+        <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
+      </div>
       <button onClick={deleteSpot}>Delete Spot</button>
       <ul className='all-reviews-container'>
       {
           reviews.map(review => (
+
             <div className = 'review-container' key={review.id}>
-             <li className='review'>{review.review}</li>
+             <li className='review-text'>{review.review}</li>
+             <li className='review-stars'>{review.stars}</li>
+             <li className='review-id'>{review.id}</li>
+             <button onClick={() => deleteReview(review.id)}>Delete Review</button>
             </div>
           ))
         }
