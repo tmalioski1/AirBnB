@@ -16,6 +16,8 @@ const SingleSpotPage = () => {
   const [validationErrors, setValidationErrors] = useState([]);
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
+  const spotImageArray = spotsObj.SpotImages
+  console.log('this is spotImageArray', spotImageArray)
 
 
 
@@ -96,6 +98,8 @@ const SingleSpotPage = () => {
 
 
   }
+  if (!spotImageArray) return null
+
   return (
     <>
       <h1>{spotsObj.description}</h1>
@@ -111,6 +115,25 @@ const SingleSpotPage = () => {
         <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
       </div>
       <button onClick={deleteSpot}>Delete Spot</button>
+
+      <ul className='singlespotpage-images-container'>
+         {
+
+
+            spotImageArray.map(spotImage => (
+
+              <li className = 'spotpage-image-container' key={spotImage.id}>
+
+              <img src={spotImage.url} alt='spotprevImage'></img>
+
+            </li>
+
+            ))
+
+         }
+
+      </ul>
+
 
       <ul className='all-reviews-container'>
       {
