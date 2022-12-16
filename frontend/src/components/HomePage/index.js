@@ -24,7 +24,7 @@ const HomePage = () => {
             <div className = 'spot-container' key={spot.id}>
               <NavLink
                 to={`/spots/${spot.id}`}>
-
+              <img className = 'spot-image-container' src={spot.previewImage} alt='prevImage'></img>
               <div className = 'top-line'>{spot.city}, {spot.state} *{spot.avgRating}</div>
               <p className = 'price'>${spot.price} night</p>
               </NavLink>

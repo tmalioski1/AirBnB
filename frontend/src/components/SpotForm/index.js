@@ -13,7 +13,7 @@ function SpotForm() {
   const [country, setCountry] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("")
-  const [price, setPrice] = useState()
+  const [price, setPrice] = useState(0)
   const [spotImage, setSpotImage] = useState('')
   const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);

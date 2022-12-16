@@ -18,6 +18,8 @@ const SingleSpotPage = () => {
   const reviews = Object.values(reviewsObj)
 
 
+
+
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
   }, [spotId, dispatch])
@@ -92,8 +94,8 @@ const SingleSpotPage = () => {
       }
     }
 
-  }
 
+  }
   return (
     <>
       <h1>{spotsObj.description}</h1>
@@ -109,6 +111,7 @@ const SingleSpotPage = () => {
         <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
       </div>
       <button onClick={deleteSpot}>Delete Spot</button>
+
       <ul className='all-reviews-container'>
       {
           reviews.map(review => (
