@@ -24,6 +24,13 @@ function LoginFormModal() {
       );
   };
 
+  const handleDemoUser = (e) => {
+    setCredential('user1@user.io')
+    setPassword('password2')
+    return dispatch(sessionActions.login({ credential, password }))
+    .then(closeModal)
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -52,6 +59,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleDemoUser}>Demo User</button>
       </form>
     </>
   );
