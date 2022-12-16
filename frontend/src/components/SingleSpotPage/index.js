@@ -16,8 +16,7 @@ const SingleSpotPage = () => {
   const [validationErrors, setValidationErrors] = useState([]);
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
-  // console.log('this is the reviewsObj', reviewsObj)
-  // console.log('this is userReviews', userReviews)
+
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
@@ -52,7 +51,6 @@ const SingleSpotPage = () => {
     for (let i = 0; i < reviews.length; i++) {
        let review = reviews[i]
        if (sessionUser.id !== review.userId) {
-        // console.log('this is the review', review)
         errors.push('Review must belong to the current user')
         setValidationErrors(errors);
       }
