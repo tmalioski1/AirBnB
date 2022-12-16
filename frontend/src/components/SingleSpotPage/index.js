@@ -15,8 +15,8 @@ const SingleSpotPage = () => {
   const owner = useSelector(state => state.spots.singleSpot.ownerId);
   const [validationErrors, setValidationErrors] = useState([]);
   const reviewsObj = useSelector(state => state.reviews.spot);
-  console.log('this is the reviewsObj', reviewsObj)
   const reviews = Object.values(reviewsObj)
+
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
@@ -54,6 +54,28 @@ const SingleSpotPage = () => {
     }
   }
 
+  const userReviewValidation = (e) => {
+    if (!sessionUser) {
+      e.preventDefault();
+      errors.push('User must be logged in to review a spot')
+      setValidationErrors(errors);
+    }
+    if (sessionUser.id === owner) {
+      e.preventDefault();
+      errors.push('Review cannot be made by spot owner')
+      setValidationErrors(errors);
+    }
+
+    for (let i = 0; i < reviews.length; i++) {
+      if (sessionUser.id === reviews[i].User.id) {
+        e.preventDefault();
+        errors.push('User already has a review for this spot')
+        setValidationErrors(errors)
+      }
+    }
+
+  }
+
   return (
     <>
       <h1>{spotsObj.description}</h1>
@@ -64,6 +86,9 @@ const SingleSpotPage = () => {
       </ul>
       <div>
         <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
+      </div>
+      <div>
+        <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
       </div>
       <button onClick={deleteSpot}>Delete Spot</button>
       <ul className='all-reviews-container'>
