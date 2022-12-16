@@ -48,6 +48,10 @@ const SingleSpotPage = () => {
     }
   }
   const deleteReview = async (reviewId) => {
+    if (!sessionUser) {
+      errors.push('User must be logged in to delete review')
+      setValidationErrors(errors);
+    }
     for (let i = 0; i < reviews.length; i++) {
        let review = reviews[i]
        if (sessionUser.id !== review.userId) {
