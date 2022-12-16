@@ -12,7 +12,6 @@ const ReviewForm = () => {
  const [stars, setStars] = useState("")
  const [validationErrors, setValidationErrors] = useState([]);
  const sessionUser = useSelector(state => state.session.user);
- console.log('this is the session user---', sessionUser)
  const spotInfo = useSelector(state => state.spots.singleSpot)
 
 

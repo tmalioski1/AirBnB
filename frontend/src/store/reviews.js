@@ -3,7 +3,7 @@ import { csrfFetch } from './csrf'
 const LOAD = 'reviews/LOAD'
 const LOAD_USER_REVIEWS = 'reviews/LOAD_USER_REVIEWS'
 const CREATE_ONE = 'reviews/CREATE_ONE'
-// const DELETE_ONE = 'reviews/DELETE_ONE'
+const DELETE_ONE = 'reviews/DELETE_ONE'
 
 const loadAllReviewsForSpot = (reviews) => ({
   type: LOAD,
@@ -18,6 +18,11 @@ const loadAllReviewsForUser = (reviews) => ({
 const createReview = (review) => ({
   type: CREATE_ONE,
   review,
+})
+
+const deleteReview = (review) => ({
+  type: DELETE_ONE,
+  review
 })
 
 export const getAllReviewsForSpot = (id) => async (dispatch) => {
@@ -54,6 +59,16 @@ export const getAllReviewsForSpot = (id) => async (dispatch) => {
 
   }
 
+  export const deleteOneReview = (reviewId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+     method: 'DELETE',
+    })
+    if (response.ok) {
+     const review = await response.json();
+     dispatch(deleteReview(review));
+    }
+ }
+
 
 const initialState = { spot: {}, user: {} }
 
@@ -70,7 +85,6 @@ const reviewsReducer = (state = initialState, action) => {
 
      case LOAD_USER_REVIEWS: {
        const newState = { spot: {}, user: {} }
-       console.log('this is action.reviews.Reviews', action.reviews.Reviews)
        action.reviews.Reviews.forEach(review => {
         newState.user[review.id] = review
        })
@@ -80,6 +94,11 @@ const reviewsReducer = (state = initialState, action) => {
       const newState = { ...state, spot: { ...state.spot}}
       newState.spot[action.review.id] = action.review;
       return newState
+    }
+
+    case DELETE_ONE: {
+      const newState = {...state, spot: {...state.spot}}
+      delete newState.spot[action.id]
     }
 
         default:

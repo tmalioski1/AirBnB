@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { getOneSpot, deleteOneSpot } from '../../store/spots';
-import { getAllReviewsForSpot } from '../../store/reviews';
+import { getAllReviewsForSpot, deleteOneReview } from '../../store/reviews';
 import './SingleSpotPage.css';
 
 
@@ -16,6 +16,7 @@ const SingleSpotPage = () => {
   const [validationErrors, setValidationErrors] = useState([]);
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
+
 
 
   useEffect(() => {
@@ -44,6 +45,18 @@ const SingleSpotPage = () => {
       await dispatch(deleteOneSpot(spotId))
       history.push('/')
     }
+  }
+
+  const deleteReview = async (reviewId) => {
+    reviews.map(review => {
+      if (sessionUser.id !== review.userId) {
+        errors.push('Review must belong to the current user')
+        return setValidationErrors(errors);
+      }
+    })
+    await dispatch(deleteOneReview(reviewId))
+    window.location.reload()
+
   }
 
   const userValidation = (e) => {
@@ -95,7 +108,10 @@ const SingleSpotPage = () => {
       {
           reviews.map(review => (
             <div className = 'review-container' key={review.id}>
-             <li className='review'>{review.review}</li>
+             <li className='review-text'>{review.review}</li>
+             <li className='review-stars'>{review.stars}</li>
+             <li className='review-id'>{review.id}</li>
+             <button onClick={() => deleteReview(review.id)}>Delete Review</button>
             </div>
           ))
         }
