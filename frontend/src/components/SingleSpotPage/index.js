@@ -17,7 +17,6 @@ const SingleSpotPage = () => {
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
   const spotImageArray = spotsObj.SpotImages
-  console.log('this is spotImageArray', spotImageArray)
 
 
 
