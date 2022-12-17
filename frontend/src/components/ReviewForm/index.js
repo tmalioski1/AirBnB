@@ -69,7 +69,7 @@ const handleSubmit = async (e) => {
         <label>
           Stars
           <input
-            type="integer"
+            type="number"
             value={stars}
             onChange={(e) => setStars(e.target.value)}
             required

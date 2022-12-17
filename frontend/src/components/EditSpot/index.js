@@ -153,7 +153,7 @@ function EditSpot() {
         <label>
           Price
           <input
-            type="text"
+            type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
