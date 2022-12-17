@@ -33,27 +33,32 @@ function Navigation({ isLoaded }){
     );
   } else {
     sessionLinks = (
-      <li>
+      <div className='LogIn-SignUp'>
         <OpenModalButton
+          className='LogInButton'
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
         />
         <OpenModalButton
+          className='SignUpButton'
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </div>
     );
   }
 
   return (
-    <ul>
-        <li>
-        <NavLink to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
-      </li>
-      <li>
+    <ul className='NavBar'>
+        <div className="AirBnbLogo">
+        <i class="fa-brands fa-airbnb"></i>
+        </div>
+      <div className='HomeLink'>
         <NavLink exact to="/">Home</NavLink>
-      </li>
+      </div>
+        <div className="Mimic-Spot-Link">
+        <NavLink to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
+      </div>
       {isLoaded && sessionLinks}
     </ul>
   );

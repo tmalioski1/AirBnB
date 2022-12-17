@@ -1,3 +1,28 @@
 .hidden {
     display: none
 }
+
+.NavBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+
+.Mimic-Spot-Link {
+    padding-left: 700px;
+
+}
+
+.LogIn-SignUp{
+    padding-right: 160px;
+}
+
+
+
+.AirBnbLogo{
+   padding-right: -20px;
+   max-width: 100%;
+   height: auto;
+
+}
