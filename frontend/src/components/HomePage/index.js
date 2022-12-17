@@ -26,7 +26,7 @@ const HomePage = () => {
                 to={`/spots/${spot.id}`}>
               <img className = 'spot-image-container' src={spot.previewImage} alt='prevImage'></img>
               <div className = 'top-line'>{spot.city}, {spot.state} *{spot.avgRating}</div>
-              <p className = 'price'>${spot.price} night</p>
+              <p className = 'price'>${Number(spot.price).toFixed(2)} night</p>
               </NavLink>
 
             </div>
