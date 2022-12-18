@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
@@ -11,21 +11,14 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
-  const history = useHistory()
 
-  const getReviews = (e) => {
-    e.preventDefault();
-    history.push('/userReviews')
-  }
+
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
       <ul className='profile-button-reviews'>
         <div>
           <ProfileButton user={sessionUser} />
-        </div>
-        <div id="reviews-button">
-          <button onClick={getReviews}>Your Reviews</button>
         </div>
       </ul>
 
