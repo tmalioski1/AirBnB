@@ -25,15 +25,42 @@
 .spot-details-num-reviews {
     margin-left: 1vw;
     text-decoration: underline;
+    font-size: 14.5px;
 
 }
 
 .spot-details-location{
     margin-left: 1vw;
     text-decoration: underline;
+    font-size: 14.5px;
+
 
 }
 
 .spot-details-edit {
     margin-left: 36vw;
+}
+
+.singlespotpage-images-container {
+    display: flex;
+    flex-direction: row;
+    width: 85vw;
+    margin-left: 3.5vw;
+
+}
+.spotpage-image-container {
+    width: 100%;
+
+}
+
+.actual-spotImage {
+   width: 100%;
+}
+
+.singlespot-errors {
+    margin-left: 5vw;
+}
+
+.home-hosted {
+    margin-left: 6vw;
 }

@@ -17,7 +17,7 @@ const SingleSpotPage = () => {
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
   const spotImageArray = spotsObj.SpotImages
-  console.log('this is spotsObj', spotsObj)
+
 
 
 
@@ -114,11 +114,11 @@ const SingleSpotPage = () => {
         <div className="spot-details-edit">
           <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Spot Details</NavLink>
           </div>
-          <div className="spot-details-delete">
-          <button onClick={deleteSpot}>Delete Spot</button>
+          <div>
+          <button className="spot-details-delete" onClick={deleteSpot}>Delete Spot</button>
         </div>
       </div>
-      <ul className="errors">
+      <ul className="singlespot-errors">
         {validationErrors.map((error) => (
           <li key={error}>{error}</li>
         ))}
@@ -127,21 +127,20 @@ const SingleSpotPage = () => {
       <ul className='singlespotpage-images-container'>
         {
 
-
           spotImageArray.map(spotImage => (
 
-            <li className='spotpage-image-container' key={spotImage.id}>
+            <div className='spotpage-image-container' key={spotImage.id}>
 
-              <img src={spotImage.url} alt='spotprevImage'></img>
+              <img className='actual-spotImage' src={spotImage.url} alt='spotprevImage'></img>
 
-            </li>
+            </div>
 
           ))
 
         }
-
       </ul>
 
+      <div className='home-hosted'>Entire home hosted by {spotsObj.Owner.firstName}</div>
       <div>
         <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
       </div>

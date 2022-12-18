@@ -35,12 +35,10 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <div className='LogIn-SignUp'>
         <OpenModalButton
-          className='LogInButton'
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
         />
         <OpenModalButton
-          className='SignUpButton'
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
