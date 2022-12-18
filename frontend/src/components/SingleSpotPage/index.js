@@ -17,7 +17,7 @@ const SingleSpotPage = () => {
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
   const spotImageArray = spotsObj.SpotImages
-
+  console.log('this is spotsObj', spotsObj)
 
 
 
@@ -56,8 +56,8 @@ const SingleSpotPage = () => {
       setValidationErrors(errors);
     }
     for (let i = 0; i < reviews.length; i++) {
-       let review = reviews[i]
-       if (sessionUser.id !== review.userId) {
+      let review = reviews[i]
+      if (sessionUser.id !== review.userId) {
         errors.push('Review must belong to the current user')
         setValidationErrors(errors);
       }
@@ -101,48 +101,60 @@ const SingleSpotPage = () => {
 
   return (
     <>
-      <h1>{spotsObj.description}</h1>
+      <div className="spot-description">
+        <h1>{spotsObj.description}</h1>
+      </div>
+      <div className="spot-details-main">
+        <div className="spot-details-top-left">
+          <i className="fa-solid fa-star fa-sm" ></i>
+          {spotsObj.avgStarRating}
+        </div>
+        <div className="spot-details-num-reviews">{spotsObj.numReviews} Review(s)</div>
+        <div className="spot-details-location">{spotsObj.city}, {spotsObj.state}, {spotsObj.country}</div>
+        <div className="spot-details-edit">
+          <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Spot Details</NavLink>
+          </div>
+          <div className="spot-details-delete">
+          <button onClick={deleteSpot}>Delete Spot</button>
+        </div>
+      </div>
       <ul className="errors">
         {validationErrors.map((error) => (
           <li key={error}>{error}</li>
         ))}
       </ul>
-      <div>
-        <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Your Spot</NavLink>
-      </div>
-      <div>
-        <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
-      </div>
-      <button onClick={deleteSpot}>Delete Spot</button>
 
       <ul className='singlespotpage-images-container'>
-         {
+        {
 
 
-            spotImageArray.map(spotImage => (
+          spotImageArray.map(spotImage => (
 
-              <li className = 'spotpage-image-container' key={spotImage.id}>
+            <li className='spotpage-image-container' key={spotImage.id}>
 
               <img src={spotImage.url} alt='spotprevImage'></img>
 
             </li>
 
-            ))
+          ))
 
-         }
+        }
 
       </ul>
 
+      <div>
+        <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
+      </div>
 
       <ul className='all-reviews-container'>
-      {
+        {
           reviews.map(review => (
 
-            <div className = 'review-container' key={review.id}>
-             <li className='review-text'>{review.review}</li>
-             <li className='review-stars'>{review.stars}</li>
-             <li className='review-id'>{review.id}</li>
-             <button onClick={() => deleteReview(review.id)}>Delete Review</button>
+            <div className='review-container' key={review.id}>
+              <li className='review-text'>{review.review}</li>
+              <li className='review-stars'>{review.stars}</li>
+              <li className='review-id'>{review.id}</li>
+              <button onClick={() => deleteReview(review.id)}>Delete Review</button>
             </div>
           ))
         }

@@ -9,7 +9,7 @@ import './Navigation.css';
 
 
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   const history = useHistory()
 
@@ -20,13 +20,13 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ul>
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
-      <div>
-      <button onClick={getReviews}>Your Reviews</button>
-      </div>
+      <ul className='profile-button-reviews'>
+        <div>
+          <ProfileButton user={sessionUser} />
+        </div>
+        <div id="reviews-button">
+          <button onClick={getReviews}>Your Reviews</button>
+        </div>
       </ul>
 
 
@@ -49,18 +49,15 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul className='NavBar'>
-        <div className="AirBnbLogo">
-        <i class="fa-brands fa-airbnb"></i>
-        </div>
-      <div className='HomeLink'>
-        <NavLink exact to="/">Home</NavLink>
+    <div className='NavBar'>
+      <div className='AirBnbLogoHomeLink'>
+        <NavLink exact to="/"><i className="fa-brands fa-airbnb fa-2xl"></i></NavLink>
       </div>
-        <div className="Mimic-Spot-Link">
-        <NavLink to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
+      <div className="Mimic-Spot-Link">
+        <NavLink className='ActualLink' to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
       </div>
       {isLoaded && sessionLinks}
-    </ul>
+    </div>
   );
 }
 

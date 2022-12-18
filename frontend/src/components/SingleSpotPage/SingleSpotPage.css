@@ -1,0 +1,39 @@
+.spot-description {
+    display: flex;
+    width: 85vw;
+    padding-bottom: 2px;
+    margin-left: 7vw;
+}
+
+.spot-details-main {
+    display: flex;
+    flex-direction: row;
+    width: 85vw;
+    padding-bottom: 15px;
+    margin-left: 7vw;
+    justify-content: space-between;
+
+}
+/* .spot-details-top-left {
+    /* justify-content: start;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    gap: 5%;
+} */
+
+.spot-details-num-reviews {
+    margin-left: 1vw;
+    text-decoration: underline;
+
+}
+
+.spot-details-location{
+    margin-left: 1vw;
+    text-decoration: underline;
+
+}
+
+.spot-details-edit {
+    margin-left: 36vw;
+}
