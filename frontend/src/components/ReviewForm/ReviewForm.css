@@ -1,0 +1,36 @@
+.review-form {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+   margin-left: 25vw;
+   margin-right: 25vw;
+   border: 1px solid black;
+   padding-bottom: 1vw;
+}
+
+
+.review-form.review-form-header {
+    width: fit-content;
+    font-size: 3vw;
+}
+
+.review-form> input {
+    margin-top: .5vw;
+    width: 30vw;
+    height: 1.3vw;
+}
+
+.review-form> button {
+    margin-top: .5vw;
+    width: 30.8vw;
+    padding: 0px;
+}
+
+.review-form-header {
+    color: red
+}
+
+.review-form-errors {
+    margin-bottom: 2vh;
+}

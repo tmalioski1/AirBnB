@@ -51,30 +51,27 @@ const handleSubmit = async (e) => {
     <>
        <form className="review-form"
         onSubmit={handleSubmit}>
-        <h1>Review Form</h1>
-        <ul className="review-errors">
+        <h1 className="review-form-header">Review Form</h1>
+        <ul className="review-form-errors">
           {validationErrors.map((error) => (
             <li key={error}>{error}</li>
           ))}
         </ul>
-        <label>
-          Reviews
+
           <input
             type="text"
             value={review}
+            placeholder= 'Reviews'
             onChange={(e) => setReview(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Stars
           <input
             type="number"
             value={stars}
+            placeholder= 'Stars'
             onChange={(e) => setStars(e.target.value)}
             required
           />
-        </label>
         <button type="submit">Create New Review</button>
       </form>
     </>

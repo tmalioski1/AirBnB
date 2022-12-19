@@ -1,0 +1,26 @@
+.all-userReviews-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 85vw;
+    height: 30vw;
+    margin-left: 7vw;
+
+
+}
+
+.userreview-page-title {
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+
+.userreview-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px dotted grey;
+  height: 12vh;
+
+}
