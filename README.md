@@ -25,12 +25,21 @@ https://airbnb-mimic.onrender.com/
 
 SPOT DETAILS:
 The user can access further information, including reviews, for each spot.
-![alt](.assets/second-screenshot.png)
+
+
+
+![Screen Shot 2022-12-19 at 2 02 58 AM](https://user-images.githubusercontent.com/107379529/208400070-04b423f8-177e-419b-b9d3-15d4ecf9ace1.png)
+
+
+
 
 FORMS:
 The user can create and edit new spots and create new reviews using a simple login form.
 
-![alt](.assets/third-screenshot.png)
+![Screen Shot 2022-12-19 at 2 03 35 AM](https://user-images.githubusercontent.com/107379529/208400194-c6f49295-0eda-461b-a9eb-3c88eb770aa1.png)
+
+
+
 
 
 # Getting Started
