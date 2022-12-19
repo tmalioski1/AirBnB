@@ -113,3 +113,8 @@
 
     background-color: red;
 }
+
+.review-top-line {
+    display: flex;
+    gap: 50vw;
+}

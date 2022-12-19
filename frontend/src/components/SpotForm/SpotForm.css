@@ -1,0 +1,11 @@
+.spot-form {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+
+}
+
+.spot-form-header {
+    color: red
+}

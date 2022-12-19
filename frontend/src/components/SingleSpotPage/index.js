@@ -17,6 +17,7 @@ const SingleSpotPage = () => {
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
   const spotImageArray = spotsObj.SpotImages
+  console.log('this is the spotsObj', spotsObj)
 
 
 
@@ -138,8 +139,10 @@ const SingleSpotPage = () => {
 
         }
       </ul>
-
+      <div className='review-top-line'>
       <div className='home-hosted'>Entire home hosted by {spotsObj.Owner?.firstName}</div>
+      <div className='spot-price'>${spotsObj.price} night</div>
+      </div>
 
       <NavLink className="create-review-navlink" onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
 
@@ -148,7 +151,6 @@ const SingleSpotPage = () => {
           reviews.map(review => (
 
             <div className='review-container' key={review.id}>
-              {/* {console.log('this is the firstName', review.User.firstName)} */}
               <div className='review-user'>Review by {review.User?.firstName} {review.User?.lastName}:</div>
               <div className='review-text'>Description: {review.review}</div>
               <div className='review-stars'>Stars: {review.stars}</div>

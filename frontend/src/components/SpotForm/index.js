@@ -88,7 +88,7 @@ function SpotForm() {
     <>
       <form className="spot-form"
         onSubmit={handleSubmit}>
-        <h1>Spot Form</h1>
+        <h1 className='spot-form-header'>Let's Add Your Home</h1>
         <ul className="errors">
           {validationErrors.map((error) => (
             <li key={error}>{error}</li>
