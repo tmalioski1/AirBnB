@@ -18,21 +18,30 @@ const HomePage = () => {
 
   return (
     <section>
-      <ul className= 'main-container'>
+      <div id= 'main-container'>
         {
           spots.map(spot => (
             <div className = 'spot-container' key={spot.id}>
               <NavLink
-                to={`/spots/${spot.id}`}>
+                to={`/spots/${spot.id}`} style={{textDecoration: 'none'}}>
               <img className = 'spot-image-container' src={spot.previewImage} alt='prevImage'></img>
-              <div className = 'top-line'>{spot.city}, {spot.state} *{spot.avgRating}</div>
-              <p className = 'price'>${spot.price} night</p>
+              <div className = 'top-line'>
+               <div id= 'left-side'>{spot.city}, {spot.state}</div>
+               <div id= 'right-side'>
+               <div className= 'star-emoticon'>
+                <i className="fa-solid fa-star fa-sm" ></i>
+                 {spot.avgRating}
+                </div>
+                </div>
+
+              </div>
+              <div className = 'price'>${Number(spot.price).toFixed(2)} night</div>
               </NavLink>
 
             </div>
           ))
         }
-      </ul>
+      </div>
 
     </section>
   );

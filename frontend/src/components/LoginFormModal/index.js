@@ -58,7 +58,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button className= 'login-button' type="submit">Log In</button>
         <button onClick={handleDemoUser}>Demo User</button>
       </form>
     </>

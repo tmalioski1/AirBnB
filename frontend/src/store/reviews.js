@@ -100,8 +100,8 @@ const reviewsReducer = (state = initialState, action) => {
       delete newState.spot[action.id]
     }
 
-        default:
-          return state
+    default:
+      return state
 
       }
 

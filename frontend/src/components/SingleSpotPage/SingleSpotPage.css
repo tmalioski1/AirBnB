@@ -1,0 +1,115 @@
+.spot-description {
+    display: flex;
+    width: 85vw;
+    padding-bottom: 2px;
+    margin-left: 7vw;
+}
+
+.spot-details-main {
+    display: flex;
+    flex-direction: row;
+    width: 85vw;
+    padding-bottom: 15px;
+    margin-left: 7vw;
+    justify-content: space-between;
+
+}
+/* .spot-details-top-left {
+    /* justify-content: start;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    gap: 5%;
+} */
+
+.spot-details-num-reviews {
+    margin-left: 1vw;
+    text-decoration: underline;
+    font-size: 14.5px;
+
+}
+
+.spot-details-location{
+    margin-left: 1vw;
+    text-decoration: underline;
+    font-size: 14.5px;
+
+
+}
+
+.spot-details-edit {
+    margin-left: 36vw;
+    padding-right: 2vw;
+}
+
+
+.spot-details-delete {
+    border-radius: 50px;
+    color: black;
+    background-color: white;
+}
+
+.spot-details-delete:hover {
+
+    background-color: red;
+}
+
+
+.singlespotpage-images-container {
+    display: flex;
+    flex-direction: row;
+    width: 85vw;
+    margin-left: 3.5vw;
+
+}
+.spotpage-image-container {
+    width: 100%;
+
+}
+
+.actual-spotImage {
+   width: 100%;
+}
+
+.singlespot-errors {
+    margin-left: 5vw;
+}
+
+.home-hosted {
+    margin-left: 7vw;
+    margin-bottom: 2vh;
+}
+
+.create-review-navlink {
+    margin-left: 7vw;
+}
+
+.review-user {
+    text-decoration: underline;
+}
+
+.all-reviews-container {
+    margin-left: 5vw;
+}
+
+.review-container {
+    margin-bottom: 5vh;
+}
+
+
+.review-user{
+    margin-bottom: 1vh;
+}
+
+
+.review-delete {
+    border-radius: 50px;
+    color: black;
+    background-color: white;
+}
+
+
+.review-delete:hover {
+
+    background-color: red;
+}

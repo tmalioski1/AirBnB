@@ -9,7 +9,7 @@ import './Navigation.css';
 
 
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   const history = useHistory()
 
@@ -20,20 +20,20 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ul>
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
-      <div>
-      <button onClick={getReviews}>Your Reviews</button>
-      </div>
+      <ul className='profile-button-reviews'>
+        <div>
+          <ProfileButton user={sessionUser} />
+        </div>
+        <div id="reviews-button">
+          <button onClick={getReviews}>Your Reviews</button>
+        </div>
       </ul>
 
 
     );
   } else {
     sessionLinks = (
-      <li>
+      <div className='LogIn-SignUp'>
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
@@ -42,20 +42,20 @@ function Navigation({ isLoaded }){
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </div>
     );
   }
 
   return (
-    <ul>
-        <li>
-        <NavLink to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
-      </li>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
+    <div className='NavBar'>
+      <div className='AirBnbLogoHomeLink'>
+        <NavLink exact to="/"><i className="fa-brands fa-airbnb fa-2xl"></i></NavLink>
+      </div>
+      <div className="Mimic-Spot-Link">
+        <NavLink className='ActualLink' to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
+      </div>
       {isLoaded && sessionLinks}
-    </ul>
+    </div>
   );
 }
 
