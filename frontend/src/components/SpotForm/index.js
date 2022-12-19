@@ -42,7 +42,7 @@ function SpotForm() {
     if (description.length === 0) {
       errors.push('Description is required');
     }
-    if (!price) {
+    if (!price || price <= 0) {
       errors.push('Price per day is required');
     }
 
@@ -51,8 +51,10 @@ function SpotForm() {
     }
 
     if (spotImage.length === 0) {
-      errors.push('Spot image is required')
+      errors.push('Spot image must be included')
     }
+
+
 
     setValidationErrors(errors);
   }, [sessionUser, address, city, state, country, name, description, price, spotImage]);

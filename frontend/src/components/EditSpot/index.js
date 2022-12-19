@@ -51,7 +51,7 @@ function EditSpot() {
     if (description.length === 0) {
       errors.push('Description is required');
     }
-    if (!price) {
+    if (!price || price <= 0) {
       errors.push('Price per day is required');
     }
 

@@ -8,6 +8,7 @@ const dispatch = useDispatch();
 const reviewsObj = useSelector(state => state.reviews.user)
 const reviews = Object.values(reviewsObj)
 const [validationErrors, setValidationErrors] = useState([]);
+console.log(reviews)
 
 useEffect(() => {
     dispatch(getAllReviewsForUser())
@@ -29,25 +30,30 @@ useEffect(() => {
     }, [reviews.length]);
 
 
-
+if (!reviews) return null
 return  (
     <>
+     <h1 className="userreview-page-title">User Reviews</h1>
      <ul className="user-review-error">
           {validationErrors.map((error) => (
             <div key={error}>{error}</div>
           ))}
        </ul>
 
-    <ul className='all-userReviews-container'>
+    <div className='all-userReviews-container'>
     {
         reviews.map(review => (
           <div className = 'userreview-container' key={review.id}>
-           <li className='userreview'>{review.review}</li>
+            <div className = "user-review-spot-name">Spot Name: {review.Spot?.name}</div>
+            <div className = "user-review-location">Address: {review.Spot?.address}, {review.Spot?.city}, {review.Spot?.state}</div>
+           <div className='user-review'>Review: {review.review}</div>
+           <div className='user-review-stars'>Stars: {review.stars}</div>
+           <div className= 'user-review-createdAt'>Created At: {review.createdAt.split('T')[0]} </div>
           </div>
         ))
       }
 
-    </ul>
+    </div>
     </>
 
 )
