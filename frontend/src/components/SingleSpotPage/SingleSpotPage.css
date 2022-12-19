@@ -39,7 +39,21 @@
 
 .spot-details-edit {
     margin-left: 36vw;
+    padding-right: 2vw;
 }
+
+
+.spot-details-delete {
+    border-radius: 50px;
+    color: black;
+    background-color: white;
+}
+
+.spot-details-delete:hover {
+
+    background-color: red;
+}
+
 
 .singlespotpage-images-container {
     display: flex;
@@ -62,5 +76,40 @@
 }
 
 .home-hosted {
-    margin-left: 6vw;
+    margin-left: 7vw;
+    margin-bottom: 2vh;
+}
+
+.create-review-navlink {
+    margin-left: 7vw;
+}
+
+.review-user {
+    text-decoration: underline;
+}
+
+.all-reviews-container {
+    margin-left: 5vw;
+}
+
+.review-container {
+    margin-bottom: 5vh;
+}
+
+
+.review-user{
+    margin-bottom: 1vh;
+}
+
+
+.review-delete {
+    border-radius: 50px;
+    color: black;
+    background-color: white;
+}
+
+
+.review-delete:hover {
+
+    background-color: red;
 }

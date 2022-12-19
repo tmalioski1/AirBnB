@@ -45,6 +45,15 @@
     width: 4vw;
     line-height: 2vw;
     margin-bottom: 3px;
+    background-color: white;
+    /* margin-right: 2vw; */
+    /* position: relative;
+    left: 2.5vw; */
+    /* margin-right: 100px; */
+}
+
+.profile-dropdown:hover {
+    /* background-color: red; */
     /* margin-right: 2vw; */
     /* position: relative;
     left: 2.5vw; */
@@ -53,12 +62,17 @@
 
 
 
+
 #reviews-button  button{
     border-radius: 20px;
+    color: black;
+    background-color: white;
     /* margin-right: 1vw; */
     /* width: 4vw; */
     /* line-height: 2vw; */
 }
+
+
 
 #reviews-button  button:hover{
     background-color: red;
@@ -74,12 +88,4 @@
 .drop-down-elements {
     position: relative;
     right: 9vw;
-}
-
-.spot-details-edit {
-    padding-right: 2vw;
-}
-
-.spot-details-delete {
-    border-radius: 50px;
 }

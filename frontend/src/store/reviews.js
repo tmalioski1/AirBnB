@@ -1,7 +1,7 @@
 import { csrfFetch } from './csrf'
 
 const LOAD = 'reviews/LOAD'
-// const LOAD_USER_REVIEWS = 'reviews/LOAD_USER_REVIEWS'
+const LOAD_USER_REVIEWS = 'reviews/LOAD_USER_REVIEWS'
 const CREATE_ONE = 'reviews/CREATE_ONE'
 const DELETE_ONE = 'reviews/DELETE_ONE'
 
@@ -10,10 +10,10 @@ const loadAllReviewsForSpot = (reviews) => ({
   reviews,
 })
 
-// const loadAllReviewsForUser = (reviews) => ({
-//   type: LOAD_USER_REVIEWS,
-//   reviews,
-// })
+const loadAllReviewsForUser = (reviews) => ({
+  type: LOAD_USER_REVIEWS,
+  reviews,
+})
 
 const createReview = (review) => ({
   type: CREATE_ONE,
@@ -35,14 +35,14 @@ export const getAllReviewsForSpot = (id) => async (dispatch) => {
     return response
   };
 
-  // export const getAllReviewsForUser = () => async (dispatch) => {
-  //   const response = await csrfFetch(`/api/reviews/current`);
-  //   if (response.ok) {
-  //     const reviews = await response.json();
-  //     dispatch(loadAllReviewsForUser(reviews));
-  //   }
-  //   return response
-  // };
+  export const getAllReviewsForUser = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/current`);
+    if (response.ok) {
+      const reviews = await response.json();
+      dispatch(loadAllReviewsForUser(reviews));
+    }
+    return response
+  };
 
   export const createOneReview = (newReview, spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
@@ -82,13 +82,13 @@ const reviewsReducer = (state = initialState, action) => {
         return newState;
      }
 
-    //  case LOAD_USER_REVIEWS: {
-    //    const newState = { spot: {}, user: {} }
-    //    action.reviews.Reviews.forEach(review => {
-    //     newState.user[review.id] = review
-    //    })
-    //     return newState;
-    //  }
+     case LOAD_USER_REVIEWS: {
+       const newState = { spot: {}, user: {} }
+       action.reviews.Reviews.forEach(review => {
+        newState.user[review.id] = review
+       })
+        return newState;
+     }
      case CREATE_ONE: {
       const newState = { ...state, spot: { ...state.spot}}
       newState.spot[action.review.id] = action.review;
@@ -100,8 +100,8 @@ const reviewsReducer = (state = initialState, action) => {
       delete newState.spot[action.id]
     }
 
-        default:
-        return state
+    default:
+      return state
 
       }
 

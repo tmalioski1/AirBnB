@@ -20,7 +20,6 @@ const SingleSpotPage = () => {
 
 
 
-
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
   }, [spotId, dispatch])
@@ -113,8 +112,8 @@ const SingleSpotPage = () => {
         <div className="spot-details-location">{spotsObj.city}, {spotsObj.state}, {spotsObj.country}</div>
         <div className="spot-details-edit">
           <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Spot Details</NavLink>
-          </div>
-          <div>
+        </div>
+        <div>
           <button className="spot-details-delete" onClick={deleteSpot}>Delete Spot</button>
         </div>
       </div>
@@ -140,20 +139,21 @@ const SingleSpotPage = () => {
         }
       </ul>
 
-      <div className='home-hosted'>Entire home hosted by {spotsObj.Owner.firstName}</div>
-      <div>
-        <NavLink onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
-      </div>
+      <div className='home-hosted'>Entire home hosted by {spotsObj.Owner?.firstName}</div>
+
+      <NavLink className="create-review-navlink" onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
 
       <ul className='all-reviews-container'>
         {
           reviews.map(review => (
 
             <div className='review-container' key={review.id}>
-              <li className='review-text'>{review.review}</li>
-              <li className='review-stars'>{review.stars}</li>
-              <li className='review-id'>{review.id}</li>
-              <button onClick={() => deleteReview(review.id)}>Delete Review</button>
+              {/* {console.log('this is the firstName', review.User.firstName)} */}
+              <div className='review-user'>Review by {review.User?.firstName} {review.User?.lastName}:</div>
+              <div className='review-text'>Description: {review.review}</div>
+              <div className='review-stars'>Stars: {review.stars}</div>
+              <div className='created-at'>Created at {review.createdAt.split('T')[0]}</div>
+              <button className="review-delete" onClick={() => deleteReview(review.id)}>Delete Review</button>
             </div>
           ))
         }

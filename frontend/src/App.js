@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage";
 import SingleSpotPage from "./components/SingleSpotPage";
 import SpotForm from "./components/SpotForm"
 import EditSpot from "./components/EditSpot"
+import UserReviewsPage from "./components/UserReviewsPage.js"
 import ReviewForm from "./components/ReviewForm";
 
 
@@ -26,6 +27,11 @@ function App() {
             exact path="/"
           >
             <HomePage />
+          </Route>
+          <Route
+             path="/userReviews"
+          >
+            <UserReviewsPage />
           </Route>
           <Route
             path="/spots/new"
