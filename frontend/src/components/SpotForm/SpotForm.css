@@ -3,9 +3,34 @@
    flex-direction: column;
    justify-content: space-evenly;
    align-items: center;
+   margin-left: 25vw;
+   margin-right: 25vw;
+   border: 1px solid black;
+   padding-bottom: 1vw;
 
+
+}
+
+.spot-form.spot-form-header {
+    width: fit-content;
+    font-size: 3vw;
+}
+
+.spot-form> input {
+    margin-top: .5vw;
+    width: 30vw;
+    height: 1.3vw;
+}
+.spot-form> button {
+    margin-top: .5vw;
+    width: 30.8vw;
+    padding: 0px;
 }
 
 .spot-form-header {
     color: red
+}
+
+.spot-form-errors {
+    margin-bottom: 2vh;
 }

@@ -86,88 +86,89 @@ function SpotForm() {
 
   return (
     <>
-      <form className="spot-form"
+        <form className="spot-form"
         onSubmit={handleSubmit}>
         <h1 className='spot-form-header'>Let's Add Your Home</h1>
-        <ul className="errors">
+        <ul className="spot-form-errors">
           {validationErrors.map((error) => (
             <li key={error}>{error}</li>
           ))}
         </ul>
-        <label>
-          Address
+
           <input
             type="text"
             value={address}
+            placeholder= 'Address'
             onChange={(e) => setAddress(e.target.value)}
             required
           />
-        </label>
-        <label>
-          City
+
+
           <input
             type="text"
             value={city}
+            placeholder='City'
             onChange={(e) => setCity(e.target.value)}
             required
           />
-        </label>
-        <label>
-          State
+
+
           <input
             type="text"
+            placeholder="State"
             value={state}
             onChange={(e) => setState(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Country
+
+
           <input
             type="text"
             value={country}
+            placeholder="Country"
             onChange={(e) => setCountry(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Name
+
+
           <input
             type="text"
             value={name}
+            placeholder="Name"
             onChange={(e) => setName(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Description
+
+
           <input
             type="text"
             value={description}
+            placeholder= "Description"
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Price
+
+
           <input
             type="number"
             value={price}
+            placeholder="Price"
             onChange={(e) => setPrice(e.target.value)}
             required
           />
-        </label>
-        <label>
-          spotImage
+
+
           <input
             type="url"
             value={spotImage}
+            placeholder= "Url"
             onChange={(e) => setSpotImage(e.target.value)}
             required
           />
-        </label>
+
         <button type="submit">Create New Spot</button>
       </form>
+
     </>
   );
 }

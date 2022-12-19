@@ -19,6 +19,7 @@ function EditSpot() {
   const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);
 
+  console.log('this is the spotsObj', spotsObj)
 
 
   useEffect(() => {
@@ -86,16 +87,16 @@ function EditSpot() {
 
   return (
     <>
-      <form className="edit-form"
+      <form className="spot-form"
         onSubmit={handleSubmit}>
-        <h1>Edit Form</h1>
-        <ul className="errors">
+        <h1 className='spot-form-header'>Edit Form</h1>
+        <ul className="spot-form-errors">
           {validationErrors.map((error) => (
             <li key={error}>{error}</li>
           ))}
         </ul>
-        <label>
           Address
+        <label>
           <input
             type="text"
             value={address}
@@ -103,8 +104,8 @@ function EditSpot() {
             required
           />
         </label>
-        <label>
           City
+        <label>
           <input
             type="text"
             value={city}
@@ -112,8 +113,8 @@ function EditSpot() {
             required
           />
         </label>
-        <label>
           State
+        <label>
           <input
             type="text"
             value={state}
@@ -121,8 +122,8 @@ function EditSpot() {
             required
           />
         </label>
-        <label>
           Country
+        <label>
           <input
             type="text"
             value={country}
@@ -130,8 +131,8 @@ function EditSpot() {
             required
           />
         </label>
-        <label>
           Name
+        <label>
           <input
             type="text"
             value={name}
@@ -139,8 +140,8 @@ function EditSpot() {
             required
           />
         </label>
-        <label>
           Description
+        <label>
           <input
             type="text"
             value={description}
@@ -148,8 +149,8 @@ function EditSpot() {
             required
           />
         </label>
-        <label>
           Price
+        <label>
           <input
             type="number"
             value={price}
