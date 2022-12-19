@@ -37,27 +37,25 @@ function LoginFormModal() {
       <h1 className= "login-form-header">Log In</h1>
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <div className= "login-errors" key={idx}>{error}</div>
           ))}
         </ul>
-        <label>
-          Username or Email
+
           <input
             type="text"
             value={credential}
+            placeholder= 'Username or Email'
             onChange={(e) => setCredential(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Password
+
           <input
             type="password"
             value={password}
+            placeholder= 'Password'
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
         <button className= 'login-button' type="submit">Log In</button>
         <button className= 'demo-user-button' onClick={handleDemoUser}>Demo User</button>
       </form>
