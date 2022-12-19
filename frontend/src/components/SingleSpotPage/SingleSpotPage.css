@@ -7,24 +7,27 @@
 
 .spot-details-main {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     width: 85vw;
     padding-bottom: 15px;
     margin-left: 7vw;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 
 }
-/* .spot-details-top-left {
-    /* justify-content: start;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 80%;
-    gap: 5%;
-} */
+.spot-details-top-left {
+    display: inline;
+    width: 100%;
 
+
+}
+.spot-details-star-ratings {
+    display: inline;
+}
 .spot-details-num-reviews {
+    display: inline;
     text-decoration: underline;
     font-size: 14.5px;
+    width: auto;
 
 }
 
@@ -32,6 +35,8 @@
     margin-left: 1.2vw;
     text-decoration: underline;
     font-size: 14.5px;
+    width: auto;
+    display: inline;
 
 
 }
@@ -39,6 +44,7 @@
 .spot-details-edit {
     margin-left: 36vw;
     padding-right: 2vw;
+    width: 350px;
 }
 
 

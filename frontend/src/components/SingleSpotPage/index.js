@@ -106,11 +106,13 @@ const SingleSpotPage = () => {
       </div>
       <div className="spot-details-main">
         <div className="spot-details-top-left">
+          <div className= 'spot-details-star-ratings'>
           <i className="fa-solid fa-star fa-sm" ></i>
           {spotsObj.avgStarRating}
-        </div>
+          </div>
         <div className="spot-details-num-reviews">{spotsObj.numReviews} Review(s)</div>
         <div className="spot-details-location">{spotsObj.city}, {spotsObj.state}, {spotsObj.country}</div>
+        </div>
         <div className="spot-details-edit">
           <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Spot Details</NavLink>
         </div>

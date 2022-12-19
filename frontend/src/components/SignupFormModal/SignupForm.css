@@ -1,0 +1,28 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30vw;
+    height: 40vw;
+    margin-bottom: 2vh;
+ }
+
+ .signup-form-header {
+    color: red
+}
+
+.signup-button {
+    border-radius: 50px;
+    color: black;
+    background-color: white;
+    width: 15vw
+}
+
+.signup-button:hover {
+    background-color: red;
+}
+
+.signup-error {
+    font-size: 1.3vw;
+}
