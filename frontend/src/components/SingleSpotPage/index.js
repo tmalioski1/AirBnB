@@ -17,7 +17,6 @@ const SingleSpotPage = () => {
   const reviewsObj = useSelector(state => state.reviews.spot);
   const reviews = Object.values(reviewsObj)
   const spotImageArray = spotsObj.SpotImages
-  console.log('this is the spotsObj', spotsObj)
 
 
 
@@ -133,7 +132,7 @@ const SingleSpotPage = () => {
 
             <div className='spotpage-image-container' key={spotImage.id}>
 
-              <img className='actual-spotImage' src={spotImage.url} alt='spotprevImage'></img>
+             ç
 
             </div>
 
