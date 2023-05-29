@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { getOneSpot, deleteOneSpot } from '../../store/spots';
 import { getAllReviewsForSpot, deleteOneReview } from '../../store/reviews';
+import BookingForm from './BookingForm';
 import './SingleSpotPage.css';
 
 
@@ -131,9 +132,7 @@ const SingleSpotPage = () => {
           spotImageArray.map(spotImage => (
 
             <div className='spotpage-image-container' key={spotImage.id}>
-
-             ç
-
+              <img className='actual-spotImage' src={spotImage.url} alt='spotprevImage'></img>
             </div>
 
           ))
@@ -162,6 +161,9 @@ const SingleSpotPage = () => {
         }
 
       </ul>
+      <div className='booking-container'>
+      <BookingForm spotsObj={spotsObj} spotId={spotId}/>
+      </div>
     </>
 
 

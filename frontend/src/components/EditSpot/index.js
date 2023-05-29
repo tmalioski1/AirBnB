@@ -19,7 +19,6 @@ function EditSpot() {
   const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);
 
-  console.log('this is the spotsObj', spotsObj)
 
 
   useEffect(() => {

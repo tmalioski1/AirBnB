@@ -38,12 +38,13 @@ export const getCurrentBookings = () => async (dispatch) => {
 }
 
 export const makeNewBooking = (spotId, newBooking) => async (dispatch) => {
+    console.log('this is the spotId---', spotId)
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newBooking)
     })
-    console.log('back', response)
+    console.log('this is the response', response)
     if(response.ok){
         const yourNewBooking = await response.json()
         dispatch(makeBooking(yourNewBooking))
@@ -82,3 +83,37 @@ export const deleteYourBooking = (id) => async (dispatch) => {
         return deletedBooking
     }
 }
+
+
+
+const initialState = {bookings: {}}
+const bookingReducer = (state = initialState, action ) => {
+    switch(action.type){
+        case LOAD:{
+            const newState = {...state}
+            const yourBookings = {...state.bookings}
+            action.bookings.Bookings.forEach(booking => yourBookings[booking.id] = booking)
+            newState.bookings = yourBookings
+            return newState
+        }
+        case CREATE:{
+            const newState = {...state}
+            const newBooking = {...state.bookings}
+            newBooking[action.booking.id] = action.booking
+            newState.bookings = newBooking
+            return newState
+        }
+        case DELETE:{
+            const newState = {...state}
+            const newBooking = {...state.bookings}
+            delete newBooking[action.id]
+            newState.bookings = newBooking
+            return newState
+        }
+
+        default:
+            return state
+    }
+}
+
+export default bookingReducer
