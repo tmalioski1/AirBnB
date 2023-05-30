@@ -93,8 +93,19 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
   const { user } = req;
   if (user.id === spot.ownerId) {
-     throw new Error("spot must not belong to the current user")
+     res.status(400)
+     return res.json({
+       "message": "Validation error",
+      "statusCode": 400,
+      "errors": [
+        "Spot must not belong to the current user"
+      ]
+     })
   }
+  // const { user } = req;
+  // if (user.id === spot.ownerId) {
+  //    throw new Error("spot must not belong to the current user")
+  // }
 
   if (end <= start) {
     res.status(400);
