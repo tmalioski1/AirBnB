@@ -84,7 +84,10 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     res.status(404);
     return res.json({
       "message": "Spot couldn't be found",
-      "statusCode": 404
+      "statusCode": 404,
+      "errors": [
+        "Choosen spot couldn't be found"
+      ]
     })
   }
 
@@ -114,10 +117,9 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
        return res.json({
          "message": "Sorry, this spot is already booked for the specified dates",
          "statusCode": 403,
-         "errors": {
-           "startdate": "Start date conflicts with an existing booking",
-           "endDate": "End date conflicts with an existing booking"
-         }
+         "errors":[
+       'Chosen dates conflict with an existing booking'
+       ]
        })
       }
   }
