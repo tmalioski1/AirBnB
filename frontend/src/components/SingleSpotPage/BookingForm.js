@@ -58,7 +58,7 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
         </div>
       )}
         <div id='title-booking'>Book Your Vacation!</div>
-                    <div className='nightlyPrice'>${spotsObj?.price.toFixed(2)} night</div>
+                    <div className='nightlyPrice'>${Number(spotsObj?.price).toFixed(2)} night</div>
                     <div className='check-in-message'>CHECK-IN</div>
                      <input
                      type='date'

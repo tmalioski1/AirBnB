@@ -147,7 +147,7 @@ const SingleSpotPage = () => {
       </ul>
       <div className='review-top-line'>
       <div className='home-hosted'>Entire home hosted by {spotsObj?.Owner?.firstName}</div>
-      <div className='spot-price'>${(spotsObj?.price).toFixed(2)} night</div>
+      <div className='spot-price'>${Number(spotsObj?.price).toFixed(2)} night</div>
       </div>
       {sessionUser && sessionUser?.id !== owner &&
 
