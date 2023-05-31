@@ -35,7 +35,7 @@ function App() {
             <UserReviewsPage />
           </Route>
           <Route
-             path="/bookings"
+             path="/trips"
           >
             <Bookings/>
           </Route>

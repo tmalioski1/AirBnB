@@ -10,25 +10,27 @@ import './SingleSpotPage.css';
 const SingleSpotPage = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  const spotsObj = useSelector(state => state.spots.singleSpot);
+  const spotsObj = useSelector(state => state?.spots?.singleSpot);
   const history = useHistory()
-  const sessionUser = useSelector(state => state.session.user);
-  const owner = useSelector(state => state.spots.singleSpot.ownerId);
+  const sessionUser = useSelector(state => state?.session?.user);
+  const owner = useSelector(state => state?.spots?.singleSpot?.ownerId);
   const [validationErrors, setValidationErrors] = useState([]);
-  const reviewsObj = useSelector(state => state.reviews.spot);
+  const reviewsObj = useSelector(state => state?.reviews?.spot);
   const reviews = Object.values(reviewsObj)
-  const spotImageArray = spotsObj.SpotImages
+  const spotImageArray = spotsObj?.SpotImages
 
 
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
-  }, [spotId, dispatch])
+    document.title = spotsObj?.description
+  }, [spotId, dispatch, spotsObj?.description])
+
+
 
   useEffect(() => {
     dispatch(getAllReviewsForSpot({ spotId }))
-  }, [spotId, dispatch])
-
+  }, [dispatch])
 
 
 
@@ -97,6 +99,8 @@ const SingleSpotPage = () => {
 
 
   }
+
+
   if (!spotImageArray) return null
 
   return (
@@ -141,7 +145,7 @@ const SingleSpotPage = () => {
       </ul>
       <div className='review-top-line'>
       <div className='home-hosted'>Entire home hosted by {spotsObj.Owner?.firstName}</div>
-      <div className='spot-price'>${Number(spotsObj.price).toFixed(2)} night</div>
+      <div className='spot-price'>${(spotsObj?.price).toFixed(2)} night</div>
       </div>
 
       <NavLink className="create-review-navlink" onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
@@ -162,7 +166,7 @@ const SingleSpotPage = () => {
 
       </ul>
       <div className='booking-container'>
-      <BookingForm spotsObj={spotsObj} spotId={spotId}/>
+      <BookingForm spotsObj={spotsObj} spotId={spotId} sessionUser={sessionUser}/>
       </div>
     </>
 

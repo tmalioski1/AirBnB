@@ -38,13 +38,11 @@ export const getCurrentBookings = () => async (dispatch) => {
 }
 
 export const makeNewBooking = (spotId, newBooking) => async (dispatch) => {
-    console.log('this is the spotId---', spotId)
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newBooking)
     })
-    console.log('this is the response', response)
     if(response.ok){
         const yourNewBooking = await response.json()
         dispatch(makeBooking(yourNewBooking))
@@ -87,7 +85,7 @@ export const deleteYourBooking = (id) => async (dispatch) => {
 
 
 const initialState = {bookings: {}}
-const bookingReducer = (state = initialState, action ) => {
+const bookingsReducer = (state = initialState, action ) => {
     switch(action.type){
         case LOAD:{
             const newState = {...state}
@@ -116,4 +114,4 @@ const bookingReducer = (state = initialState, action ) => {
     }
 }
 
-export default bookingReducer
+export default bookingsReducer
