@@ -25,11 +25,19 @@ const prevBookings = bookings.filter(booking => {
   return endDate < currentDate
 })
 
-const otherBookings = bookings.filter(booking => {
+
+const currentBookings = bookings.filter(booking => {
   const currentDate = new Date();
+  const startDate = new Date(booking?.startDate);
   const endDate = new Date(booking?.endDate);
 
-  return endDate >= currentDate;
+  return startDate <= currentDate && endDate >= currentDate;
+});
+
+const futureBookings = bookings.filter(booking => {
+  const currentDate = new Date();
+  const startDate = new Date(booking?.startDate);
+  return startDate > currentDate;
 });
 
 function formatDate(startDateValue, endDateValue) {
@@ -96,29 +104,36 @@ const handleDeletion = async (id) => {
       <>
    <h1>Trips</h1>
    <div className='bookings-container'>
-    <div className='current-upcoming-trips-container'>
-    {!otherBookings ? (
-      <>
-      <div className='no-booking-line1'>No trips booked...yet!</div>
-      <div className='no-booking-line'>Time to dust off your bags and start planning your next adventure</div>
-      <button onClick={history.push('/')}>Start Searching</button>
-      </>
-    ) : (
-      <>
-      <p>Your bookings</p>
-      {otherBookings.map(booking => (
+   {currentBookings.length !== 0 &&
+    <div className='current-trips-container'>
+      <p>Your current booking- enjoy!</p>
+      {currentBookings.map(booking => (
         <div className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <img className='booking-image' src={booking?.Spot?.previewImage}></img>
         <div className='city-state'>{booking?.Spot?.city}, {booking?.Spot?.state}</div>
         <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
         </NavLink>
+        </div>
+      ))}
+    </div>
+    }
+    {futureBookings.length !== 0 &&
+    <div className='upcoming-trips-container'>
+      <h1>Your upcoming bookings</h1>
+      {futureBookings.map(booking => (
+        <div className='individual-booking'>
+        <NavLink to={`/spots/${booking?.Spot?.id}`}>
+        <img className='booking-image' src={booking?.Spot?.previewImage}></img>
+        <div className='city-state'>{booking?.Spot?.city}, {booking?.Spot?.state}</div>
+        <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
+        </NavLink>
+        <button>Change the Dates</button>
         <button onClick={() => handleDeletion(booking?.id)} className='cancel-booking'>Cancel Trip</button>
         </div>
       ))}
-    </>
-    )}
     </div>
+    }
     <div className='previous-trips-container'>
     <h1 className='where-you-been'>Where you've been</h1>
     {prevBookings.map(booking => (
