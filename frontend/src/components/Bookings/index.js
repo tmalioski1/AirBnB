@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, NavLink } from 'react-router-dom';
 import {getCurrentBookings, deleteYourBooking} from '../../store/bookings'
+import EditBooking from './EditBooking'
 
 function Bookings() {
 const bookingsObj = useSelector(state =>state?.bookings?.bookings)
@@ -10,7 +11,8 @@ const dispatch = useDispatch();
 const history = useHistory();
 const [isLoading, setIsLoading] = useState(true)
 const [errors, setErrors] = useState([])
-
+const [showEditBooking, setShowEditBooking] = useState(false);
+const [editBookingId, setEditBookingId] = useState('')
 
 
 
@@ -51,34 +53,39 @@ function formatDate(startDateValue, endDateValue) {
   const endYear = endDate.getFullYear();
   const endMonth = endDate.toLocaleString('default', { month: 'short' });
   const endDay = endDate.toLocaleString('default', { day: '2-digit' });
+
   const currentYear = new Date().getFullYear();
 
   if (startYear !== endYear || startYear !== currentYear) {
     let formattedStartDate = `${startMonth} ${startDay}, ${startYear}`;
-
-
-
     let formattedEndDate = `${endMonth} ${endDay}`;
+
     if (endYear !== currentYear) {
       formattedEndDate += `, ${endYear}`;
     }
 
     return `${formattedStartDate} - ${formattedEndDate}`;
-  } else if (startYear === endYear && startYear !==currentYear) {
+  } else if (startYear === endYear && startYear !== currentYear) {
     let formattedStartDate = `${startMonth} ${startDay}`;
-    let formattedEndDate = `${startMonth} ${startDay}, ${startYear}`;
+    let formattedEndDate = `${startMonth} ${endDay}, ${startYear}`;
     return `${formattedStartDate} - ${formattedEndDate}`;
-  }
-
-  else {
+  } else {
     let formattedDate = `${startMonth} ${startDay}`;
+
     if (startYear !== currentYear) {
       formattedDate += `, ${startYear}`;
     }
-    formattedDate += ` - ${endDay}`;
+
+    formattedDate += ` - ${endMonth} ${endDay}`;
+
+    if (endYear !== currentYear) {
+      formattedDate += `, ${endYear}`;
+    }
+
     return formattedDate;
   }
 }
+
 const handleDeletion = async (id) => {
   try {
     const response = await dispatch(deleteYourBooking(id));
@@ -98,7 +105,10 @@ const handleDeletion = async (id) => {
   }
 };
 
-
+const handleEditBooking = (id) => {
+  setShowEditBooking(true);
+  setEditBookingId(id);
+};
 
      return (
       <>
@@ -138,10 +148,11 @@ const handleDeletion = async (id) => {
         <div className='city-state'>{booking?.Spot?.city}, {booking?.Spot?.state}</div>
         <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
         </NavLink>
-        <button>Change the Dates</button>
+        <button onClick={() => handleEditBooking(booking?.id)} className='edit-booking-button'>Change the Dates</button>
         <button onClick={() => handleDeletion(booking?.id)} className='cancel-booking'>Cancel Trip</button>
         </div>
       ))}
+      {showEditBooking && <EditBooking bookingId={editBookingId} />}
     </div>
     }
            </>
