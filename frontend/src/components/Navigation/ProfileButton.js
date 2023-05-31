@@ -35,6 +35,11 @@ function ProfileButton({ user }) {
     history.push('/')
   };
 
+  const goToTrips = (e) => {
+    e.preventDefault();
+    history.push('/trips')
+  };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -47,6 +52,10 @@ function ProfileButton({ user }) {
         <li>{user.username}</li>
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
+        <li>
+        <button className="your-trips-button" onClick={goToTrips}>Trips</button>
+
+        </li>
         <li>
           <button className="log-out-button" onClick={logout}>Log Out</button>
         </li>
