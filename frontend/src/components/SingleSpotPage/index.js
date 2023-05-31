@@ -3,32 +3,34 @@ import { useEffect, useState } from 'react';
 import { useParams, NavLink, useHistory } from 'react-router-dom';
 import { getOneSpot, deleteOneSpot } from '../../store/spots';
 import { getAllReviewsForSpot, deleteOneReview } from '../../store/reviews';
+import BookingForm from './BookingForm';
 import './SingleSpotPage.css';
 
 
 const SingleSpotPage = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  const spotsObj = useSelector(state => state.spots.singleSpot);
+  const spotsObj = useSelector(state => state?.spots?.singleSpot);
   const history = useHistory()
-  const sessionUser = useSelector(state => state.session.user);
-  const owner = useSelector(state => state.spots.singleSpot.ownerId);
+  const sessionUser = useSelector(state => state?.session?.user);
+  const owner = useSelector(state => state?.spots?.singleSpot?.ownerId);
   const [validationErrors, setValidationErrors] = useState([]);
-  const reviewsObj = useSelector(state => state.reviews.spot);
+  const reviewsObj = useSelector(state => state?.reviews?.spot);
   const reviews = Object.values(reviewsObj)
-  const spotImageArray = spotsObj.SpotImages
-  console.log('this is the spotsObj', spotsObj)
+  const spotImageArray = spotsObj?.SpotImages
 
 
 
   useEffect(() => {
     dispatch(getOneSpot({ spotId }))
-  }, [spotId, dispatch])
+    document.title = spotsObj?.description
+  }, [spotId, dispatch, spotsObj?.description])
+
+
 
   useEffect(() => {
     dispatch(getAllReviewsForSpot({ spotId }))
   }, [spotId, dispatch])
-
 
 
 
@@ -97,6 +99,8 @@ const SingleSpotPage = () => {
 
 
   }
+
+
   if (!spotImageArray) return null
 
   return (
@@ -110,15 +114,17 @@ const SingleSpotPage = () => {
           <i className="fa-solid fa-star fa-sm" ></i>
           {spotsObj.avgStarRating}
           </div>
-        <div className="spot-details-num-reviews">{spotsObj.numReviews} Review(s)</div>
-        <div className="spot-details-location">{spotsObj.city}, {spotsObj.state}, {spotsObj.country}</div>
+        <div className="spot-details-num-reviews">{spotsObj?.numReviews} Review(s)</div>
+        <div className="spot-details-location">{spotsObj?.city}, {spotsObj?.state}, {spotsObj?.country}</div>
         </div>
+        {sessionUser && sessionUser?.id === owner &&
         <div className="spot-details-edit">
           <NavLink onClick={userValidation} to={`/spots/${spotId}/edit`}>Edit Spot Details</NavLink>
-        </div>
+        </div>}
+      {sessionUser && sessionUser?.id === owner &&
         <div>
           <button className="spot-details-delete" onClick={deleteSpot}>Delete Spot</button>
-        </div>
+        </div>}
       </div>
       <ul className="singlespot-errors">
         {validationErrors.map((error) => (
@@ -132,9 +138,7 @@ const SingleSpotPage = () => {
           spotImageArray.map(spotImage => (
 
             <div className='spotpage-image-container' key={spotImage.id}>
-
-              <img className='actual-spotImage' src={spotImage.url} alt='spotprevImage'></img>
-
+              <img className='actual-spotImage' src={spotImage?.url} alt='spotprevImage'></img>
             </div>
 
           ))
@@ -142,27 +146,35 @@ const SingleSpotPage = () => {
         }
       </ul>
       <div className='review-top-line'>
-      <div className='home-hosted'>Entire home hosted by {spotsObj.Owner?.firstName}</div>
-      <div className='spot-price'>${Number(spotsObj.price).toFixed(2)} night</div>
+      <div className='home-hosted'>Entire home hosted by {spotsObj?.Owner?.firstName}</div>
+      <div className='spot-price'>${(spotsObj?.price).toFixed(2)} night</div>
       </div>
+      {sessionUser && sessionUser?.id !== owner &&
 
       <NavLink className="create-review-navlink" onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
-
+      }
       <ul className='all-reviews-container'>
         {
           reviews.map(review => (
 
-            <div className='review-container' key={review.id}>
-              <div className='review-user'>Review by {review.User?.firstName} {review.User?.lastName}:</div>
-              <div className='review-text'>Description: {review.review}</div>
-              <div className='review-stars'>Stars: {review.stars}</div>
-              <div className='created-at'>Created at {review.createdAt.split('T')[0]}</div>
+            <div className='review-container' key={review?.id}>
+              <div className='review-user'>Review by {review?.User?.firstName} {review?.User?.lastName}:</div>
+              <div className='review-text'>Description: {review?.review}</div>
+              <div className='review-stars'>Stars: {review?.stars}</div>
+              <div className='created-at'>Created at {review?.createdAt.split('T')[0]}</div>
+              {sessionUser && sessionUser.id === review?.User?.id &&
               <button className="review-delete" onClick={() => deleteReview(review.id)}>Delete Review</button>
+              }
             </div>
           ))
         }
 
       </ul>
+      {sessionUser?.id !== owner &&
+      <div className='booking-container'>
+      <BookingForm spotsObj={spotsObj} spotId={spotId} sessionUser={sessionUser}/>
+      </div>
+}
     </>
 
 

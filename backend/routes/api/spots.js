@@ -84,14 +84,28 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     res.status(404);
     return res.json({
       "message": "Spot couldn't be found",
-      "statusCode": 404
+      "statusCode": 404,
+      "errors": [
+        "Choosen spot couldn't be found"
+      ]
     })
   }
 
   const { user } = req;
   if (user.id === spot.ownerId) {
-     throw new Error("spot must not belong to the current user")
+     res.status(400)
+     return res.json({
+       "message": "Validation error",
+      "statusCode": 400,
+      "errors": [
+        "Spot must not belong to the current user"
+      ]
+     })
   }
+  // const { user } = req;
+  // if (user.id === spot.ownerId) {
+  //    throw new Error("spot must not belong to the current user")
+  // }
 
   if (end <= start) {
     res.status(400);
@@ -114,10 +128,9 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
        return res.json({
          "message": "Sorry, this spot is already booked for the specified dates",
          "statusCode": 403,
-         "errors": {
-           "startdate": "Start date conflicts with an existing booking",
-           "endDate": "End date conflicts with an existing booking"
-         }
+         "errors":[
+       'Chosen dates conflict with an existing booking'
+       ]
        })
       }
   }

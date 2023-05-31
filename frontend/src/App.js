@@ -9,6 +9,7 @@ import SpotForm from "./components/SpotForm"
 import EditSpot from "./components/EditSpot"
 import UserReviewsPage from "./components/UserReviewsPage.js"
 import ReviewForm from "./components/ReviewForm";
+import Bookings from "./components/Bookings"
 
 
 function App() {
@@ -32,6 +33,11 @@ function App() {
              path="/userReviews"
           >
             <UserReviewsPage />
+          </Route>
+          <Route
+             path="/trips"
+          >
+            <Bookings/>
           </Route>
           <Route
             path="/spots/new"

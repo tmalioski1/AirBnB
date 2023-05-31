@@ -24,9 +24,7 @@ function Navigation({ isLoaded }) {
         <div>
           <ProfileButton user={sessionUser} />
         </div>
-        <div id="reviews-button">
-          <button onClick={getReviews}>Your Reviews</button>
-        </div>
+   
       </ul>
 
 
