@@ -104,9 +104,19 @@ const handleDeletion = async (id) => {
       <>
    <h1>Trips</h1>
    <div className='bookings-container'>
+   {(currentBookings.length === 0 && futureBookings.length === 0) ? (
+    <>
+    <div className="no-booking-line1">No trips booked...yet!</div>
+    <div className="no-booking-line">
+      Time to dust off your bags and start planning your next adventure
+    </div>
+    <button onClick={() => history.push("/")}>Start Searching</button>
+  </>
+        ) : (
+          <>
    {currentBookings.length !== 0 &&
     <div className='current-trips-container'>
-      <p>Your current booking- enjoy!</p>
+      <p>Your current bookings- enjoy!</p>
       {currentBookings.map(booking => (
         <div className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
@@ -134,6 +144,9 @@ const handleDeletion = async (id) => {
       ))}
     </div>
     }
+           </>
+        )}
+    {prevBookings.length !== 0 &&
     <div className='previous-trips-container'>
     <h1 className='where-you-been'>Where you've been</h1>
     {prevBookings.map(booking => (
@@ -145,6 +158,7 @@ const handleDeletion = async (id) => {
     </div>
     ))}
    </div>
+}
    </div>
    </>
      );
