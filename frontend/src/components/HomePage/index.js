@@ -36,7 +36,7 @@ const HomePage = () => {
                 </div>
 
               </div>
-              <div className = 'price'>${(spot.price).toFixed(2)} night</div>
+              <div className = 'price'>${Number(spot.price).toFixed(2)} night</div>
               </NavLink>
 
             </div>
