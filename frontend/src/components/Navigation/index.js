@@ -24,7 +24,7 @@ function Navigation({ isLoaded }) {
         <div>
           <ProfileButton user={sessionUser} />
         </div>
-   
+
       </ul>
 
 

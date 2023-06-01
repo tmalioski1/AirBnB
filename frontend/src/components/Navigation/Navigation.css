@@ -2,22 +2,24 @@
     display: none
 }
 
+
+
 .NavBar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 85vw;
-    padding-bottom: 30px;
-    margin-left: 6.9vw;
-    margin-top: 3vh;
+    width: 100%;
     align-items: center;
     align-content: center;
+    border-bottom: 1px solid rgb(196, 192, 192);
+    padding-bottom: 1%;
+    margin-bottom:5%;
 
 }
 
-.Mimic-Spot-Link {
-    padding-left: 400px;
-
+.AirBnbLogoHomeLink{
+   height: 4px;
+   margin-left: 7.2%;
 
 }
 
@@ -38,49 +40,16 @@
 
 
 
-
-
-
-.AirBnbLogoHomeLink{
-   /* padding-right: -20px; */
-   /* max-width: 100%; */
-   height: 5px;
-
-}
-
-/* .Mimic-Spot-Link {
-
-} */
-
 .profile-dropdown {
     border-radius: 20px;
     width: 4vw;
     line-height: 2vw;
-    margin-bottom: 3px;
     background-color: white;
-    /* margin-right: 2vw; */
-    /* position: relative;
-    left: 2.5vw; */
-    /* margin-right: 100px; */
-}
-
-/* .profile-dropdown:hover {
-    /* background-color: red; */
-    /* margin-right: 2vw; */
-    /* position: relative;
-    left: 2.5vw; */
-    /* margin-right: 100px;
 }
 
 
 
 
-
-/* #reviews-button  button{
-    border-radius: 20px;
-    color: black;
-    background-color: white;
-} */
 
 #reviews-button button{
     border-radius: 20px;
@@ -98,6 +67,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    margin-right: 7.2%;
+    padding-top: 1%;
 
 }
 
