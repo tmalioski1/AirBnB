@@ -22,6 +22,8 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
       return `${year}-${month}-${day}`;
     }
 
+
+
     const handleSubmit = async (e) => {
       e.preventDefault()
 
@@ -40,6 +42,7 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
           }
       )
 
+
       if(postBooking){
           history.push('/trips')
       }
@@ -57,8 +60,18 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
           </ul>
         </div>
       )}
-        <div id='title-booking'>Book Your Vacation!</div>
-                    <div className='nightlyPrice'>${Number(spotsObj?.price).toFixed(2)} night</div>
+          <div className='nightlyPrice-stars'>
+          <div className='bookingform-nightlyPrice'>${Number(spotsObj?.price).toFixed(2)} <span className='night'>night</span></div>
+          <div className='bookingform-stars'>
+          <div className= 'bookingform--star-ratings'>
+          <i className="fa-solid fa-star fa-sm" ></i>
+          {spotsObj.avgStarRating}
+          </div>
+          <span className='period'>.</span>
+        <div className="bookingform-num-reviews">{spotsObj?.numReviews} Review(s)</div>
+        </div>
+        </div>
+        <div className='bookingform-checkin-checkout-container'>
                     <div className='check-in-message'>CHECK-IN</div>
                      <input
                      type='date'
@@ -78,7 +91,7 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
                      className='date-form'
                      min={startDate || getCurrentDate()}
                      />
-
+</div>
                   {sessionUser ? (
                           <button type="submit" id="booking-submit-button">
                             Reserve

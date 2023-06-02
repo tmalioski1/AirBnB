@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
 
@@ -54,7 +54,7 @@ function ProfileButton({ user }) {
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
         <li>
-        <button className="your-trips-button" onClick={goToTrips}>Trips</button>
+        <NavLink exact to='/trips' className="your-trips-navlink" onClick={goToTrips}>Trips</NavLink>
 
         </li>
         <li>

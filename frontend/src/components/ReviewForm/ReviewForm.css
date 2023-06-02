@@ -34,3 +34,7 @@
 .review-form-errors {
     margin-bottom: 2vh;
 }
+
+.review-button {
+    cursor: pointer;
+}

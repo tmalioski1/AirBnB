@@ -72,7 +72,7 @@ const handleSubmit = async (e) => {
             onChange={(e) => setStars(e.target.value)}
             required
           />
-        <button type="submit">Create New Review</button>
+        <button className= 'review-button' type="submit">Create New Review</button>
       </form>
     </>
 

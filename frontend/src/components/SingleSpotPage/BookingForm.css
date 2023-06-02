@@ -1,0 +1,53 @@
+.booking-form{
+    z-index: 3;
+    border: 1px solid lightgrey;
+    width: 330px;
+    height:360px;
+    border-radius: 4%;
+    margin-top: 48px;
+    margin-bottom: 40px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 3.1vh 1.6vw;
+
+}
+
+
+.nightlyPrice-stars {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 5vh;
+}
+
+.bookingform-stars {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+.period{
+    padding-left: .3vw;
+    padding-right: .3vw;
+    line-height: .8;
+    font-weight: bold;
+}
+
+
+.bookingform-nightlyPrice{
+    font-size: 1.3vw;
+    font-weight: bold;
+}
+
+.night{
+    font-size: 1vw;
+    font-weight: normal;
+}
+
+.bookingform-checkin-checkout-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3vh;
+}

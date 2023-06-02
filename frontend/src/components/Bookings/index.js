@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, NavLink } from 'react-router-dom';
 import {getCurrentBookings, deleteYourBooking} from '../../store/bookings'
 import EditBooking from './EditBooking'
+import './index.css'
 
 function Bookings() {
 const bookingsObj = useSelector(state =>state?.bookings?.bookings)
@@ -120,7 +121,7 @@ const handleEditBooking = (id) => {
     <div className="no-booking-line">
       Time to dust off your bags and start planning your next adventure
     </div>
-    <button onClick={() => history.push("/")}>Start Searching</button>
+    <button className='start-searching' onClick={() => history.push("/")}>Start Searching</button>
   </>
         ) : (
           <>

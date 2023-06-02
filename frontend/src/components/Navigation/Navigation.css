@@ -32,26 +32,35 @@
     font-family: "Figtree", sans-serif;
 }
 
-.log-out-button {
-    border-radius: 65px;
-    color: black;
-    background-color: white;
-}
-
-.log-out-button:hover {
-    background-color: red;
-}
-
-
-
 .profile-dropdown {
-    border-radius: 20px;
+    border-radius: 50px;
     width: 4vw;
-    line-height: 2vw;
     background-color: white;
-    cursor: pointer;
 }
 
+
+.your-trips-navlink {
+    text-decoration: none;
+}
+
+.your-trips-navlink:hover {
+    text-decoration: underline;
+}
+
+
+.log-out-button {
+    color: black;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+.log-out-button:hover{
+    text-decoration: underline;
+}
 
 
 
@@ -73,7 +82,8 @@
     flex-direction: column;
     justify-content: flex-end;
     margin-right: 7.2%;
-
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .drop-down-elements {
