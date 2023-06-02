@@ -93,7 +93,7 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
                      />
 </div>
                   {sessionUser ? (
-                          <button type="submit" id="booking-submit-button">
+                          <button type="submit" className="booking-submit-button">
                             Reserve
                           </button>
                         ) : (
@@ -101,7 +101,8 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
                           buttonText="Reserve"
                           modalComponent={<LoginFormModal />}
                         />
-                        )}
+                        )
+                        }
         </form>
       </>
     );

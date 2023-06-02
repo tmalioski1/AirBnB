@@ -140,21 +140,24 @@ const SingleSpotPage = () => {
 
         }
       </ul>
+
+      <div className='reviews-bookings'>
+      <div className='reviews'>
       <div className='review-top-line'>
       <div className='home-hosted'>Entire home hosted by {spotsObj?.Owner?.firstName}</div>
       </div>
+      <div className='line-div'></div>
+      <div className='review-info'>
       <ul className="singlespot-errors">
         {validationErrors.map((error) => (
           <li key={error}>{error}</li>
         ))}
       </ul>
-      <div className='reviews-bookings'>
-      <div className='reviews'>
       {sessionUser && sessionUser?.id !== owner &&
 
       <NavLink className="create-review-navlink" onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
       }
-      <ul className='all-reviews-container'>
+      <div className='all-reviews-container'>
         {
           reviews.map(review => (
 
@@ -170,7 +173,8 @@ const SingleSpotPage = () => {
           ))
         }
 
-      </ul>
+      </div>
+      </div>
       </div>
       {sessionUser?.id !== owner &&
       <div className='booking-container'>

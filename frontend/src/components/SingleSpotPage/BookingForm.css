@@ -4,7 +4,6 @@
     width: 330px;
     height:360px;
     border-radius: 4%;
-    margin-top: 48px;
     margin-bottom: 40px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     padding: 3.1vh 1.6vw;
@@ -49,5 +48,37 @@
 .bookingform-checkin-checkout-container{
     display: flex;
     flex-direction: column;
+    margin-bottom: 1vh;
+
+}
+
+.date-form{
     margin-bottom: 3vh;
+}
+
+
+.booking-submit-button {
+    width: 100%;
+    color: white;
+    background-color: red;
+    height: 5.5vh;
+    padding: 1.3vh 5vw 2.5vh 5vw;
+    /* padding: 14px 24px 32px 24px; */
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+      border-radius: 8px;
+      font-size: 17px
+}
+
+.booking-submit-button:hover {
+       cursor: pointer;
 }
