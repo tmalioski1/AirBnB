@@ -1,33 +1,40 @@
-.spot-description {
+.spot-description-container {
     display: flex;
     width: 85vw;
     padding-bottom: 2px;
     margin-left: 7vw;
+    margin-top: -3%;
+}
+
+.spot-description {
+    font-family: "Figtree", sans-serif;
+    font-weight: normal;
 }
 
 .spot-details-main {
     display: flex;
-    /* flex-direction: row; */
     width: 85vw;
     padding-bottom: 15px;
     margin-left: 7vw;
-    /* justify-content: space-between; */
 
 }
 .spot-details-top-left {
     display: inline;
     width: 100%;
-
-
 }
+
 .spot-details-star-ratings {
     display: inline;
+    margin-right: 1vw;
+
+
 }
 .spot-details-num-reviews {
     display: inline;
     text-decoration: underline;
     font-size: 14.5px;
     width: auto;
+    font-family:"Figtree", sans-serif
 
 }
 
@@ -37,8 +44,7 @@
     font-size: 14.5px;
     width: auto;
     display: inline;
-
-
+    font-family:"Figtree", sans-serif
 }
 
 .spot-details-edit {
@@ -46,6 +52,15 @@
     padding-right: 2vw;
     width: 350px;
 }
+
+.spot-details-edit a {
+    text-decoration: none;
+}
+
+.spot-details-edit a:hover {
+    text-decoration: underline;
+}
+
 
 
 .spot-details-delete {
@@ -63,17 +78,20 @@
 .singlespotpage-images-container {
     display: flex;
     flex-direction: row;
-    width: 85vw;
-    margin-left: 3.5vw;
+    width: 86%;
+    margin-left: 4.5%;
+    height: auto;
 
 }
 .spotpage-image-container {
     width: 100%;
-
+    height: 100%
 }
 
 .actual-spotImage {
    width: 100%;
+   border-radius:1.4%;
+   height: 100%
 }
 
 .singlespot-errors {
@@ -83,10 +101,26 @@
 .home-hosted {
     margin-left: 7vw;
     margin-bottom: 2vh;
+    font-family: "Figtree", sans-serif;
+    font-size: 25px;
 }
 
+.reviews-bookings {
+    display: flex;
+    flex-direction: row;
+    width: 93%;
+    justify-content: space-between;
+}
 .create-review-navlink {
     margin-left: 7vw;
+    text-decoration: none;
+    font-family: "Figtree", sans-serif;
+    font-size: 15px;
+}
+
+.create-review-navlink:hover {
+    margin-left: 7vw;
+    text-decoration: underline;
 }
 
 .review-user {
@@ -94,7 +128,7 @@
 }
 
 .all-reviews-container {
-    margin-left: 5vw;
+    margin-left: 4.3vw;
 }
 
 .review-container {
@@ -123,3 +157,11 @@
     display: flex;
     gap: 50vw;
 }
+
+
+@media screen and (min-width: 2560px) {
+    .singlespotpage-images-container {
+      margin-left: 5%;
+    }
+
+  }

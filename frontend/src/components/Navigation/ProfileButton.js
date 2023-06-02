@@ -37,6 +37,7 @@ function ProfileButton({ user }) {
 
   const goToTrips = (e) => {
     e.preventDefault();
+    setShowMenu(false)
     history.push('/trips')
   };
 

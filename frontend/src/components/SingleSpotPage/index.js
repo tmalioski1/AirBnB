@@ -92,7 +92,7 @@ const SingleSpotPage = () => {
     for (let i = 0; i < reviews.length; i++) {
       if (sessionUser.id === reviews[i].User.id) {
         e.preventDefault();
-        errors.push('User already has a review for this spot')
+        errors.push('You already made a review for this spot')
         setValidationErrors(errors)
       }
     }
@@ -105,8 +105,8 @@ const SingleSpotPage = () => {
 
   return (
     <>
-      <div className="spot-description">
-        <h1>{spotsObj.description}</h1>
+      <div className="spot-description-container">
+        <h1 className='spot-description'>{spotsObj.description}</h1>
       </div>
       <div className="spot-details-main">
         <div className="spot-details-top-left">
@@ -126,11 +126,6 @@ const SingleSpotPage = () => {
           <button className="spot-details-delete" onClick={deleteSpot}>Delete Spot</button>
         </div>}
       </div>
-      <ul className="singlespot-errors">
-        {validationErrors.map((error) => (
-          <li key={error}>{error}</li>
-        ))}
-      </ul>
 
       <ul className='singlespotpage-images-container'>
         {
@@ -147,8 +142,14 @@ const SingleSpotPage = () => {
       </ul>
       <div className='review-top-line'>
       <div className='home-hosted'>Entire home hosted by {spotsObj?.Owner?.firstName}</div>
-      <div className='spot-price'>${Number(spotsObj?.price).toFixed(2)} night</div>
       </div>
+      <ul className="singlespot-errors">
+        {validationErrors.map((error) => (
+          <li key={error}>{error}</li>
+        ))}
+      </ul>
+      <div className='reviews-bookings'>
+      <div className='reviews'>
       {sessionUser && sessionUser?.id !== owner &&
 
       <NavLink className="create-review-navlink" onClick={userReviewValidation} to={`/spots/${spotId}/review`}>Create A Review</NavLink>
@@ -170,11 +171,13 @@ const SingleSpotPage = () => {
         }
 
       </ul>
+      </div>
       {sessionUser?.id !== owner &&
       <div className='booking-container'>
       <BookingForm spotsObj={spotsObj} spotId={spotId} sessionUser={sessionUser}/>
       </div>
 }
+</div>
     </>
 
 

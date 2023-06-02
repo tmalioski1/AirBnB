@@ -14,18 +14,22 @@
     border-bottom: 1px solid rgb(196, 192, 192);
     padding-bottom: 1%;
     margin-bottom:5%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
 
 }
 
 .AirBnbLogoHomeLink{
    height: 4px;
    margin-left: 7.2%;
-
+   line-height: 1vh;
 }
 
 .ActualLink {
     font-size: 1.5vw;
     text-decoration: none;
+    line-height: 1vh;
+    font-family: "Figtree", sans-serif;
 }
 
 .log-out-button {
@@ -45,6 +49,7 @@
     width: 4vw;
     line-height: 2vw;
     background-color: white;
+    cursor: pointer;
 }
 
 
@@ -68,13 +73,16 @@
     flex-direction: column;
     justify-content: flex-end;
     margin-right: 7.2%;
-    padding-top: 1%;
 
 }
 
 .drop-down-elements {
     position: relative;
     right: 9vw;
+}
+
+.LogIn-SignUp {
+    padding-right: 7.6%;
 }
 
 .LogIn-SignUp > button {
