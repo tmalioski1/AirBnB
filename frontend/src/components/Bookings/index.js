@@ -133,26 +133,33 @@ const handleEditBooking = (id) => {
           <>
    {currentBookings.length !== 0 &&
     <div className='current-trips-container'>
-      <p>Your current bookings- enjoy!</p>
+      <h2>{currentBookings.length === 1 ? 'Your current booking - enjoy!' : 'Your current bookings - enjoy!'}</h2>
+      <div className='trip-array'>
       {currentBookings.map(booking => (
         <div className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <img className='booking-image' src={booking?.Spot?.previewImage}></img>
-        <div className='city-state'>{booking?.Spot?.city}, {booking?.Spot?.state}</div>
+        </NavLink>
+        <div className='booking-city-dates'>
+        <NavLink to={`/spots/${booking?.Spot?.id}`}>
+        <div className='booking-city'>{booking?.Spot?.city}</div>
         <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
         </NavLink>
         </div>
+        </div>
       ))}
+      </div>
     </div>
     }
     {futureBookings.length !== 0 &&
     <div className='upcoming-trips-container'>
-      <h1>Your upcoming bookings</h1>
+      <h2>Your upcoming bookings</h2>
+      <div className='trip-array'>
       {futureBookings.map(booking => (
         <div className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <img className='booking-image' src={booking?.Spot?.previewImage}></img>
-        <div className='city-state'>{booking?.Spot?.city}, {booking?.Spot?.state}</div>
+        <div className='city-state'>{booking?.Spot?.city}</div>
         <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
         </NavLink>
         <button onClick={() => handleEditBooking(booking?.id)} className='edit-booking-button'>Change the Dates</button>
@@ -161,20 +168,24 @@ const handleEditBooking = (id) => {
       ))}
       {showEditBooking && <EditBooking bookingId={editBookingId} />}
     </div>
+    </div>
     }
            </>
         )}
     {prevBookings.length !== 0 &&
     <div className='previous-trips-container'>
-    <h1 className='where-you-been'>Where you've been</h1>
+    <h2 className='where-you-been'>Where you've been</h2>
+    <div className='trip-array'>
     {prevBookings.map(booking => (
-    <div className='individual-prev-booking'>
+    <div className='individual-booking'>
       <NavLink to={`/spots/${booking?.Spot?.id}`}>
-    <img className='prev-booking-image' src={booking?.Spot?.previewImage}></img>
-    <div className='prev-booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
+    <img className='booking-image' src={booking?.Spot?.previewImage}></img>
+    <div className='city-state'>{booking?.Spot?.city}</div>
+    <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
     </NavLink>
     </div>
     ))}
+   </div>
    </div>
 }
    </div>

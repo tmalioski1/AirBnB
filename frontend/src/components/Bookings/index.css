@@ -7,7 +7,7 @@
 }
 
 .trips-header{
-    margin-bottom: 7vh;
+    margin-bottom: 6vh;
     font-size: 32px;
 }
 
@@ -76,4 +76,36 @@
   height: 100%;
   border-radius: 0px 10px 10px 0px;
   object-fit: cover;
+}
+
+
+.bookings-container h2 {
+    font-weight: 500;
+}
+
+.booking-image {
+    width: 5.2vw;
+    height: 9vh;
+    border-radius: 9px;
+}
+
+.current-trips-container{
+     margin-bottom: 5vh;
+
+}
+
+.trip-array{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.upcoming-trips-container {
+    margin-bottom: 5vh;
+}
+
+
+.individual-booking {
+    display: flex;
+    flex-direction: row;
+    margin-right: 3vw;
 }
