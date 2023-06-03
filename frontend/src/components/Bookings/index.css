@@ -98,7 +98,6 @@
 .trip-array{
     display: flex;
     flex-wrap: wrap;
-
 }
 .upcoming-trips-container {
     margin-bottom: 5vh;
@@ -141,6 +140,8 @@ justify-content: center;
 .future-extras button{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 75%;
     border-radius: 10px;
     background: linear-gradient(
@@ -170,9 +171,14 @@ cursor: pointer;
 .edit-booking-button{
     margin-top: .5vh;
     margin-bottom: .3vh;
-    padding-left: 2.2vw
 }
 
-.cancel-booking{
-    padding-left: 3.56vw
+.previous-trips-container{
+    margin-bottom: 3vh;
 }
+
+.booking-dates {
+    font-size: .93vw;
+    word-wrap: break-word;
+    margin-top: .6vh;
+  }

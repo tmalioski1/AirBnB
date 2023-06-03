@@ -12,8 +12,7 @@ const dispatch = useDispatch();
 const history = useHistory();
 const [isLoading, setIsLoading] = useState(true)
 const [errors, setErrors] = useState([])
-const [showEditBooking, setShowEditBooking] = useState(false);
-const [editBookingId, setEditBookingId] = useState('')
+const [selectedBookingId, setSelectedBookingId] = useState(null);
 
 
 
@@ -107,8 +106,11 @@ const handleDeletion = async (id) => {
 };
 
 const handleEditBooking = (id) => {
-  setShowEditBooking(true);
-  setEditBookingId(id);
+  if (selectedBookingId === id) {
+    setSelectedBookingId(null);
+  } else {
+    setSelectedBookingId(id);
+  }
 };
 
      return (
@@ -163,16 +165,18 @@ const handleEditBooking = (id) => {
         </NavLink>
         <div className='booking-city-dates'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
-        <div className='city-state'>{booking?.Spot?.city}</div>
+        <div className='booking-city'>{booking?.Spot?.city}</div>
         <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
         </NavLink>
         </div>
         </div>
         <div className='future-extras'>
-         <button onClick={() => handleEditBooking(booking?.id)} className='edit-booking-button'>Change the Dates</button>
-         {showEditBooking && <EditBooking bookingId={editBookingId} />}
-         <button onClick={() => handleDeletion(booking?.id)} className='cancel-booking'>Cancel Trip</button>
-         </div>
+      <button onClick={() => handleEditBooking(booking?.id)} className='edit-booking-button'>
+        {selectedBookingId === booking?.id ? 'Close' : 'Change the Dates'}
+      </button>
+      {selectedBookingId === booking?.id && <EditBooking bookingId={booking?.id} />}
+      <button onClick={() => handleDeletion(booking?.id)} className='cancel-booking'>Cancel Trip</button>
+    </div>
          </div>
 
       ))}
@@ -189,9 +193,13 @@ const handleEditBooking = (id) => {
     <div className='individual-booking'>
       <NavLink to={`/spots/${booking?.Spot?.id}`}>
     <img className='booking-image' src={booking?.Spot?.previewImage}></img>
-    <div className='city-state'>{booking?.Spot?.city}</div>
+    </NavLink>
+    <div className='booking-city-dates'>
+        <NavLink to={`/spots/${booking?.Spot?.id}`}>
+    <div className='booking-city'>{booking?.Spot?.city}</div>
     <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
     </NavLink>
+        </div>
     </div>
     ))}
    </div>
