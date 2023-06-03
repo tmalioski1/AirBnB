@@ -112,17 +112,23 @@ const handleEditBooking = (id) => {
 };
 
      return (
-      <>
-   <h1>Trips</h1>
+    <div className= 'trips-container'>
+   <h1 className='trips-header'>Trips</h1>
    <div className='bookings-container'>
    {(currentBookings.length === 0 && futureBookings.length === 0) ? (
-    <>
+
+    <div className='no-trips-container'>
+    <div className='no-trips-container-info'>
     <div className="no-booking-line1">No trips booked...yet!</div>
-    <div className="no-booking-line">
-      Time to dust off your bags and start planning your next adventure
+    <div className="no-booking-line2">
+      Time to dust off your bags and start planning your <br></br>next adventure
     </div>
     <button className='start-searching' onClick={() => history.push("/")}>Start Searching</button>
-  </>
+    </div>
+    <div className='no-trips-pic-container'>
+    <img className='no-trips-pic' src='https://a0.muscache.com/im/pictures/d727f355-3f10-44b5-9750-d1efca2438fc.jpg?im_w=1200'></img>
+    </div>
+  </div>
         ) : (
           <>
    {currentBookings.length !== 0 &&
@@ -172,7 +178,8 @@ const handleEditBooking = (id) => {
    </div>
 }
    </div>
-   </>
+   </div>
+
      );
    }
 
