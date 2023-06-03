@@ -33,10 +33,13 @@ function SignupFormModal() {
     <>
       <form className= "signup-form" onSubmit={handleSubmit}>
       <h1 className="signup-form-header">Sign Up</h1>
+      <div className= 'error-div'>
         <ul>
           {errors.map((error, idx) => <div className="signup-error" key={idx}>{error}</div>)}
         </ul>
-
+        </div>
+       <div className='signup-inputs-button'>
+       <div className='signup-inputs'>
           <input
             type="text"
             value={email}
@@ -86,8 +89,9 @@ function SignupFormModal() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-
+        </div>
         <button className = "signup-button" type="submit">Sign Up</button>
+        </div>
       </form>
     </>
   );

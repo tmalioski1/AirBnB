@@ -17,27 +17,57 @@
 }
 
 .login-errors {
-    font-size: 1.3vw;
+    font-size: 1vw;
+}
 
+.login-form input {
+    width: 14vw;
+    height: 3vh
 }
 .login-button {
     border-radius: 50px;
-    color: black;
-    background-color: white;
-    width: 15vw
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+       width: 15vw;
+       font-size: 1vw;
+       padding-top: 1vh;
+       padding-bottom: 1vh;
 }
 
 .login-button:hover {
-    background-color: red;
+    cursor: pointer;
 }
 
 .demo-user-button {
     border-radius: 50px;
-    color: black;
-    background-color: white;
-    width: 15vw
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+       width: 15vw;
+       font-size: 1vw;
+       padding-top: 1vh;
+       padding-bottom: 1vh;
 }
 
 .demo-user-button:hover {
-    background-color: red;
+    cursor: pointer;
 }
