@@ -156,17 +156,26 @@ const handleEditBooking = (id) => {
       <h2>Your upcoming bookings</h2>
       <div className='trip-array'>
       {futureBookings.map(booking => (
+        <div className='individual-booking-upcoming-extra'>
         <div className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <img className='booking-image' src={booking?.Spot?.previewImage}></img>
+        </NavLink>
+        <div className='booking-city-dates'>
+        <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <div className='city-state'>{booking?.Spot?.city}</div>
         <div className='booking-dates'>{formatDate(booking?.startDate, booking?.endDate)}</div>
         </NavLink>
-        <button onClick={() => handleEditBooking(booking?.id)} className='edit-booking-button'>Change the Dates</button>
-        <button onClick={() => handleDeletion(booking?.id)} className='cancel-booking'>Cancel Trip</button>
         </div>
+        </div>
+        <div className='future-extras'>
+         <button onClick={() => handleEditBooking(booking?.id)} className='edit-booking-button'>Change the Dates</button>
+         {showEditBooking && <EditBooking bookingId={editBookingId} />}
+         <button onClick={() => handleDeletion(booking?.id)} className='cancel-booking'>Cancel Trip</button>
+         </div>
+         </div>
+
       ))}
-      {showEditBooking && <EditBooking bookingId={editBookingId} />}
     </div>
     </div>
     }

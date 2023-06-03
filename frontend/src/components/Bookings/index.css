@@ -87,6 +87,7 @@
     width: 5.2vw;
     height: 9vh;
     border-radius: 9px;
+    margin-right: .9vw;
 }
 
 .current-trips-container{
@@ -107,5 +108,71 @@
 .individual-booking {
     display: flex;
     flex-direction: row;
-    margin-right: 3vw;
+    margin-right: 4.5vw;
+}
+
+.booking-city-dates {
+display:flex;
+flex-direction: column;
+justify-content: center;
+}
+
+.booking-city-dates a{
+    text-decoration: none;
+}
+
+.booking-city{
+    font-size: 1.1vw;
+    font-weight: 500
+}
+
+.individual-booking-upcoming-extra{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.future-extras{
+    margin-top: .5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.future-extras button{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+      color: white;
+      font-size: 1vw;
+      padding-top: 1.5vh;
+      padding-bottom: 1.5vh;
+}
+
+.future-extras button:hover{
+cursor: pointer;
+}
+
+
+
+
+.edit-booking-button{
+    margin-top: .5vh;
+    margin-bottom: .3vh;
+    padding-left: 2.2vw
+}
+
+.cancel-booking{
+    padding-left: 3.56vw
 }
