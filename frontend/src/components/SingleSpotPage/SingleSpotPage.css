@@ -166,14 +166,27 @@
 
 .review-delete {
     border-radius: 50px;
-    color: black;
-    background-color: white;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+      width: 18.5%;
+      padding: 1vh 0 1vh 0
+
 }
 
 
 .review-delete:hover {
 
-    background-color: red;
+cursor: pointer;
 }
 
 

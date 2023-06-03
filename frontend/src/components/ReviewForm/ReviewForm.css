@@ -17,14 +17,30 @@
 
 .review-form> input {
     margin-top: .5vw;
-    width: 30vw;
-    height: 1.3vw;
+    width: 29.5vw;
+    height: 3vh;
 }
 
 .review-form> button {
-    margin-top: .5vw;
+    margin-top: 1.5vh;
     width: 30.8vw;
-    padding: 0px;
+    margin-bottom: 2vh;
+     border-radius: 50px;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+    font-size: 1vw;
+         padding-top: 1vh;
+       padding-bottom: 1vh;
 }
 
 .review-form-header {
@@ -32,7 +48,7 @@
 }
 
 .review-form-errors {
-    margin-bottom: 2vh;
+    margin-bottom: 1.8vh;
 }
 
 .review-button {
