@@ -92,6 +92,7 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
                      min={startDate || getCurrentDate()}
                      />
 </div>
+  <div className='booking-submit-button-container'>
                   {sessionUser ? (
                           <button type="submit" className="booking-submit-button">
                             Reserve
@@ -103,6 +104,7 @@ function BookingForm({spotsObj, spotId, sessionUser}) {
                         />
                         )
                         }
+                        </div>
         </form>
       </>
     );
