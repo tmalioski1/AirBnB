@@ -6,20 +6,30 @@ import EditBooking from './EditBooking'
 import './index.css'
 
 function Bookings() {
+const sessionUser = useSelector(state => state?.session?.user);
+console.log('this is the sessionUser---', sessionUser)
 const bookingsObj = useSelector(state =>state?.bookings?.bookings)
 const bookings = Object.values(bookingsObj)
 const dispatch = useDispatch();
 const history = useHistory();
-const [isLoading, setIsLoading] = useState(true)
-const [errors, setErrors] = useState([])
 const [selectedBookingId, setSelectedBookingId] = useState(null);
+const [userKey, setUserKey] = useState(sessionUser.id);
 
 
 
 useEffect(() => {
-  dispatch(getCurrentBookings()).then(() => setIsLoading(false))
+  dispatch(getCurrentBookings())
   document.title = 'Your Trips'
-}, [dispatch])
+  const hasNonMatchingBooking = bookings.some(booking => booking.userId !== sessionUser.id);
+  if (hasNonMatchingBooking) {
+    // Refresh the page if there is any non-matching booking
+    history.go(0);
+  }
+}, [dispatch, sessionUser.id, history])
+
+useEffect(() => {
+  setUserKey(sessionUser?.id || null);
+}, [sessionUser]);
 
 const prevBookings = bookings.filter(booking => {
   const currentDate = new Date();
@@ -114,7 +124,7 @@ const handleEditBooking = (id) => {
 };
 
      return (
-    <div className= 'trips-container'>
+    <div className= 'trips-container' key={userKey}>
    <h1 className='trips-header'>Trips</h1>
    <div className='bookings-container'>
    {(currentBookings.length === 0 && futureBookings.length === 0) ? (
@@ -138,7 +148,7 @@ const handleEditBooking = (id) => {
       <h2>{currentBookings.length === 1 ? 'Your current booking - enjoy!' : 'Your current bookings - enjoy!'}</h2>
       <div className='trip-array'>
       {currentBookings.map(booking => (
-        <div className='individual-booking'>
+        <div key={booking.id} className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <img className='booking-image' src={booking?.Spot?.previewImage}></img>
         </NavLink>
@@ -158,7 +168,7 @@ const handleEditBooking = (id) => {
       <h2>Your upcoming bookings</h2>
       <div className='trip-array'>
       {futureBookings.map(booking => (
-        <div className='individual-booking-upcoming-extra'>
+        <div key={booking.id} className='individual-booking-upcoming-extra'>
         <div className='individual-booking'>
         <NavLink to={`/spots/${booking?.Spot?.id}`}>
         <img className='booking-image' src={booking?.Spot?.previewImage}></img>
@@ -190,7 +200,7 @@ const handleEditBooking = (id) => {
     <h2 className='where-you-been'>Where you've been</h2>
     <div className='trip-array'>
     {prevBookings.map(booking => (
-    <div className='individual-booking'>
+    <div key={booking.id} className='individual-booking'>
       <NavLink to={`/spots/${booking?.Spot?.id}`}>
     <img className='booking-image' src={booking?.Spot?.previewImage}></img>
     </NavLink>
