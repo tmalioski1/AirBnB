@@ -13,7 +13,7 @@ function SpotForm() {
   const [country, setCountry] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("")
-  const [price, setPrice] = useState(0)
+  const [price, setPrice] = useState('')
   const [spotImage, setSpotImage] = useState('')
   const sessionUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState([])
@@ -130,6 +130,7 @@ const createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage)).catch(
             type="number"
             value={price}
             placeholder="Price"
+            min={1}
             onChange={(e) => setPrice(e.target.value)}
             required
           />
