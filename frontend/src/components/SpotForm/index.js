@@ -15,49 +15,11 @@ function SpotForm() {
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState(0)
   const [spotImage, setSpotImage] = useState('')
-  const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);
-
-  useEffect(() => {
-    const errors = [];
-
-    if (!sessionUser) {
-      errors.push('User must be logged in to create spot')
-    }
-    if (address.length === 0) {
-      errors.push('Street address is required');
-    }
-    if (city.length === 0) {
-      errors.push('City is required');
-    }
-    if (state.length === 0) {
-      errors.push('State is required');
-    }
-    if (country.length === 0) {
-      errors.push('Country is required');
-    }
-    if (name.length === 0) {
-      errors.push('Name is required');
-    }
-    if (description.length === 0) {
-      errors.push('Description is required');
-    }
-    if (!price || price <= 0) {
-      errors.push('Price per day is required');
-    }
-
-    if (!Number(price)) {
-      errors.push('Price must be a number')
-    }
-
-    if (spotImage.length === 0) {
-      errors.push('Spot image must be included')
-    }
+  const [errors, setErrors] = useState([])
 
 
 
-    setValidationErrors(errors);
-  }, [sessionUser, address, city, state, country, name, description, price, spotImage]);
 
 
   const handleSubmit = async (e) => {
@@ -79,11 +41,19 @@ function SpotForm() {
       url: spotImage,
       preview: true
     }
-
-    let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
-    if (createdSpot) {
+const createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage)).catch(
+  async (res) => {
+    const data = await res.json()
+    if(data&&data.errors) setErrors(data.errors)
+  }
+)
+     if (createdSpot) {
       history.push(`/spots/${createdSpot.id}`);
-    }
+     }
+    // let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
+    // if (createdSpot) {
+    //   history.push(`/spots/${createdSpot.id}`);
+    // }
   };
 
   return (
@@ -91,11 +61,15 @@ function SpotForm() {
         <form className="spot-form"
         onSubmit={handleSubmit}>
         <h1 className='spot-form-header'>Let's Add Your Home</h1>
-        <ul className="spot-form-errors">
-          {validationErrors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
+        {errors.length > 0 && (
+        <div className="error-messages">
+          <ul>
+            {errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
           <input
             type="text"

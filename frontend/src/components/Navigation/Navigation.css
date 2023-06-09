@@ -32,6 +32,22 @@
     font-family: "Figtree", sans-serif;
 }
 
+
+
+.Mimic-Spot-Link > button {
+    font-size: 1.5vw;
+    text-decoration: none;
+    line-height: 1vh;
+    font-family: "Figtree", sans-serif;
+    /* Additional button-like styling */
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white;
+}
+
 .profile-dropdown {
     border-radius: 50px;
     width: 4vw;
