@@ -126,15 +126,19 @@ const createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage)).catch(
           />
 
 
-          <input
-            type="number"
-            value={price}
-            placeholder="Price"
-            min={1}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-
+<input
+  type="text"
+  value={price}
+  placeholder="Price"
+  onChange={(e) => {
+    const enteredValue = e.target.value;
+    const regex = /^\d*(\.\d{0,2})?$/; // Regex pattern to allow up to two decimal places
+    if (regex.test(enteredValue) || enteredValue === "") {
+      setPrice(enteredValue);
+    }
+  }}
+  required
+/>
 
           <input
             type="url"
