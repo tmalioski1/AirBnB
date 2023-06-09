@@ -113,11 +113,22 @@
 
 .LogIn-SignUp > button {
     border-radius: 50px;
-    color: black;
-    background-color: white;
+    color: white;
+    background: linear-gradient(
+        90deg,
+        #d70464,
+        #d90661,
+        #dc0a5e,
+        #de0d5b,
+        #e01158,
+        #e21555,
+        #e31952,
+        #e51d4f
+      );
+
 }
 
 .LogIn-SignUp > button:hover {
 
-    background-color: red;
+cursor: pointer
 }

@@ -41,6 +41,7 @@ function SpotForm() {
       url: spotImage,
       preview: true
     }
+
 const createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage)).catch(
   async (res) => {
     const data = await res.json()

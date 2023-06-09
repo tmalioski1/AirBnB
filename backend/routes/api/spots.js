@@ -166,9 +166,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     throw new Error("Spot must belong to the current user");
   }
 
-  // Validate the image URL using the isImageURL function
   const isImage = await isImageURL(url);
-  console.log('this is the url---', url)
   if (!isImage) {
     res.status(400);
     return res.json({
@@ -610,6 +608,7 @@ router.post('/', requireAuth, async (req, res) => {
       ]
     })
   }
+
 
 
   const newSpot = await Spot.create({
