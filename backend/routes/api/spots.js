@@ -9,6 +9,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
+const isImageURL = require('image-url-validator').default;
 
 
 //GET all Bookings for a Spot based on a Spot Id//
@@ -102,10 +103,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       ]
      })
   }
-  // const { user } = req;
-  // if (user.id === spot.ownerId) {
-  //    throw new Error("spot must not belong to the current user")
-  // }
 
   if (end <= start) {
     res.status(400);
@@ -152,27 +149,45 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 //Create an Image for a Spot//
 router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
-  const spot = await Spot.findByPk(req.params.spotId)
+  const spot = await Spot.findByPk(req.params.spotId);
+
   if (!spot) {
     res.status(404);
     return res.json({
       "message": "Spot couldn't be found",
       "statusCode": 404
-    })
-  }
-  const { user } = req;
-  if (user.id !== spot.ownerId) {
-     throw new Error("spot must belong to the current user")
+    });
   }
 
-  let spotId = spot.id
+  const { user } = req;
+
+  if (user.id !== spot.ownerId) {
+    throw new Error("Spot must belong to the current user");
+  }
+
+  const isImage = await isImageURL(url);
+  if (!isImage) {
+    res.status(400);
+    return res.json({
+      "message": "Invalid image URL",
+      "statusCode": 400,
+      "errors": ['Invalid image URL- please choose another image']
+    });
+  }
+
+  let spotId = spot.id;
   const newImage = await SpotImage.create({
     spotId,
     url,
     preview,
+  });
 
-  })
-  return res.json({ "id": newImage.id, "url": newImage.url, "preview": newImage.preview })
+  return res.json({
+    "id": newImage.id,
+    "url": newImage.url,
+    "preview": newImage.preview
+  });
+
 });
 
 //Get Reviews by SpotId//
@@ -574,7 +589,7 @@ router.get('/', async (req, res) => {
 
 //Create a Spot//
 router.post('/', requireAuth, async (req, res) => {
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price, imageUrl, imagePreview } = req.body;
   if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
     return res.status(400).json({
       "message": "Validation Error",
@@ -594,6 +609,7 @@ router.post('/', requireAuth, async (req, res) => {
   }
 
 
+
   const newSpot = await Spot.create({
 
     ownerId: req.user.id,
@@ -607,6 +623,7 @@ router.post('/', requireAuth, async (req, res) => {
     description,
     price
   })
+  
   res.status(201)
   return res.json(newSpot)
 }

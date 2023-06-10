@@ -11,12 +11,9 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
-  const history = useHistory()
 
-  const getReviews = (e) => {
-    e.preventDefault();
-    history.push('/userReviews')
-  }
+
+
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -44,13 +41,22 @@ function Navigation({ isLoaded }) {
     );
   }
 
+  const mimicSpotLink = sessionUser ? (
+    <NavLink className='ActualLink' to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
+  ) : (
+    <OpenModalButton
+      buttonText="AirBnb-Mimic Your Spot"
+      modalComponent={<LoginFormModal />}
+      id='ActualLink-logout'
+    />
+  );
   return (
     <div className='NavBar'>
       <div className='AirBnbLogoHomeLink'>
         <NavLink exact to="/"><i className="fa-brands fa-airbnb fa-2xl"></i></NavLink>
       </div>
       <div className="Mimic-Spot-Link">
-        <NavLink className='ActualLink' to={'/spots/new'}>AirBnb-Mimic Your Spot</NavLink>
+        {mimicSpotLink}
       </div>
       {isLoaded && sessionLinks}
     </div>

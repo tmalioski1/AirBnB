@@ -13,77 +13,55 @@ function SpotForm() {
   const [country, setCountry] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("")
-  const [price, setPrice] = useState(0)
+  const [price, setPrice] = useState('')
   const [spotImage, setSpotImage] = useState('')
-  const [validationErrors, setValidationErrors] = useState([]);
   const sessionUser = useSelector(state => state.session.user);
-
-  useEffect(() => {
-    const errors = [];
-
-    if (!sessionUser) {
-      errors.push('User must be logged in to create spot')
-    }
-    if (address.length === 0) {
-      errors.push('Street address is required');
-    }
-    if (city.length === 0) {
-      errors.push('City is required');
-    }
-    if (state.length === 0) {
-      errors.push('State is required');
-    }
-    if (country.length === 0) {
-      errors.push('Country is required');
-    }
-    if (name.length === 0) {
-      errors.push('Name is required');
-    }
-    if (description.length === 0) {
-      errors.push('Description is required');
-    }
-    if (!price || price <= 0) {
-      errors.push('Price per day is required');
-    }
-
-    if (!Number(price)) {
-      errors.push('Price must be a number')
-    }
-
-    if (spotImage.length === 0) {
-      errors.push('Spot image must be included')
-    }
+  const [errors, setErrors] = useState([])
 
 
 
-    setValidationErrors(errors);
-  }, [sessionUser, address, city, state, country, name, description, price, spotImage]);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newSpot = {
-      address,
-      city,
-      state,
-      country,
-      'lat': 50,
-      'lng': 100,
-      name,
-      description,
-      price,
+    const image = new Image();
+    image.src = spotImage;
+
+    image.onload = () => {
+      if (image.width === 0 || image.height === 0) {
+        setErrors(['Invalid image URL - please choose another image']);
+      } else {
+        const newSpot = {
+          address,
+          city,
+          state,
+          country,
+          lat: 50,
+          lng: 100,
+          name,
+          description,
+          price,
+        };
+
+        const newSpotImage = {
+          url: spotImage,
+          preview: true,
+        };
+
+        dispatch(createOneSpot(newSpot, newSpotImage))
+          .then((createdSpot) => {
+            history.push(`/spots/${createdSpot.id}`);
+          })
+          .catch((error) => {
+            setErrors([error.message]);
+          });
+      }
     };
 
-    const newSpotImage = {
-      url: spotImage,
-      preview: true
-    }
-
-    let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
-    if (createdSpot) {
-      history.push(`/spots/${createdSpot.id}`);
-    }
+    image.onerror = () => {
+      setErrors(['Invalid image URL - please choose another image']);
+    };
   };
 
   return (
@@ -91,11 +69,15 @@ function SpotForm() {
         <form className="spot-form"
         onSubmit={handleSubmit}>
         <h1 className='spot-form-header'>Let's Add Your Home</h1>
-        <ul className="spot-form-errors">
-          {validationErrors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
+        {errors.length > 0 && (
+        <div className="error-messages">
+          <ul>
+            {errors.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
           <input
             type="text"
@@ -151,14 +133,19 @@ function SpotForm() {
           />
 
 
-          <input
-            type="number"
-            value={price}
-            placeholder="Price"
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-
+<input
+  type="text"
+  value={price}
+  placeholder="Price"
+  onChange={(e) => {
+    const enteredValue = e.target.value;
+    const regex = /^\d*(\.\d{0,2})?$/; // Regex pattern to allow up to two decimal places
+    if (regex.test(enteredValue) || enteredValue === "") {
+      setPrice(enteredValue);
+    }
+  }}
+  required
+/>
 
           <input
             type="url"
