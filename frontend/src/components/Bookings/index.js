@@ -7,7 +7,6 @@ import './index.css'
 
 function Bookings() {
 const sessionUser = useSelector(state => state?.session?.user);
-console.log('this is the sessionUser---', sessionUser)
 const bookingsObj = useSelector(state =>state?.bookings?.bookings)
 const bookings = Object.values(bookingsObj)
 const dispatch = useDispatch();
@@ -22,7 +21,6 @@ useEffect(() => {
   document.title = 'Your Trips'
   const hasNonMatchingBooking = bookings.some(booking => booking.userId !== sessionUser.id);
   if (hasNonMatchingBooking) {
-    // Refresh the page if there is any non-matching booking
     history.go(0);
   }
 }, [dispatch, sessionUser.id, history])

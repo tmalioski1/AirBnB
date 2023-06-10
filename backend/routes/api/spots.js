@@ -10,7 +10,6 @@ const { validateLogin } = require('./session')
 
 const sequelize = require("sequelize");
 const isImageURL = require('image-url-validator').default;
-console.log('this isImageURL', isImageURL)
 
 
 //GET all Bookings for a Spot based on a Spot Id//
@@ -175,7 +174,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
       "errors": ['Invalid image URL- please choose another image']
     });
   }
-if (isImage){
+
   let spotId = spot.id;
   const newImage = await SpotImage.create({
     spotId,
@@ -188,7 +187,7 @@ if (isImage){
     "url": newImage.url,
     "preview": newImage.preview
   });
-}
+
 });
 
 //Get Reviews by SpotId//
@@ -590,7 +589,7 @@ router.get('/', async (req, res) => {
 
 //Create a Spot//
 router.post('/', requireAuth, async (req, res) => {
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price, imageUrl, imagePreview } = req.body;
   if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
     return res.status(400).json({
       "message": "Validation Error",
@@ -624,6 +623,7 @@ router.post('/', requireAuth, async (req, res) => {
     description,
     price
   })
+  
   res.status(201)
   return res.json(newSpot)
 }

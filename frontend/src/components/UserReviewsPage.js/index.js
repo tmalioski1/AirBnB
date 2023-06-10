@@ -8,15 +8,11 @@ const dispatch = useDispatch();
 const reviewsObj = useSelector(state => state.reviews.user)
 const reviews = Object.values(reviewsObj)
 const [validationErrors, setValidationErrors] = useState([]);
-console.log(reviews)
 
 useEffect(() => {
     dispatch(getAllReviewsForUser())
   }, [dispatch])
 
-    // if (reviews.length === 0) {
-    //   return "You don't have a review yet, go to a spot's page to write a review!"
-    // }
 
     useEffect(() => {
       const errors = [];

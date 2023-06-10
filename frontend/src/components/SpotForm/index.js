@@ -25,36 +25,43 @@ function SpotForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newSpot = {
-      address,
-      city,
-      state,
-      country,
-      'lat': 50,
-      'lng': 100,
-      name,
-      description,
-      price,
+    const image = new Image();
+    image.src = spotImage;
+
+    image.onload = () => {
+      if (image.width === 0 || image.height === 0) {
+        setErrors(['Invalid image URL - please choose another image']);
+      } else {
+        const newSpot = {
+          address,
+          city,
+          state,
+          country,
+          lat: 50,
+          lng: 100,
+          name,
+          description,
+          price,
+        };
+
+        const newSpotImage = {
+          url: spotImage,
+          preview: true,
+        };
+
+        dispatch(createOneSpot(newSpot, newSpotImage))
+          .then((createdSpot) => {
+            history.push(`/spots/${createdSpot.id}`);
+          })
+          .catch((error) => {
+            setErrors([error.message]);
+          });
+      }
     };
 
-    const newSpotImage = {
-      url: spotImage,
-      preview: true
-    }
-
-const createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage)).catch(
-  async (res) => {
-    const data = await res.json()
-    if(data&&data.errors) setErrors(data.errors)
-  }
-)
-     if (createdSpot) {
-      history.push(`/spots/${createdSpot.id}`);
-     }
-    // let createdSpot = await dispatch(createOneSpot(newSpot, newSpotImage));
-    // if (createdSpot) {
-    //   history.push(`/spots/${createdSpot.id}`);
-    // }
+    image.onerror = () => {
+      setErrors(['Invalid image URL - please choose another image']);
+    };
   };
 
   return (
