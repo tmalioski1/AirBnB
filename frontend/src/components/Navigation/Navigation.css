@@ -17,6 +17,7 @@
     padding-top: 1.5%;
     padding-bottom: 1.5%;
 
+
 }
 
 .AirBnbLogoHomeLink{
@@ -48,10 +49,17 @@
     background-color: white;
 }
 
-.profile-dropdown {
-    border-radius: 50px;
-    width: 4vw;
+.profile-button {
+    border-radius: 55px;
+    height: 5vh;
+    width: 5vw;
     background-color: white;
+    margin-right: 7.12vw;
+    border-color: #989292;
+}
+
+.profile-button:hover {
+cursor: pointer;
 }
 
 
@@ -72,12 +80,8 @@
     font: inherit;
     text-decoration: none;
     cursor: pointer;
+    font-size: 1vw;
   }
-
-.log-out-button:hover{
-    text-decoration: underline;
-}
-
 
 
 
@@ -93,18 +97,50 @@
     background-color: red;
 }
 
-.profile-button-reviews {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin-right: 7.2%;
-    margin-bottom: 0;
-    margin-top: 0;
+#bars{
+    margin-right: .5vw;
 }
 
 .drop-down-elements {
-    position: relative;
-    right: 9vw;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    right: 7%;
+    border: 1px solid lightgrey;
+    background-color: white;
+    height: 25vh;
+    width: 13vw;
+    cursor: default;
+    border-radius: 15px;
+    box-shadow: 10px red;
+}
+
+.all-but-logout{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3vh;
+    width: 176%;
+    border-bottom: 1px solid lightgray;
+
+}
+
+.all-but-logout div{
+font-weight: bold;
+font-size: 1vw;
+}
+
+#trippy-trips{
+    padding-bottom: 1vh;
+}
+
+.profile-input{
+    margin-left: 1vw;
+    margin-top: 2vh
+}
+
+#dropdown-profile-name{
+margin-top: 1.5vh
 }
 
 .LogIn-SignUp {
