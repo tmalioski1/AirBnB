@@ -45,23 +45,27 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu} className={'profile-dropdown'}>
+      <button onClick={openMenu} className={'profile-button'}>
+      <i id='bars' className="fa-solid fa-bars"></i>
         <i className="fas fa-user-circle" />
       </button>
+      {showMenu &&
       <div className="drop-down-elements">
-      <ul className={ulClassName}  ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
+      <div className={ulClassName}  ref={ulRef}>
+        <div className='all-but-logout'>
+        <div id='dropdown-profile-name' className='profile-input'>{user.username}</div>
+        <div className='profile-input'>{user.firstName} {user.lastName}</div>
+        <div className='profile-input'>{user.email}</div>
+        <div  id= 'trippy-trips'className='profile-input'>
         <NavLink exact to='/trips' className="your-trips-navlink" onClick={goToTrips}>Trips</NavLink>
-
-        </li>
-        <li>
+        </div>
+        </div>
+        <div className='profile-input'>
           <button className="log-out-button" onClick={logout}>Log Out</button>
-        </li>
-      </ul>
+        </div>
       </div>
+      </div>
+}
     </>
   );
 }

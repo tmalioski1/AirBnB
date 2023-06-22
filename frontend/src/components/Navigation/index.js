@@ -17,13 +17,9 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ul className='profile-button-reviews'>
         <div>
           <ProfileButton user={sessionUser} />
         </div>
-
-      </ul>
-
 
     );
   } else {
