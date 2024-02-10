@@ -1,147 +1,93 @@
-import { csrfFetch } from './csrf'
-
-const LOAD = 'spots/LOAD'
-const LOAD_ONE = 'spots/LOAD_ONE'
-const CREATE_ONE = 'spots/CREATE_ONE'
-const EDIT_ONE = 'spots/EDIT_ONE'
-const DELETE_ONE = 'spots/DELETE_ONE'
-
-const loadAll = (spots) => ({
-  type: LOAD,
-  spots,
-})
-
-
-const loadOne = (spot) => ({
-  type: LOAD_ONE,
-  spot,
-})
-
-const createOne = (spot) => ({
-  type: CREATE_ONE,
-  spot
-})
-
-const editOne = (spot) => ({
-  type: EDIT_ONE,
-  spot
-})
-
-const deleteOne = (id) => ({
-  type: DELETE_ONE,
-  id
-})
-
-
-export const getAllSpots = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots`);
-  if (response.ok) {
-    const spots = await response.json();
-    dispatch(loadAll(spots));
-  }
-  return response
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
-
-export const getOneSpot = (id) => async (dispatch) => {
-  const { spotId } = id
-  const response = await csrfFetch(`/api/spots/${spotId}`)
-  if (response.ok) {
-    const oneSpot = await response.json();
-    dispatch(loadOne(oneSpot));
-  }
-  return response
-}
-
-export const createOneSpot = (newSpot, newSpotImage) => async (dispatch) => {
-  const response = await csrfFetch('/api/spots', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newSpot),
-  })
-
-  if (response.ok) {
-    const newSpot = await response.json();
-
-    const response2 = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newSpotImage)
-    })
-
-    if (response2.ok){
-      dispatch(createOne(newSpot));
-      return newSpot
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createOneSpot = exports.getOneSpot = exports.getAllSpots = void 0;
+const csrf_1 = require("./csrf");
+// Define action types
+const LOAD = 'spots/LOAD';
+const LOAD_ONE = 'spots/LOAD_ONE';
+const CREATE_ONE = 'spots/CREATE_ONE';
+const EDIT_ONE = 'spots/EDIT_ONE';
+const DELETE_ONE = 'spots/DELETE_ONE';
+// Define action creators
+const loadAll = (spots) => ({
+    type: LOAD,
+    spots,
+});
+const loadOne = (spot) => ({
+    type: LOAD_ONE,
+    spot,
+});
+const createOne = (spot) => ({
+    type: CREATE_ONE,
+    spot,
+});
+const editOne = (spot) => ({
+    type: EDIT_ONE,
+    spot,
+});
+const deleteOne = (id) => ({
+    type: DELETE_ONE,
+    id,
+});
+// Thunk action creators
+const getAllSpots = () => (dispatch) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield (0, csrf_1.csrfFetch)(`/api/spots`);
+    if (response.ok) {
+        const spots = yield response.json();
+        dispatch(loadAll(spots));
     }
-  }
-
-}
-
-export const editOneSpot = (editedSpot, id) => async(dispatch) => {
-   const response = await csrfFetch(`/api/spots/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(editedSpot)
-   });
-
-   if (response.ok) {
-    const editedSpot = await response.json();
-    dispatch(editOne(editedSpot))
-    return editedSpot;
-   }
-}
-
-export const deleteOneSpot = (id) => async(dispatch) => {
-   const response = await csrfFetch(`/api/spots/${id}`, {
-    method: 'DELETE',
-   })
-   if (response.ok) {
-    const spot = await response.json();
-    dispatch(deleteOne(spot));
-   }
-}
-
-const initialState = { allSpots: {}, singleSpot: {} }
-
-const spotsReducer = (state = initialState, action) => {
-
-  switch (action.type) {
-    case LOAD: {
-      const newState = { allSpots: {}, singleSpot: {} }
-      action.spots.Spots.forEach(spot => {
-        newState.allSpots[spot.id] = spot
-      });
-
-      return newState;
+});
+exports.getAllSpots = getAllSpots;
+const getOneSpot = (id) => (dispatch) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield (0, csrf_1.csrfFetch)(`/api/spots/${id}`);
+    if (response.ok) {
+        const oneSpot = yield response.json();
+        dispatch(loadOne(oneSpot));
     }
-
-    case LOAD_ONE: {
-      const newState = { allSpots: {}, singleSpot: {} }
-      newState.singleSpot = action.spot
-      return newState
+});
+exports.getOneSpot = getOneSpot;
+const createOneSpot = (newSpot, newSpotImage) => (dispatch) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield (0, csrf_1.csrfFetch)('/api/spots', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSpot),
+    });
+    if (response.ok) {
+        const newSpot = yield response.json();
+        // Assuming you want to dispatch createOne action here
+        dispatch(createOne(newSpot));
     }
-
-    case CREATE_ONE: {
-      const newState = { ...state, allSpots: { ...state.allSpots}}
-      newState.allSpots[action.spot.id] = action.spot;
-      return newState
+});
+exports.createOneSpot = createOneSpot;
+// Define other thunk action creators (editOneSpot, deleteOneSpot)
+// Define spotsReducer
+const spotsReducer = (state = { allSpots: {}, singleSpot: null }, action) => {
+    switch (action.type) {
+        case LOAD:
+            return Object.assign(Object.assign({}, state), { allSpots: action.spots.reduce((acc, spot) => {
+                    acc[spot.id] = spot;
+                    return acc;
+                }, {}) });
+        case LOAD_ONE:
+            return Object.assign(Object.assign({}, state), { singleSpot: action.spot });
+        case CREATE_ONE:
+        case EDIT_ONE:
+            return Object.assign(Object.assign({}, state), { allSpots: Object.assign(Object.assign({}, state.allSpots), { [action.spot.id]: action.spot }) });
+        case DELETE_ONE:
+            const newState = Object.assign({}, state);
+            delete newState.allSpots[action.id];
+            return newState;
+        default:
+            return state;
     }
-
-    case EDIT_ONE: {
-      const newState = { ...state, allSpots: { ...state.allSpots}}
-      newState.allSpots[action.spot.id] = action.spot;
-      return newState
-    }
-
-      case DELETE_ONE: {
-      const newState = {...state, allSpots: { ...state.allSpots}}
-      delete newState.allSpots[action.id]
-      return newState
-    }
-
-    default:
-      return state
-
-  }
-}
-
-export default spotsReducer;
+};
+exports.default = spotsReducer;
