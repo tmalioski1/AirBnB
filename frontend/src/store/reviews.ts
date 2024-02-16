@@ -1,9 +1,10 @@
-import { csrfFetch } from './csrf'
-import { Spot } from './spots'
-import { User } from './session'
+import { csrfFetch } from './csrf';
+import { Spot } from './spots';
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
+import { User } from './session';
 
-
-interface Reviews {
+interface Review {
   id: number;
   spotId: number;
   userId: number;
@@ -11,118 +12,125 @@ interface Reviews {
   stars: number;
 }
 
-const LOAD = 'reviews/LOAD'
-const LOAD_USER_REVIEWS = 'reviews/LOAD_USER_REVIEWS'
-const CREATE_ONE = 'reviews/CREATE_ONE'
-const DELETE_ONE = 'reviews/DELETE_ONE'
+// Define action types
+const LOAD = 'reviews/LOAD';
+const LOAD_USER_REVIEWS = 'reviews/LOAD_USER_REVIEWS';
+const CREATE_ONE = 'reviews/CREATE_ONE';
+const DELETE_ONE = 'reviews/DELETE_ONE';
 
-const loadAllReviewsForSpot = (reviews: Reviews[]) => ({
+// Define action creators
+const loadAllReviewsForSpot = (reviews: Review[]): { type: typeof LOAD; reviews: Review[] } => ({
   type: LOAD,
   reviews,
-})
+});
 
-const loadAllReviewsForUser = (reviews: Reviews[]) => ({
+const loadAllReviewsForUser = (reviews: Review[]): { type: typeof LOAD_USER_REVIEWS; reviews: Review[] } => ({
   type: LOAD_USER_REVIEWS,
   reviews,
-})
+});
 
-const createReview = (review: Reviews) => ({
+const createReview = (review: Review): { type: typeof CREATE_ONE; review: Review } => ({
   type: CREATE_ONE,
   review,
-})
+});
 
-const deleteReview = (review: Reviews) => ({
+const deleteReview = (review: Review): { type: typeof DELETE_ONE; review: Review } => ({
   type: DELETE_ONE,
-  review
-})
+  review,
+});
 
+// Define state interface
 interface ReviewsState {
-  spot: Spot | null
-  user: User | null
-
+  spot: { [id: number]: Review };
+  user: { [id: number]: Review };
 }
 
-export const getAllReviewsForSpot = (id) => async (dispatch) => {
-    const { spotId } = id
-    const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
-    if (response.ok) {
-      const reviews = await response.json();
-      dispatch(loadAllReviewsForSpot(reviews));
-    }
-    return response
-  };
-
-  export const getAllReviewsForUser = () => async (dispatch) => {
-    const response = await csrfFetch(`/api/reviews/current`);
-    if (response.ok) {
-      const reviews = await response.json();
-      dispatch(loadAllReviewsForUser(reviews));
-    }
-    return response
-  };
-
-  export const createOneReview = (newReview, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newReview),
-    })
-    if (response.ok) {
-      const newReview = await response.json();
-      dispatch(createReview(newReview))
-      return newReview
-    }
-
+// Thunk action creators
+export const getAllReviewsForSpot = (
+  id: number
+): ThunkAction<void, ReviewsState, unknown, Action<string>> => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${id}/reviews`);
+  if (response.ok) {
+    const reviews: Review[] = await response.json();
+    dispatch(loadAllReviewsForSpot(reviews));
   }
+};
 
-  export const deleteOneReview = (reviewId) => async(dispatch) => {
-    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
-     method: 'DELETE',
-    })
-    if (response.ok) {
-     const review = await response.json();
-     dispatch(deleteReview(review));
-    }
- }
+export const getAllReviewsForUser = (): ThunkAction<void, ReviewsState, unknown, Action<string>> => async (
+  dispatch
+) => {
+  const response = await csrfFetch(`/api/reviews/current`);
+  if (response.ok) {
+    const reviews: Review[] = await response.json();
+    dispatch(loadAllReviewsForUser(reviews));
+  }
+};
 
+export const createOneReview = (
+  newReview: Review,
+  spotId: number
+): ThunkAction<void, ReviewsState, unknown, Action<string>> => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newReview),
+  });
+  if (response.ok) {
+    const createdReview: Review = await response.json();
+    dispatch(createReview(createdReview));
+  }
+};
 
-const initialState = { spot: {}, user: {} }
+export const deleteOneReview = (
+  reviewId: number
+): ThunkAction<void, ReviewsState, unknown, Action<string>> => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: 'DELETE',
+  });
+  if (response.ok) {
+    const deletedReview: Review = await response.json();
+    dispatch(deleteReview(deletedReview));
+  }
+};
 
-const reviewsReducer = (state = initialState, action) => {
-    switch (action.type) {
-     case LOAD: {
-        const newState = { spot: {}, user: {} }
-        action.reviews.Reviews.forEach(review => {
-            newState.spot[review.id] = review
-        })
+// Define initial state
+const initialState: ReviewsState = { spot: {}, user: {} };
 
-        return newState;
-     }
+// Define reducer
+const reviewsReducer = (state: ReviewsState = initialState, action: any): ReviewsState => {
+  switch (action.type) {
+    case LOAD:
+      return {
+        ...state,
+        spot: action.reviews.reduce((acc: { [key: number]: Review }, review: Review) => {
+          acc[review.id] = review;
+          return acc;
+        }, {}),
+      };
+    case LOAD_USER_REVIEWS:
+      return {
+        ...state,
+        user: action.reviews.reduce((acc: { [key: number]: Review }, review: Review) => {
+          acc[review.id] = review;
+          return acc;
+        }, {}),
+      };
 
-     case LOAD_USER_REVIEWS: {
-       const newState = { spot: {}, user: {} }
-       action.reviews.Reviews.forEach(review => {
-        newState.user[review.id] = review
-       })
-        return newState;
-     }
-     case CREATE_ONE: {
-      const newState = { ...state, spot: { ...state.spot}}
-      newState.spot[action.review.id] = action.review;
-      return newState
-    }
-
-    case DELETE_ONE: {
-      const newState = {...state, spot: {...state.spot}}
-      delete newState.spot[action.id]
-    }
-
+    case CREATE_ONE:
+      return {
+        ...state,
+        spot: {
+          ...state.spot,
+          [action.review.id]: action.review,
+        },
+      };
+    case DELETE_ONE:
+      const newState = { ...state };
+      delete newState.spot[action.review.id];
+      return newState;
     default:
-      return state
-
-      }
-
-
-}
+      return state;
+  }
+};
 
 export default reviewsReducer;
