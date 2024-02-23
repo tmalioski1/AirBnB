@@ -1,32 +1,47 @@
 import { csrfFetch } from './csrf'
 
+interface Booking {
+id: number;
+spotId: number;
+userId: number;
+startDate: number;
+endDate: number
+
+}
+
 const LOAD = 'bookings/LOAD'
 const CREATE = 'bookings/CREATE'
 const EDIT = 'bookings/EDIT'
 const DELETE = 'bookings/delete'
 
-const getBookings = (bookings) => ({
+
+
+const getBookings = (bookings: Booking[]): {type: typeof LOAD; bookings: Booking[] } => ({
     type: LOAD,
     bookings
 })
 
 
-const makeBooking = (booking) => ({
+const makeBooking = (booking: Booking): { type: typeof CREATE; booking: Booking} => ({
     type: CREATE,
     booking
 })
 
 
-const editBooking = (booking) => ({
+const editBooking = (booking: Booking): {type: typeof EDIT; booking: Booking} => ({
     type:EDIT,
     booking
 })
 
 
-const deleteBooking = (id) => ({
+const deleteBooking = (id: string): {type: typeof DELETE; id: string} => ({
     type: DELETE,
     id
 })
+
+interface BookingsState {
+    booking: {[id: string]: Booking }
+}
 
 export const getCurrentBookings = () => async (dispatch) => {
     const response = await csrfFetch('/api/bookings/current')
