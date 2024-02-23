@@ -1,27 +1,16 @@
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getAllSpots } from '../../store/spots';
 import { NavLink } from 'react-router-dom';
+import  { Spot, getAllSpots } from '../../store/spots';
 import './HomePage.css';
-
 import { RootState } from '../../store';
 
-interface Spot {
-  id: string;
-  city: string;
-  state: string;
-  previewImage: string;
-  avgRating: number;
-  price: number;
-}
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  // Use RootState as the type for useSelector
   const spotsObj = useSelector((state: RootState) => state.spots.allSpots);
 
-  // Define spots array as Spot[]
   const spots: Spot[] = Object.values(spotsObj);
 
   useEffect(() => {
