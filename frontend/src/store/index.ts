@@ -8,6 +8,11 @@ import bookingsReducer  from "./bookings";
 // Define RootState type
 type RootState = ReturnType<typeof rootReducer>;
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 // Define root reducer
 const rootReducer = combineReducers({
   session: sessionReducer,
