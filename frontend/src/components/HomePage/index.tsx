@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import  { Spot, getAllSpots } from '../../store/spots';
-import './HomePage.css';
 import { RootState } from '../../store';
+import { Spot, getAllSpots } from '../../store/spots';
+import './HomePage.css';
 
+interface IProps {}
 
-const HomePage: React.FC = (): JSX.Element => {
+const HomePage: React.FC<IProps> = () => {
   const dispatch = useDispatch();
-
-  const spotsObj = useSelector((state: RootState) => state.spots.allSpots);
-
-  const spots: Spot[] = Object.values(spotsObj);
 
   useEffect(() => {
     dispatch(getAllSpots());
     document.title = 'Home';
   }, [dispatch]);
+
+  const spotsObj: { [key: string]: Spot } = useSelector((state: RootState) => state.spots.allSpots);
+  const spots: Spot[] = Object.values(spotsObj);
 
   return (
     <section>

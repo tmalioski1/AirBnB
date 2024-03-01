@@ -15,6 +15,8 @@ export interface Spot {
   name: string;
   description: string;
   price: number;
+  avgRating: number;
+
 }
 
 // Define action types
